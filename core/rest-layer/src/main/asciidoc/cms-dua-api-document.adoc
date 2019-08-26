@@ -1,0 +1,2455 @@
+= CMS DUA REST Service API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+== Request Header
+All request should have the following header information
+include::{snippets}/case-create/request-headers.adoc[]
+
+== 1. Patient
+
+=== 1.1 Register
+
+Register a new patient to the system. Only after creating a new patient
+<<Add Medical Coverage plan to Patient New Coverage>> can be assigned to the patient
+
+URL : *_/patient/register/_*
+
+anchor:request-parameters[]Request Parameters
+include::{snippets}/new-patient/request-fields.adoc[]
+
+Request Example
+include::{snippets}/new-patient/http-request.adoc[]
+
+anchor:response-parameters[]Response Parameters
+include::{snippets}/new-patient/response-fields.adoc[]
+
+Response Example
+include::{snippets}/new-patient/http-response.adoc[]
+
+
+=== 1.2 Update
+
+Update the patient information
+
+URL
+
+include::{snippets}/update-patient/path-parameters.adoc[]
+
+Request Parameters
+
+<<request-parameters>>
+
+Response Parameters
+include::{snippets}/update-patient/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-patient/http-response.adoc[]
+
+
+
+=== 1.3 Search
+
+Search for a given patient.
+
+URL
+
+include::{snippets}/patient-search/path-parameters.adoc[]
+
+Response Parameters
+
+<<response-parameters>>
+
+Response Example
+include::{snippets}/patient-search/http-response.adoc[]
+
+=== 1.4 Patient ID number validate
+
+Validate if the ID number (User ID) is already in use
+
+URL
+
+include::{snippets}/patient-id-number-validate/path-parameters.adoc[]
+
+Response Parameters
+
+<<response-parameters>>
+
+Response Example
+include::{snippets}/patient-id-number-validate/http-response.adoc[]
+
+
+
+=== 1.5 Like Search
+
+Does a like search on the patient name and contact number
+
+URL
+
+include::{snippets}/patient-like-search/path-parameters.adoc[]
+
+Response Parameters
+
+<<response-parameters>>
+
+Response Example
+include::{snippets}/patient-like-search/http-response.adoc[]
+
+
+== 2. Policy Holder
+
+=== 2.1 Add
+
+Add a new policy holder to a medical coverage
+
+URL
+
+include::{snippets}/add-policy-holder/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-policy-holder/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-policy-holder/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-policy-holder/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-policy-holder/http-response.adoc[]
+
+
+=== 2.2 Remove
+
+Remove a policy holder from a coverage
+
+URL
+
+include::{snippets}/remove-policy-holder/path-parameters.adoc[]
+
+Response Example
+include::{snippets}/remove-policy-holder/http-response.adoc[]
+
+
+
+=== 2.3 Search By ID
+
+Search for Policy holder by ID
+
+URL
+
+include::{snippets}/search-by-id-policy-holder/path-parameters.adoc[]
+
+Response Example
+include::{snippets}/search-by-id-policy-holder/http-response.adoc[]
+
+
+=== 2.4 Search By User ID
+
+Search By User ID
+
+URL : *_/policyholder/search-by-user-id_*
+
+Request Parameters
+include::{snippets}/search-by-user-id-policy-holder/request-fields.adoc[]
+
+Request Example
+include::{snippets}/search-by-user-id-policy-holder/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-by-user-id-policy-holder/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-by-user-id-policy-holder/http-response.adoc[]
+
+
+
+== 3. Medical Alert
+
+=== 3.1 Add
+
+Add a new Medical Alert to the patient : ALLERGY, REMINDERS cannot be added part of this API,
+please use the appropriate API for it
+
+URL
+
+include::{snippets}/add-medical-alerts/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-medical-alerts/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-medical-alerts/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-medical-alerts/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-medical-alerts/http-response.adoc[]
+
+
+=== 3.2 Delete
+
+Delete a given Medical Alert
+
+URL : *_/medical-alerts/delete_*
+
+Request Parameters
+include::{snippets}/delete-medical-alerts/request-fields.adoc[]
+
+Request Example
+include::{snippets}/delete-medical-alerts/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/delete-medical-alerts/response-fields.adoc[]
+
+Response Example
+include::{snippets}/delete-medical-alerts/http-response.adoc[]
+
+
+
+=== 3.4 List
+
+Lists all medical alerts for the given patient
+
+URL
+
+include::{snippets}/list-medical-alerts/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/list-medical-alerts/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-medical-alerts/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-medical-alerts/http-response.adoc[]
+
+
+
+== 4. Allergy Management
+
+=== 4.1 Check Patient Allergies
+
+System will check the patient records to validate if the given drugs are allergic to the patient
+
+URL
+
+include::{snippets}/check-allergy/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/check-allergy/request-fields.adoc[]
+
+Request Example
+include::{snippets}/check-allergy/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/check-allergy/response-fields.adoc[]
+
+Response Example
+include::{snippets}/check-allergy/http-response.adoc[]
+
+
+=== 4.2 Create Group
+
+Create a new Allergic group
+
+
+URL : *_/allergy-management/create/group_*
+
+Request Parameters
+include::{snippets}/create-allergy-groups/request-fields.adoc[]
+
+Request Example
+include::{snippets}/create-allergy-groups/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/create-allergy-groups/response-fields.adoc[]
+
+Response Example
+include::{snippets}/create-allergy-groups/http-response.adoc[]
+
+
+=== 4.3 Modify Group
+
+Modify an existing allergy group
+
+
+URL
+
+include::{snippets}/modify-allergy-groups/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-allergy-groups/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-allergy-groups/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-allergy-groups/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-allergy-groups/http-response.adoc[]
+
+
+
+=== 4.4 Delete Group
+
+Delete a allergy group
+
+URL
+
+include::{snippets}/delete-allergy-groups/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/delete-allergy-groups/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/delete-allergy-groups/response-fields.adoc[]
+
+Response Example
+include::{snippets}/delete-allergy-groups/http-response.adoc[]
+
+
+
+=== 4.5 List Group
+
+Lists all medical alerts for the given patient
+
+URL : *_/allergy-management/list/groups_*
+
+Request Example
+include::{snippets}/list-allergy-groups/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-allergy-groups/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-allergy-groups/http-response.adoc[]
+
+
+== 5. User notification
+
+=== 5.1 List
+
+List notification for the logged in user
+
+URL
+
+include::{snippets}/list-notification/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/list-notification/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-notification/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-notification/http-response.adoc[]
+
+
+=== 5.2 Mark As Read
+
+Marks a notification as read
+
+
+URL
+
+include::{snippets}/mark-as-read-notification/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/mark-as-read-notification/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mark-as-read-notification/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mark-as-read-notification/http-response.adoc[]
+
+
+
+=== 5.3 Create Notification
+
+Creates a new notification
+
+URL : *_/notification/create_*
+
+Request Parameters
+include::{snippets}/create-notification/request-fields.adoc[]
+
+Request Example
+include::{snippets}/create-notification/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/create-notification/response-fields.adoc[]
+
+Response Example
+include::{snippets}/create-notification/http-response.adoc[]
+
+
+== 6. CASE Management
+
+=== 6.1 Create new case
+
+Create new case. Note that, this is required existing patient ID and clinic ID and rest of the details are optional
+
+URL : *_/case/create_*
+
+Request Parameters
+include::{snippets}/case-create/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-create/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-create/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-create/http-response.adoc[]
+
+
+=== 6.2 Update a existing case
+
+Request Parameters
+include::{snippets}/case-update/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-update/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-update/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-update/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-update/http-response.adoc[]
+
+
+=== 6.3 Search a Case
+
+Request Parameters
+include::{snippets}/case-search/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/case-search/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-search/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-search/http-response.adoc[]
+
+
+=== 6.4 List cases
+
+Get the list of cases by clinic code without paging.
+If search parameters available, then the search result will be filtered accordingly. If search parameters are not available, then the result will be filtered only by the clinic code.
+
+Request Parameters
+include::{snippets}/case-list-by-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-list-by-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-list-by-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-list-by-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-list-by-clinic/http-response.adoc[]
+
+
+=== 6.5 List cases with page
+
+Get the list of cases by clinic code with paging. If search parameters available, then the search result will be filtered accordingly.
+If search parameters are not available, then the result will be filtered only by the clinic code.
+
+Request Parameters
+include::{snippets}/case-list-by-clinic-page/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-list-by-clinic-page/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-list-by-clinic-page/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-list-by-clinic-page/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-list-by-clinic-page/http-response.adoc[]
+
+
+=== 6.6 Close a case
+
+Request Parameters
+include::{snippets}/case-close/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/case-close/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-close/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-close/http-response.adoc[]
+
+
+=== 6.7 Search Sales Order
+
+Sales order detail search of a particular Case
+
+Request Parameters
+include::{snippets}/case-sales-order-search/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/case-sales-order-search/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-sales-order-search/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-sales-order-search/http-response.adoc[]
+
+
+=== 6.8 Update Sales Order
+
+Update a Sales Order details of a particular Case
+
+Request Path parameter
+include::{snippets}/case-sales-order-update/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-sales-order-update/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-sales-order-update/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-sales-order-update/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-sales-order-update/http-response.adoc[]
+
+
+=== 6.9 Search Package
+
+Search package details of a particular Case                        n
+
+Request Path parameter
+include::{snippets}/case-package-search/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/case-package-search/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-package-search/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-package-search/http-response.adoc[]
+
+
+=== 6.10 Add package to case
+
+Add a puchased package to an existing case
+
+URL : *_case/package/update/{caseId}/{packageItemId}_*
+
+Request Path parameter
+include::{snippets}/case-package-update/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-package-update/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-package-update/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-package-update/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-package-update/http-response.adoc[]
+
+=== 6.11 Set Case single visit
+
+Set case as a single visit holder or a multiple visit.
+
+Request Path parameter
+include::{snippets}/case-single-visit/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-single-visit/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-single-visit/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-single-visit/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-single-visit/http-response.adoc[]
+
+=== 6.12 Get Case Item price
+
+API for check the item prices in item charge breakdown
+
+Request Path parameter
+include::{snippets}/case-item-prices/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-item-prices/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-item-prices/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-item-prices/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-item-prices/http-response.adoc[]
+
+=== 6.13 Update medical coverage
+
+API for update medical coverages for case.
+
+Request Path parameter
+include::{snippets}/case-update-medical-coverage/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/case-update-medical-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/case-update-medical-coverage/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/case-update-medical-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/case-update-medical-coverage/http-response.adoc[]
+
+== 7. Patient Visit Registry
+
+=== 7.1 List
+
+List patient visits
+
+URL : *_/patient-visit/list/{patientId}_*
+
+Request Path parameter
+include::{snippets}/visit-list/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-list/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-list/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-list/http-response.adoc[]
+
+=== 7.2 List with Page
+
+List patient visits with pagination
+
+URL : *_/patient-visit/list/{patientId}/{page}/{size}_*
+
+Request Path parameter
+include::{snippets}/visits-list-with-page/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visits-list-with-page/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visits-list-with-page/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visits-list-with-page/http-response.adoc[]
+
+=== 7.3 Create
+
+Creates a new PatientVisitRegistry and add to a new Case
+
+URL : *_/patient-visit/create_*
+
+Request Parameters
+include::{snippets}/visit-create/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-create/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-create/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-create/http-response.adoc[]
+
+=== 7.4 Create and add to existing Case
+
+Creates a new PatientVisitRegistry and add to a existing Case
+
+URL : *_/patient-visit/create/{caseId}_*
+
+Request Path parameter
+include::{snippets}/visit-create-to-exists-case/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-create-to-exists-case/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-create-to-exists-case/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-create-to-exists-case/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-create-to-exists-case/http-response.adoc[]
+
+=== 7.5 Update
+
+Update PatientVisitRegistry
+
+URL : *_/patient-visit/update/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-update/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-update/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update/http-response.adoc[]
+
+=== 7.6 Remove
+
+Remove PatientVisitRegistry and remove it from Case
+
+URL : *_/patient-visit/remove/{visitId}/{caseId}_*
+
+Request Path parameter
+include::{snippets}/visit-remove/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-remove/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-remove/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-remove/http-response.adoc[]
+
+=== 7.7 Attach to case
+
+Attach exists visit to a particular Case
+
+URL : *_/patient-visit/attach/{caseId}_*
+
+Request Path parameter
+include::{snippets}/visit-attach-to-case/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-attach-to-case/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-attach-to-case/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-attach-to-case/http-response.adoc[]
+
+=== 7.8 List attachable visits
+
+List attachable visit by case and patient
+
+URL : *_/patient-visit/list/by-month/{patientId}/{month}/{caseId}/{limit}_*
+
+Request Path parameter
+include::{snippets}/visit-list-attachable/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-list-attachable/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-list-attachable/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-list-attachable/http-response.adoc[]
+
+=== 7.9 Search By Id
+
+Update PatientVisitRegistry
+
+URL : *_/patient-visit/search/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-search/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-search/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-search/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-search/http-response.adoc[]
+
+
+=== 7.10 Update to CONSULT
+
+Update visit to CONSULT state
+
+URL : *_/patient-visit/update/consult/{visitId}/{doctorId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-to-consult/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-update-to-consult/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-to-consult/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-to-consult/http-response.adoc[]
+
+
+=== 7.11 Update to POST-CONSULT
+
+Update visit to POST-CONSULT state
+
+URL : *_/patient-visit/update/post-consult/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-to-post-consult/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-update-to-post-consult/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-update-to-post-consult/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-to-post-consult/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-to-post-consult/http-response.adoc[]
+
+=== 7.12 Update to PAYMENT
+
+Update visit to PAYMENT state
+
+URL : *_/patient-visit/update/payment/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-to-payment/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-update-to-payment/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-update-to-payment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-to-payment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-to-payment/http-response.adoc[]
+
+=== 7.13 Update to COMPLETE
+
+Update visit to COMPLETE state
+
+URL : *_/patient-visit/update/complete/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-to-complete/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-update-to-complete/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-to-complete/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-to-complete/http-response.adoc[]
+
+=== 7.14 List by clinic and startTime
+
+List visits by clinic and start time between
+
+URL : *_/patient-visit/list/by-time/{clinicId}/{from}/{to}_*
+
+Request Path parameter
+include::{snippets}/visits-by-clinic-start-time/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visits-by-clinic-start-time/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visits-by-clinic-start-time/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visits-by-clinic-start-time/http-response.adoc[]
+
+
+=== 7.15 Visits data by case
+
+List visits data by case
+
+URL : *_/patient-visit/list/by-case/{caseId}_*
+
+Request Path parameter
+include::{snippets}/visits-list-by-case/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visits-list-by-case/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visits-list-by-case/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visits-list-by-case/http-response.adoc[]
+
+=== 7.16 Update Visit Consultation
+
+Update/Create visit consultation only
+
+URL : *_/patient-visit/update/consultation/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-consultation/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-update-consultation/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-update-consultation/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-consultation/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-consultation/http-response.adoc[]
+
+=== 7.17 Update Visit ConsultationFollowup
+
+Update/Create visit ConsultationFollowup only
+
+URL : *_/patient-visit/update/followup/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-followup/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-update-followup/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-update-followup/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-followup/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-followup/http-response.adoc[]
+
+=== 7.18 Update Visit PatientReferral
+
+Update/Create visit PatientReferral only
+
+URL : *_/patient-visit/update/referral/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-referral/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-update-referral/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-update-referral/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-referral/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-referral/http-response.adoc[]
+
+=== 7.19 Update Visit MedicalCertificates
+
+Update/Create visit Medical Certificates only
+
+URL : *_/patient-visit/update/certificates/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-update-certificates/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-update-certificates/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-update-certificates/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-update-certificates/http-response.adoc[]
+
+=== 7.20 Save Visit Consultation Data
+
+Save Medical reference data including
+
+URL : *_/patient-visit/save/consultation/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-save-consultation-data/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-save-consultation-data/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-save-consultation-data/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-save-consultation-data/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-save-consultation-data/http-response.adoc[]
+
+=== 7.21 Save Visit Dispensing Data
+
+Save MedicalReference data without consultation and diagnosis data
+
+URL : *_/patient-visit/save/dispensing/{visitId}_*
+
+Request Path parameter
+include::{snippets}/visit-save-dispensing-data/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/visit-save-dispensing-data/request-fields.adoc[]
+
+Request Example
+include::{snippets}/visit-save-dispensing-data/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-save-dispensing-data/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-save-dispensing-data/http-response.adoc[]
+
+=== 7.22 List clinic queue
+
+Lists sorted clinic queue
+
+Request Path parameter
+include::{snippets}/clinic-queue/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/clinic-queue/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/clinic-queue/response-fields.adoc[]
+
+Response Example
+include::{snippets}/clinic-queue/http-response.adoc[]
+
+
+=== 7.23 Call next patient
+
+Calls the next patient in queue
+
+Request Path parameter
+include::{snippets}/visit-call-next-patient/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-call-next-patient/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-call-next-patient/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-call-next-patient/http-response.adoc[]
+
+
+=== 7.24 Rollback to post consult
+
+Rollback visit from payment to rollback
+
+Request Path parameter
+include::{snippets}/visit-payment-state-rollback/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-payment-state-rollback/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-payment-state-rollback/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-payment-state-rollback/http-response.adoc[]
+
+=== 7.25 List patient consultation follow up
+
+Request Path parameter
+include::{snippets}/visit-patient-consultation-list-followup/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/visit-patient-consultation-list-followup/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/visit-patient-consultation-list-followup/response-fields.adoc[]
+
+Response Example
+include::{snippets}/visit-patient-consultation-list-followup/http-response.adoc[]
+
+== 8. Visit upload
+
+=== 8.1 Upload document for visit
+
+Upload file to a PatientVisitRegistry
+
+URL : *_/document-management/upload/visit/{visitId}/{uploadTo}_*
+
+Request Path parameter
+include::{snippets}/file-upload-to-visit/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/file-upload-to-visit/request-fields.adoc[]
+
+Request Example
+include::{snippets}/file-upload-to-visit/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/file-upload-to-visit/response-fields.adoc[]
+
+Response Example
+include::{snippets}/file-upload-to-visit/http-response.adoc[]
+
+=== 8.2 Download document form visit
+
+Download file from a PatientVisitRegistry
+
+URL : *_/document-management/download/visit/{visitId}/{fileId}_*
+
+Request Path parameter
+include::{snippets}/file-download-from-visit/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/file-download-from-visit/http-request.adoc[]
+
+Response Example
+include::{snippets}/file-download-from-visit/http-response.adoc[]
+
+=== 8.3 List documents in the visit
+
+List all documents in PatientVisitRegistry
+
+URL : *_/document-management/list/visit/{visitId}_*
+
+Request Path parameter
+include::{snippets}/file-list-by-visit/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/file-list-by-visit/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/file-list-by-visit/response-fields.adoc[]
+
+Response Example
+include::{snippets}/file-list-by-visit/http-response.adoc[]
+
+=== 8.4 Upload document for patient
+
+Upload file to a PatientVisitRegistry
+
+URL :
+include::{snippets}/file-upload-to-patient/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/file-upload-to-patient/request-fields.adoc[]
+
+Request Example
+include::{snippets}/file-upload-to-patient/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/file-upload-to-patient/response-fields.adoc[]
+
+Response Example
+include::{snippets}/file-upload-to-patient/http-response.adoc[]
+
+=== 8.5 Download document form patient
+
+Download file from a PatientVisitRegistry
+
+URL :
+include::{snippets}/file-download-from-patient/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/file-download-from-patient/http-request.adoc[]
+
+Response Example
+include::{snippets}/file-download-from-patient/http-response.adoc[]
+
+=== 8.6 List documents in the patient
+
+List all documents in PatientVisitRegistry
+
+URL :
+include::{snippets}/file-list-by-patient/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/file-list-by-patient/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/file-list-by-patient/response-fields.adoc[]
+
+Response Example
+include::{snippets}/file-list-by-patient/http-response.adoc[]
+
+== 9. Item
+
+=== 9.1 List all
+
+List all items sorted by item name
+
+URL : *_/item/list_*
+
+Request Example
+include::{snippets}/item-list-all/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-list-all/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-list-all/http-response.adoc[]
+
+=== 9.2 Item by id
+
+Search Item by item id
+
+URL :
+include::{snippets}/item-search-by-id/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-id/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-id/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-id/http-response.adoc[]
+
+=== 9.3 Item by code
+
+Search Item by item code
+
+URL :
+include::{snippets}/item-search-by-code/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-code/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-code/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-code/http-response.adoc[]
+
+=== 9.4 Item by keyword
+
+Filter Item name and code by keyword
+
+URL :
+include::{snippets}/item-search-by-keyword/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-keyword/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-keyword/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-keyword/http-response.adoc[]
+
+=== 9.5 List all by clinic id
+
+List all items sorted by item name
+
+URL :
+include::{snippets}/item-list-all-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-list-all-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-list-all-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-list-all-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-list-all-clinic/http-response.adoc[]
+
+=== 9.6 Item by id and clinic id
+
+Search Item by item id
+
+URL :
+include::{snippets}/item-search-by-id-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-search-by-id-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-id-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-id-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-id-clinic/http-response.adoc[]
+
+=== 9.7 Item by code and clinic id
+
+Search Item by item code
+
+URL :
+include::{snippets}/item-search-by-code-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-search-by-code-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-code-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-code-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-code-clinic/http-response.adoc[]
+
+=== 9.8 Item by keyword and clinic id
+
+Filter Item name and code by keyword
+
+URL :
+
+include::{snippets}/item-search-by-keyword-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-search-by-keyword-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-keyword-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-keyword-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-keyword-clinic/http-response.adoc[]
+
+=== 9.9 List all by group name
+
+List all items sorted by item name
+
+URL :
+include::{snippets}/item-list-all-group/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-list-all-group/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-list-all-group/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-list-all-group/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-list-all-group/http-response.adoc[]
+
+=== 9.10 Item by id and group name
+
+Search Item by item id
+
+URL :
+include::{snippets}/item-search-by-id-group/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-search-by-id-group/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-id-group/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-id-group/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-id-group/http-response.adoc[]
+
+=== 9.11 Item by code and group name
+
+Search Item by item code
+
+URL :
+include::{snippets}/item-search-by-code-group/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-search-by-code-group/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-code-group/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-code-group/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-code-group/http-response.adoc[]
+
+=== 9.12 Item by keyword and group name
+
+Filter Item name and code by keyword
+
+URL :
+
+include::{snippets}/item-search-by-keyword-group/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/item-search-by-keyword-group/request-fields.adoc[]
+
+Request Example
+include::{snippets}/item-search-by-keyword-group/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/item-search-by-keyword-group/response-fields.adoc[]
+
+Response Example
+include::{snippets}/item-search-by-keyword-group/http-response.adoc[]
+
+
+== 10. System Configurations
+
+=== 10.1 Relationships
+
+Lists Relationships
+
+URL : *_/system-config/list/relationships_*
+
+Response Parameters
+include::{snippets}/list-relationships/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-relationships/http-response.adoc[]
+
+=== 10.2 Marital Status
+
+Lists Marital Status
+
+URL : *_/system-config/list/marital-status_*
+
+Response Parameters
+include::{snippets}/list-marital-status/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-marital-status/http-response.adoc[]
+
+
+=== 10.3 Clinic Groups
+
+Lists Clinic Groups
+
+URL : *_ /system-config/list/clinic-groups _*
+
+Response Parameters
+include::{snippets}/list-clinic-groups/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-clinic-groups/http-response.adoc[]
+
+=== 10.4 Default Label List
+
+List all Default label names
+
+URL : *_ /system-config/list/default-labels _*
+
+Response Parameters
+include::{snippets}/list-default-labels/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-default-labels/http-response.adoc[]
+
+
+=== 10.5 Laboratories List
+
+List all laboratories
+
+URL : *_ /system-config/list/medical-test-laboratories _*
+
+Response Parameters
+include::{snippets}/list-medical-test-laboratories/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-medical-test-laboratories/http-response.adoc[]
+
+
+=== 10.6 Identification Validation
+
+Validates if the NRIC or the FIN is correct.
+
+URL
+
+include::{snippets}/identification-validation/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/identification-validation/response-fields.adoc[]
+
+Response Example
+include::{snippets}/identification-validation/http-response.adoc[]
+
+
+=== 10.7 Address Finder
+
+Find the address based on the postcode given
+
+URL
+
+include::{snippets}/find-postcode/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/find-postcode/response-fields.adoc[]
+
+Response Example
+include::{snippets}/find-postcode/http-response.adoc[]
+
+
+=== 10.8 List all vital codes
+
+List all vital codes
+
+URL : *_ /system-config/list/vitals _*
+
+Response Parameters
+include::{snippets}/list-vital-codes/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-vital-codes/http-response.adoc[]
+
+=== 10.9 List default vital list
+
+List all vital codes
+
+URL : *_ /system-config/list/vitals/default _*
+
+Response Parameters
+include::{snippets}/list-default-vital-codes/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-default-vital-codes/http-response.adoc[]
+
+
+=== 10.10 List active instructions
+
+List all active instructions
+
+URL : *_ /system-config/list/instructions _*
+
+Response Parameters
+include::{snippets}/list-instructions/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-instructions/http-response.adoc[]
+
+
+=== 10.11 List active prescription dose
+
+List all active prescription dose
+
+URL : *_ /system-config/list/prescription-dose _*
+
+Response Parameters
+include::{snippets}/list-prescription-dose/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-prescription-dose/http-response.adoc[]
+
+
+== 11. Patient Notes
+
+User can append notes for a given patient
+
+=== 11.1 List All
+
+URL
+
+include::{snippets}/list-patient-notes/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/list-patient-notes/http-request.adoc[]
+
+Response Example
+include::{snippets}/list-patient-notes/http-response.adoc[]
+
+=== 11.2 Add a New Note
+
+URL
+
+include::{snippets}/patient-note-add/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/patient-note-add/request-fields.adoc[]
+
+Request Example
+include::{snippets}/patient-note-add/http-request.adoc[]
+
+Response Example
+include::{snippets}/patient-note-add/http-response.adoc[]
+
+=== 11.3 Modify a Note
+
+URL
+
+include::{snippets}/change-patient-note-status/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/change-patient-note-status/http-request.adoc[]
+
+Response Example
+include::{snippets}/change-patient-note-status/http-response.adoc[]
+
+== 12. Invoices
+
+=== 12.1 Invoice breakdown
+
+URL : *_/charging/invoice/breakdown/{caseId}_*
+
+Request Path parameter
+include::{snippets}/invoice-breakdown/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/invoice-breakdown/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/invoice-breakdown/response-fields.adoc[]
+
+Response Example
+include::{snippets}/invoice-breakdown/http-response.adoc[]
+
+
+=== 12.2 Invoice breakdown dynamic
+
+URL : *_/charging/invoice/breakdown-dynamic/{caseId}_*
+
+Request Path parameter
+include::{snippets}/invoice-breakdown-dynamic/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/invoice-breakdown-dynamic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/invoice-breakdown-dynamic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/invoice-breakdown-dynamic/http-response.adoc[]
+
+=== 12.3 Delete invoice
+
+URL : *_/charging/invoice/delete/{caseId}/{invoiceIds}/{reason}_*
+
+Request Path parameter
+include::{snippets}/invoice-delete/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/invoice-delete/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/invoice-delete/response-fields.adoc[]
+
+Response Example
+include::{snippets}/invoice-delete/http-response.adoc[]
+
+=== 12.4 Direct payment
+
+Request Path parameter
+include::{snippets}/invoice-direct-payment/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/invoice-direct-payment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/invoice-direct-payment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/invoice-direct-payment/http-response.adoc[]
+
+=== 12.5 Find due amount
+
+URL : *_/charging/payment/due/{caseId}_*
+
+Request Path parameter
+include::{snippets}/invoice-due-amount/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/invoice-due-amount/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/invoice-due-amount/response-fields.adoc[]
+
+Response Example
+include::{snippets}/invoice-due-amount/http-response.adoc[]
+
+=== 12.6 Payment mode
+
+URL : *_/payment/modes_*
+
+Request Path parameter
+include::{snippets}/invoice-payment-mode/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/invoice-payment-mode/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/invoice-payment-mode/response-fields.adoc[]
+
+Response Example
+include::{snippets}/invoice-payment-mode/http-response.adoc[]
+
+== 13 Vital Signs
+
+
+=== 13.1 List Vital Signs
+
+List Vital signs of the patient
+
+Request Path parameter
+include::{snippets}/list-vital/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/list-vital/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-vital/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-vital/http-response.adoc[]
+
+=== 13.2 Add Vital
+
+Add a Vital sign to the user
+
+Request Path parameter
+URL : *_/vital/add_*
+
+Request Example
+include::{snippets}/add-vital/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-vital/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-vital/http-response.adoc[]
+
+
+=== 13.3 Modify Vital
+
+Modify an existing vital
+
+
+Request Path parameter
+include::{snippets}/modify-vital/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/modify-vital/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-vital/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-vital/http-response.adoc[]
+
+=== 13.4 Add Vital List
+
+Add a Vital sign to the user as a list
+
+Request Path parameter
+URL : *_/vital/add/vital/list_*
+
+Request Example
+include::{snippets}/add-vital-list/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-vital-list/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-vital-list/http-response.adoc[]
+
+
+=== 13.5 Modify Vital List
+
+Modify an existing vital from a list
+
+
+Request Path parameter
+URL : *_/vital/update/vital/list_*
+
+Request Example
+include::{snippets}/modify-vital-list/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-vital-list/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-vital-list/http-response.adoc[]
+
+
+=== 13.6 Delete Vital
+
+Delete a vital
+
+
+Request Path parameter
+include::{snippets}/remove-vital/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/remove-vital/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/remove-vital/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-vital/http-response.adoc[]
+
+
+== 14. CLAIM Management
+
+=== 14.1 Create new claim
+
+A Claim will be automatically created when user is doing a payment for a visit. A claim will be created for each credit payment and will be saved in the DB.
+When comes to claims, they can be divided into two categories as manually submitted and automated (MEDISAVE and CHAS)
+
+
+=== 14.2.1 Submit an existing CHAS or MEDISAVE claim
+
+//URL : *_/mhcp-claim/submit/{claimId}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-submit/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/mhcp-claim-submit/request-fields.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-submit/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-submit/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-submit/http-response.adoc[]
+
+
+=== 14.2.2 Update an existing Claim
+
+Request Parameters
+include::{snippets}/mhcp-claim-update/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/mhcp-claim-update/request-fields.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-update/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-update/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-update/http-response.adoc[]
+
+
+=== 14.2.3 Reject an existing Claim
+
+//URL : *_/claim/reject/{claimId}/{rejectedAs}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-reject/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-reject/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-reject/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-reject/http-response.adoc[]
+
+
+=== 14.2.4 Checking balance
+
+URL : *_/mhcp-claim/balance/{clinicId}/{planId}/{patientNric}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-check-balance-nric/path-parameters.adoc[]
+
+
+Request Example
+include::{snippets}/mhcp-claim-check-balance-nric/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-check-balance-nric/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-check-balance-nric/http-response.adoc[]
+
+
+=== 14.2.5 Search claims belong to a clinic
+
+Following can be used to query the claims which belongs to the given clinic.
+
+==== 14.2.5.1 Search claims by medical coverage type and payer NRIC
+
+This will check for the claims which have been created in given time period for a payer with mentioned NRIC.
+
+
+Request Parameters
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic-nric/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic-nric/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic-nric/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic-nric/http-response.adoc[]
+
+==== 14.2.5.2 Search claims by medical coverage type
+
+This will check for the claims which have been created in given time period with given medical coverage type.
+
+//URL : *_/mhcp-claim/list-by-type/{medicalCoverageType}/{payerNric}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type-clinic/http-response.adoc[]
+
+==== 14.2.5.3 Search claims by given medical coverage Id
+
+This will check for the claims which have been created in given time period for a payer with mentioned NRIC.
+
+//URL : *_/mhcp-claim/list/{clinicId}/{medicalCoverageId}/{payerNric}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-list-nric-medical-coverage-id-clinic/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-list-nric-medical-coverage-id-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-list-nric-medical-coverage-id-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-list-nric-medical-coverage-id-clinic/http-response.adoc[]
+
+==== 14.2.5.4 Search claims by given medical coverage Id
+
+This will check for the claims which have been created in given time period for a given medical coverage.
+
+//URL : *_/mhcp-claim/list/{clinicId}/{medicalCoverageId}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-list-medical-coverage-id-clinic/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-list-medical-coverage-id-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-list-medical-coverage-id-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-list-medical-coverage-id-clinic/http-response.adoc[]
+
+=== 14.2.6 Search claims belong to all clinics
+
+Following can be used to query all claims which are recorded by the system for all clinics.
+Most probably a user from HQ may need to use these endpoints.
+
+==== 14.2.6.1 Search claims by medical coverage type
+
+This will check for all claims which have been created in given time period for any clinic in the system.
+
+//URL : *_/mhcp-claim/list-by-type/{medicalCoverageType}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-list-by-medical-coverage-type/http-response.adoc[]
+
+==== 14.2.6.2 Search claims by medical coverage Id
+
+This will check for all claims which have the mentioned medical coverage for any clinic in the system.
+
+//URL : *_/mhcp-claim/list/{medicalCoverageId}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-list-medical-coverage-id/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-list-medical-coverage-id/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-list-medical-coverage-id/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-list-medical-coverage-id/http-response.adoc[]
+
+
+=== 14.2.7 Check Status of claims
+
+User have the ability to check the status in a specified manner of check all claims of a given clinic(s)
+
+==== 14.2.7.1 Check status for claims of a given clinic(s)
+
+URL : *_/mhcp-claim/status_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-check-status-for-clinics/request-fields.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-check-status-for-clinics/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-check-status-for-clinics/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-check-status-for-clinics/http-response.adoc[]
+
+==== 14.2.7.2 Check status of specified claims of a given clinic
+
+//URL : *_/mhcp-claim//status/{clinicId}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-check-status/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/mhcp-claim-check-status/request-fields.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-check-status/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-check-status/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-check-status/http-response.adoc[]
+
+
+=== 14.2.8 Check Status of claims
+
+//URL : *_/mhcp-claim/update-status/{claimId}/{updateStatusTo}_*
+
+Request Parameters
+include::{snippets}/mhcp-claim-update-status/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/mhcp-claim-update-status/request-fields.adoc[]
+
+Request Example
+include::{snippets}/mhcp-claim-update-status/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/mhcp-claim-update-status/response-fields.adoc[]
+
+Response Example
+include::{snippets}/mhcp-claim-update-status/http-response.adoc[]
+
+
+
+=== 14.3.1 Submit an existing manual Claim
+
+The manual claims are not submitted through the CMS system. Hence there is no api exposed to submit them through the system.
+
+
+=== 14.3.2 Update an existing Claim
+
+//URL : *_/claim/save/{claimId}_*
+
+Request Parameters
+include::{snippets}/claim-update/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/claim-update/request-fields.adoc[]
+
+Request Example
+include::{snippets}/claim-update/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-update/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-update/http-response.adoc[]
+
+
+=== 14.3.3 Search claims belong to a clinic
+
+Following can be used to query the claims which belongs to the given clinic.
+
+==== 14.3.3.1 Search claims by medical coverage type and payer NRIC
+
+This will check for the claims which have been created in given time period for a payer with mentioned NRIC.
+
+
+Request Parameters
+include::{snippets}/claim-list-by-medical-coverage-type-clinic-nric/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/claim-list-by-medical-coverage-type-clinic-nric/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-list-by-medical-coverage-type-clinic-nric/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-list-by-medical-coverage-type-clinic-nric/http-response.adoc[]
+
+==== 14.3.3.2 Search claims by medical coverage type
+
+This will check for the claims which have been created in given time period with given medical coverage type.
+
+//URL : *_/claim/list-by-type/{medicalCoverageType}/{payerNric}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/claim-list-by-medical-coverage-type-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/claim-list-by-medical-coverage-type-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/claim-list-by-medical-coverage-type-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-list-by-medical-coverage-type-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-list-by-medical-coverage-type-clinic/http-response.adoc[]
+
+==== 14.3.3.3 Search claims by given medical coverage Id
+
+This will check for the claims which have been created in given time period for a payer with mentioned NRIC.
+
+//URL : *_/claim/list/{clinicId}/{medicalCoverageId}/{payerNric}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/claim-list-nric-medical-coverage-id-clinic/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/claim-list-nric-medical-coverage-id-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-list-nric-medical-coverage-id-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-list-nric-medical-coverage-id-clinic/http-response.adoc[]
+
+==== 14.3.3.4 Search claims by given medical coverage Id
+
+This will check for the claims which have been created in given time period for a given medical coverage.
+
+//URL : *_/claim/list/{clinicId}/{medicalCoverageId}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/claim-list-medical-coverage-id-clinic/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/claim-list-medical-coverage-id-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-list-medical-coverage-id-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-list-medical-coverage-id-clinic/http-response.adoc[]
+
+=== 14.3.4 Search claims belong to all clinics
+
+Following can be used to query all claims which are recorded by the system for all clinics.
+Most probably a user from HQ may need to use these endpoints.
+
+==== 14.3.4.1 Search claims by medical coverage type
+
+This will check for all claims which have been created in given time period for any clinic in the system.
+
+//URL : *_/claim/list-by-type/{medicalCoverageType}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/claim-list-by-medical-coverage-type/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/claim-list-by-medical-coverage-type/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-list-by-medical-coverage-type/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-list-by-medical-coverage-type/http-response.adoc[]
+
+==== 14.3.4.2 Search claims by medical coverage Id
+
+This will check for all claims which have the mentioned medical coverage for any clinic in the system.
+
+//URL : *_/claim/list/{medicalCoverageId}/{status}/{startDate}/{endDate}_*
+
+Request Parameters
+include::{snippets}/claim-list-medical-coverage-id/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/claim-list-medical-coverage-id/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-list-medical-coverage-id/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-list-medical-coverage-id/http-response.adoc[]
+
+
+=== 14.3.5 Check Status of claims
+
+URL : *_/claim/update-status/{claimId}/{updateStatusTo}_*
+
+Request Parameters
+include::{snippets}/claim-update-status/request-fields.adoc[]
+
+Request Example
+include::{snippets}/claim-update-status/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-update-status/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-update-status/http-response.adoc[]
+
+=== 14.3.6 Reject an existing Claim
+
+//URL : *_/claim/reject/{claimId}/{rejectedAs}_*
+
+Request Parameters
+include::{snippets}/claim-reject/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/claim-reject/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/claim-reject/response-fields.adoc[]
+
+Response Example
+include::{snippets}/claim-reject/http-response.adoc[]
+
+== 15. Medical Coverage
+
+=== 15.1 Create
+
+Create a new Medical Coverage into the system
+
+URL : *_/coverage/add/_*
+
+Request Parameters
+include::{snippets}/add-new-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-new-coverage/http-request.adoc[]
+
+anchor:medical-response-parameters[]Response Parameters
+include::{snippets}/add-new-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-new-coverage/http-response.adoc[]
+
+=== 15.2 Update
+
+Update a medical coverage, part of update following fields will not be changed *CoverageType, Plans, and Code*
+and plans cannot be sent part of the update call, to update plans please use <<update-plan, Update Plan>> API
+
+
+URL
+
+include::{snippets}/update-medical-coverage/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-medical-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-medical-coverage/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-medical-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-medical-coverage/http-response.adoc[]
+
+
+=== 15.3 Search
+
+Search for a medical coverage by Name or by ID, response also includes the plans that belong
+to the given coverage
+
+Name will use like search
+
+URL
+
+include::{snippets}/search-medical-coverage/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/search-medical-coverage/http-response.adoc[]
+
+
+=== 15.4 List
+
+Search for a medical coverage, response also includes the plans that belong
+to the given coverage
+
+URL
+
+include::{snippets}/list-medical-coverages/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/list-medical-coverages/http-response.adoc[]
+
+=== 15.5 List All
+
+Lists all the medical coverages that's available within the system
+
+URL
+
+include::{snippets}/list-all-medical-coverage/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/list-all-medical-coverage/http-response.adoc[]
+
+
+=== 15.6 List All By Clinic
+
+Lists all available medical coverage for the clinic
+
+URL
+
+include::{snippets}/list-all-medical-coverage-by-clinic/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/list-all-medical-coverage-by-clinic/http-response.adoc[]
+
+
+=== 15.7 Remove
+
+Remove a Medical Coverage from the system, if a medical coverage is used by
+any patient system will not allow the deletion.
+
+URL
+
+include::{snippets}/remove-medical-coverage/path-parameters.adoc[]
+
+Response Example
+include::{snippets}/remove-medical-coverage/http-response.adoc[]
+
+
+=== 15.8 Add Plan
+
+Add a Plan to the Medical Coverage
+
+URL
+
+include::{snippets}/add-plan-medical-coverage/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-plan-medical-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-plan-medical-coverage/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-plan-medical-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-plan-medical-coverage/http-response.adoc[]
+
+
+=== 15.9 Update Plan
+
+anchor:update-plan[]Update a Plan of a Medical Coverage, Medical Scheme cannot be updated with this call
+
+URL
+
+include::{snippets}/update-plan-medical-coverage/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-plan-medical-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-plan-medical-coverage/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-plan-medical-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-plan-medical-coverage/http-response.adoc[]
+
+
+=== 15.10 Remove Plan
+
+Remove a Plan from the Medical Coverage, Removal can only be done if not used by
+any patient
+
+URL
+
+include::{snippets}/remove-plan-coverage/path-parameters.adoc[]
+
+Response Example
+include::{snippets}/remove-plan-coverage/http-response.adoc[]
+
+
+=== 15.11 Search by planId
+
+Search coverage plan by plan id
+
+URL
+
+include::{snippets}/medical-coverage-by-plan-id/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/medical-coverage-by-plan-id/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/medical-coverage-by-plan-id/response-fields.adoc[]
+
+Response Example
+include::{snippets}/medical-coverage-by-plan-id/http-response.adoc[]

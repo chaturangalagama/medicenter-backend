@@ -1,0 +1,43 @@
+{
+  "coverage-plan-01": {
+    "category": "ACT",
+    "patientType": "A",
+    "billType": "",
+    "tier": "",
+    "acute": true
+  },
+  "coverage-plan-02": {
+    "category": "CHR",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "1"
+  },
+  "coverage-plan-03": {
+    "category": "CHR",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "2"
+  },
+  "coverage-plan-04": {
+    "category": "CHR",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "2",
+    "acute": true
+  },
+  "coverage-plan-05": {
+    "category": "CHR",
+    "patientType": "A",
+    "tier": "1"
+  },
+  "coverage-plan-06": {
+    "category": "CHR",
+    "patientType": "A",
+    "tier": "2"
+  },
+  "coverage-plan-07": {
+    "category": "CHR",
+    "patientType": "A",
+    "tier": ""
+  }
+}

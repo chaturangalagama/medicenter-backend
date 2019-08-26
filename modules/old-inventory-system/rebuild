@@ -1,0 +1,5 @@
+mvn clean install
+mkdir target/generated-resources/appassembler/jsw/inventory-system/logs
+chmod -R +x target/generated-resources/appassembler/jsw/inventory-system/bin
+kill $(lsof -t -i :8098)
+./target/generated-resources/appassembler/jsw/inventory-system/bin/inventory-system start

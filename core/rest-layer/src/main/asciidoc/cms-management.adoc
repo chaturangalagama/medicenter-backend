@@ -1,0 +1,1487 @@
+= CMS Management REST Service API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+== Request Header
+All request should have the following header information
+include::{snippets}/add-new-coverage/request-headers.adoc[]
+
+
+== Medical Coverage
+
+=== Create
+
+Create a new Medical Coverage into the system
+
+URL : *_/coverage/add/_*
+
+Request Parameters
+include::{snippets}/add-new-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-new-coverage/http-request.adoc[]
+
+anchor:medical-response-parameters[]Response Parameters
+include::{snippets}/add-new-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-new-coverage/http-response.adoc[]
+
+=== Update
+
+Update a medical coverage, part of update following fields will not be changed *CoverageType, Plans, and Code*
+and plans cannot be sent part of the update call, to update plans please use <<update-plan, Update Plan>> API
+
+
+URL
+
+include::{snippets}/update-medical-coverage/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-medical-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-medical-coverage/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-medical-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-medical-coverage/http-response.adoc[]
+
+
+=== Search
+
+Search for a medical coverage by Name or by ID, response also includes the plans that belong
+to the given coverage
+
+Name will use like search
+
+URL
+
+include::{snippets}/search-medical-coverage/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/search-medical-coverage/http-response.adoc[]
+
+
+=== List
+
+Search for a medical coverage, response also includes the plans that belong
+to the given coverage
+
+URL
+
+include::{snippets}/list-medical-coverages/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/list-medical-coverages/http-response.adoc[]
+
+=== List All
+
+Lists all the medical coverages that's available within the system
+
+URL
+
+include::{snippets}/list-all-medical-coverage/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/list-all-medical-coverage/http-response.adoc[]
+
+
+=== List All By Clinic
+
+Lists all available medical coverage for the clinic
+
+URL
+
+include::{snippets}/list-all-medical-coverage-by-clinic/path-parameters.adoc[]
+
+<<medical-response-parameters, Response Parameters>>
+
+
+Response Example
+include::{snippets}/list-all-medical-coverage-by-clinic/http-response.adoc[]
+
+
+=== Remove
+
+Remove a Medical Coverage from the system, if a medical coverage is used by
+any patient system will not allow the deletion.
+
+URL
+
+include::{snippets}/remove-medical-coverage/path-parameters.adoc[]
+
+Response Example
+include::{snippets}/remove-medical-coverage/http-response.adoc[]
+
+
+=== Add Plan
+
+Add a Plan to the Medical Coverage
+
+URL
+
+include::{snippets}/add-plan-medical-coverage/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-plan-medical-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-plan-medical-coverage/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-plan-medical-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-plan-medical-coverage/http-response.adoc[]
+
+
+=== Update Plan
+
+anchor:update-plan[]Update a Plan of a Medical Coverage, Medical Scheme cannot be updated with this call
+
+URL
+
+include::{snippets}/update-plan-medical-coverage/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-plan-medical-coverage/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-plan-medical-coverage/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-plan-medical-coverage/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-plan-medical-coverage/http-response.adoc[]
+
+
+=== Remove Plan
+
+Remove a Plan from the Medical Coverage, Removal can only be done if not used by
+any patient
+
+URL
+
+include::{snippets}/remove-plan-coverage/path-parameters.adoc[]
+
+Response Example
+include::{snippets}/remove-plan-coverage/http-response.adoc[]
+
+
+=== List Plan Association Details
+
+Will return all details related to the given plan including all the items attached to the plan
+
+*NOTE :* This is a very heavy utilisation API on the backend, use it wisely
+
+
+URL
+
+include::{snippets}/list-plan-association-details/path-parameters.adoc[]
+
+Response Example
+include::{snippets}/list-plan-association-details/http-response.adoc[]
+
+
+== Drugs
+
+=== Add
+
+Add a new drug to the system
+
+URL : *_/drug/add_*
+
+Request Parameters
+include::{snippets}/add-drug/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-drug/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-drug/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-drug/http-response.adoc[]
+
+
+=== Remove
+
+Remove Drug from the system, This can be only done if the drug is not associated
+with Medical Coverage Plan
+
+URL
+
+include::{snippets}/delete-drug/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/delete-drug/response-fields.adoc[]
+
+Response Example
+include::{snippets}/delete-drug/http-response.adoc[]
+
+
+=== Modify Drug
+
+Modify a Drug within the system
+
+URL
+
+include::{snippets}/modify-drug/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-drug/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-drug/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-drug/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-drug/http-response.adoc[]
+
+=== Search Drug by Specific field
+
+Search for a drug
+
+URL
+
+include::{snippets}/search-drug/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/search-drug/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-drug/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-drug/http-response.adoc[]
+
+
+=== Search Drug Regex
+
+Search for drugs by regex
+
+URL
+
+include::{snippets}/search-drug-regex/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/search-drug-regex/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-drug-regex/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-drug-regex/http-response.adoc[]
+
+
+=== List All Drugs (Paging)
+
+Lists all available Drugs with pagination
+
+URL
+
+include::{snippets}/list-drug/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/list-drug/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-drug/http-response.adoc[]
+
+
+=== List All Drugs
+
+Lists all available Drugs
+
+URL : *_/drug/list/all_*
+
+Response Parameters
+include::{snippets}/list-all-drug/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-all-drug/http-response.adoc[]
+
+
+
+=== Add Drug Association
+
+Associate a drug to a Medical Coverage Plan. Association could be to change
+the oriTotalPrice and sellingPrice code of the drug for a given plan or to exclude the drug from
+a medical coverage
+
+URL : *_/drug/association/add_*
+
+
+Request Parameters
+include::{snippets}/add-drug-association/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-drug-association/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-drug-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-drug-association/http-response.adoc[]
+
+
+
+=== Remove Drug Association
+
+Remove Drug association from a Medical Coverage Plan
+
+URL
+
+include::{snippets}/remove-drug-association/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/remove-drug-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-drug-association/http-response.adoc[]
+
+
+== Medical Test
+
+=== Add
+
+Add a new medical test to the system
+
+URL : *_/medical-test/add_*
+
+Request Parameters
+include::{snippets}/add-medical-test/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-medical-test/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-medical-test/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-medical-test/http-response.adoc[]
+
+
+=== Modify Medical Test
+
+Modify a Medical Test within the system
+
+URL
+
+include::{snippets}/modify-medical-test/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-medical-test/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-medical-test/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-medical-test/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-medical-test/http-response.adoc[]
+
+
+=== List All Medical Test
+
+Lists all available Medical Test
+
+URL : *_/medical-test/list/all_*
+
+Response Parameters
+include::{snippets}/medical-test-list/response-fields.adoc[]
+
+Response Example
+include::{snippets}/medical-test-list/http-response.adoc[]
+
+
+=== List By State
+
+Lists all Medical Test by it's state
+
+URL
+
+include::{snippets}/medical-test-list-state/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/medical-test-list-state/response-fields.adoc[]
+
+Response Example
+include::{snippets}/medical-test-list-state/http-response.adoc[]
+
+
+
+=== Add Medical Test Association
+
+Associate a Medical Test to a Medical Coverage Plan. Association could be to change
+the oriTotalPrice and sellingPrice code of the Medical Test for a given plan or to exclude the Medical Test from
+a medical coverage
+
+URL : *_/medical-test/association/add_*
+
+
+Request Parameters
+include::{snippets}/add-medical-test-association/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-medical-test-association/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-medical-test-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-medical-test-association/http-response.adoc[]
+
+=== Update Medical Test Association
+
+Update Medical Test, the API will drop the current association and create a new association
+based on the new data set
+
+URL : *_/medical-test/association/update_*
+
+
+Request Parameters
+include::{snippets}/update-medical-test-association/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-medical-test-association/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-medical-test-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-medical-test-association/http-response.adoc[]
+
+
+
+=== Remove Medical Test Association
+
+Remove Medical association from a Medical Coverage Plan
+
+URL
+
+include::{snippets}/remove-medical-test-association/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/remove-medical-test-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-medical-test-association/http-response.adoc[]
+
+
+
+== Vaccination
+
+=== Add Vaacination
+Add new vaccination, , Age is calculated in months.
+If Age is set to '0' it is expected it would be taken at birth,
+'-1' denotes no age validation
+
+URL
+
+Request Parameters
+include::{snippets}/add-vaccination/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-vaccination/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-vaccination/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-vaccination/http-response.adoc[]
+
+
+=== List All Vaccinations
+
+Lists all available Vaccinations, Age is calculated in months.
+If Age is set to '0' it is expected it would be taken at birth,
+'-1' denotes no age validation
+
+URL
+
+include::{snippets}/list-vaccinations/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/list-vaccinations/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-vaccinations/http-response.adoc[]
+
+
+
+=== Add Patient Vaccine Association
+
+Associate a vaccine to a patient.
+
+
+URL
+
+include::{snippets}/add-vaccination-association/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-vaccination-association/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-vaccination-association/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-vaccination-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-vaccination-association/http-response.adoc[]
+
+
+
+=== Remove Patient Vaccine Association
+
+Remove vaccine association from a Patient
+
+URL
+
+include::{snippets}/remove-vaccination-association/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/remove-vaccination-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-vaccination-association/http-response.adoc[]
+
+
+=== Add Medical Coverage Vaccine Association
+
+Associate a vaccine to a Medical Coverage.
+
+
+URL : *_/vaccination/coverage/association/add_*
+
+Request Parameters
+include::{snippets}/add-vaccination-medical-association/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-vaccination-medical-association/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-vaccination-medical-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-vaccination-medical-association/http-response.adoc[]
+
+
+=== Update Medical Coverage Vaccine Association
+
+Update associate a vaccine to a Medical Coverage.
+
+
+URL : *_/vaccination/coverage/association/update_*
+
+Request Parameters
+include::{snippets}/update-vaccination-medical-association/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-vaccination-medical-association/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-vaccination-medical-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-vaccination-medical-association/http-response.adoc[]
+
+
+
+=== Remove Medical Coverage Vaccine Association
+
+Remove vaccine association from a Medical Coverage
+
+URL
+
+include::{snippets}/remove-vaccination-medical-association/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/remove-vaccination-medical-association/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-vaccination-medical-association/http-response.adoc[]
+
+
+
+== Clinic
+
+=== Add
+
+Add a new Clinic to the system
+
+URL : *_/clinic/add_*
+
+Request Parameters
+include::{snippets}/add-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-clinic/http-response.adoc[]
+
+
+=== Remove
+
+Remove a Clinic from the system
+
+
+URL
+
+include::{snippets}/remove-clinic/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/remove-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-clinic/http-response.adoc[]
+
+
+=== Modify
+
+Modify a clinic
+
+URL
+
+include::{snippets}/modify-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-clinic/http-response.adoc[]
+
+
+=== List All Clinics
+
+Lists all clinics
+
+URL : *_/clinic/list/all_*
+
+Response Parameters
+include::{snippets}/list-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-clinic/http-response.adoc[]
+
+
+
+== Doctor
+
+=== Add
+
+Add a new Doctor to the system
+
+URL : *_/doctor/add_*
+
+Request Parameters
+include::{snippets}/add-doctor/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-doctor/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-doctor/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-doctor/http-response.adoc[]
+
+
+=== Modify
+
+Modify doctor information
+
+URL
+
+include::{snippets}/modify-doctor/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-doctor/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-doctor/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-doctor/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-doctor/http-response.adoc[]
+
+
+=== List All Doctors
+
+Lists all available Doctors
+
+URL : *_/doctor/list/all_*
+
+Response Parameters
+include::{snippets}/list-doctors/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-doctors/http-response.adoc[]
+
+
+=== List All Doctors By Clinic
+
+Lists all available Doctors by clinic
+
+URL
+
+include::{snippets}/list-doctors-by-clinic/path-parameters.adoc[]
+
+
+Response Parameters
+include::{snippets}/list-doctors-by-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-doctors-by-clinic/http-response.adoc[]
+
+
+== Medical Service
+
+=== List All
+
+Lists all Medical services available in the system
+
+URL : *_/medical-service/list/all_*
+
+Response Parameters
+include::{snippets}/medical-services/response-fields.adoc[]
+
+Response Example
+include::{snippets}/medical-services/http-response.adoc[]
+
+
+
+== Visit Purpose
+
+=== Add
+
+Add a new Visit Purpose to the system
+
+URL : *_/visit-purpose/add_*
+
+Request Parameters
+include::{snippets}/add-visit-purpose/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-visit-purpose/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-visit-purpose/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-visit-purpose/http-response.adoc[]
+
+
+=== Remove
+
+Remove a Visit Purpose from the system
+
+
+URL
+
+include::{snippets}/remove-visit-purpose/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/remove-visit-purpose/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-visit-purpose/http-response.adoc[]
+
+
+=== Modify
+
+Modify a Visit Purpose
+
+URL
+
+include::{snippets}/modify-visit-purpose/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-visit-purpose/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-visit-purpose/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-visit-purpose/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-visit-purpose/http-response.adoc[]
+
+
+=== List All Purposes
+
+Lists all Visit Purpose
+
+URL : *_/visit-purpose/list/all_*
+
+Response Parameters
+include::{snippets}/list-visit-purpose/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-visit-purpose/http-response.adoc[]
+
+== Labels
+
+=== Add
+
+Add a new Label, Names for the labels can be taken from System Configuration
+
+URL : *_/label/add_*
+
+Request Parameters
+include::{snippets}/add-label/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-label/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-label/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-label/http-response.adoc[]
+
+
+=== Modify
+
+Modify a Label
+
+URL
+
+include::{snippets}/modify-label/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-label/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-label/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-label/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-label/http-response.adoc[]
+
+
+=== List All Labels
+
+Lists all Labels
+
+URL : *_/label/list/all_*
+
+Response Parameters
+include::{snippets}/list-label/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-label/http-response.adoc[]
+
+
+=== Search By Name
+
+Searches for label by name
+
+URL
+
+include::{snippets}/search-label/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/search-label/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-label/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-label/http-response.adoc[]
+
+
+== System Configurations
+
+
+=== Relationships
+
+Lists Relationships
+
+URL : *_/system-config/list/relationships_*
+
+Response Parameters
+include::{snippets}/list-relationships/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-relationships/http-response.adoc[]
+
+=== Marital Status
+
+Lists Marital Status
+
+URL : *_/system-config/list/marital-status_*
+
+Response Parameters
+include::{snippets}/list-marital-status/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-marital-status/http-response.adoc[]
+
+
+=== Clinic Groups
+
+Lists Clinic Groups
+
+URL : *_ /system-config/list/clinic-groups _*
+
+Response Parameters
+include::{snippets}/list-clinic-groups/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-clinic-groups/http-response.adoc[]
+
+=== Default Label List
+
+List all Default label names
+
+URL : *_ /system-config/list/default-labels _*
+
+Response Parameters
+include::{snippets}/list-default-labels/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-default-labels/http-response.adoc[]
+
+
+=== Laboratories List
+
+List all laboratories
+
+URL : *_ /system-config/list/medical-test-laboratories _*
+
+Response Parameters
+include::{snippets}/list-medical-test-laboratories/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-medical-test-laboratories/http-response.adoc[]
+
+
+=== Identification Validation
+
+Validates if the NRIC or the FIN is correct.
+
+URL
+
+include::{snippets}/identification-validation/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/identification-validation/response-fields.adoc[]
+
+Response Example
+include::{snippets}/identification-validation/http-response.adoc[]
+
+
+=== Address Finder
+
+Find the address based on the postcode given
+
+URL
+
+include::{snippets}/find-postcode/path-parameters.adoc[]
+
+Response Parameters
+include::{snippets}/find-postcode/response-fields.adoc[]
+
+Response Example
+include::{snippets}/find-postcode/http-response.adoc[]
+
+
+
+== Diagnosis
+
+
+=== Search
+
+Search for the diagnosis based on icd-10 code, term and SNOMED code, term
+
+URL
+include::{snippets}/search-diagnosis/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/search-diagnosis/request-fields.adoc[]
+
+Request Example
+include::{snippets}/search-diagnosis/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-diagnosis/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-diagnosis/http-response.adoc[]
+
+=== Search By ID
+
+Search for the diagnosis based on system diagnosis ID
+
+
+URL
+include::{snippets}/search-diagnosis-by-id/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/search-diagnosis-by-id/request-fields.adoc[]
+
+Request Example
+include::{snippets}/search-diagnosis-by-id/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-diagnosis/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-diagnosis/http-response.adoc[]
+
+== Supplier
+
+=== List All
+
+List all suppliers within the system
+
+URL : *_ /supplier/list/all _*
+
+Request Parameters
+include::{snippets}/list-supplier/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-supplier/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-supplier/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-supplier/http-response.adoc[]
+
+== Decorator API
+
+=== Doctor by Specialist
+
+
+URL : *_ /system-config/list/speciality _*
+
+Request Example
+include::{snippets}/list-doctor-by-speciality/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-doctor-by-speciality/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-doctor-by-speciality/http-response.adoc[]
+
+
+
+== Temporary Store API
+
+=== Store
+
+
+URL
+
+include::{snippets}/temp-store-put/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/temp-store-put/http-request.adoc[]
+
+Response Example
+include::{snippets}/temp-store-put/http-response.adoc[]
+
+
+=== Retrieve
+
+URL
+
+include::{snippets}/temp-store-get/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/temp-store-get/http-request.adoc[]
+
+Response Example
+include::{snippets}/temp-store-get/http-response.adoc[]
+
+
+== Consultation Template
+
+
+=== List Templates
+
+URL
+
+include::{snippets}/list-consult-template/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/list-consult-template/http-request.adoc[]
+
+Response Example
+include::{snippets}/list-consult-template/http-response.adoc[]
+
+
+
+=== Load Template
+Load predefined templates, templates can use place holders as {{ KEY }}, following are the available key
+
+doctor_name, doctor_education, patient_name, patient_id, patient_age, patient_gender, patient_email,
+patient_number, patient_contact, patient_address, today_date
+
+URL
+
+include::{snippets}/load-consult-template/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/load-consult-template/http-request.adoc[]
+
+Response Example
+include::{snippets}/load-consult-template/http-response.adoc[]
+
+
+
+
+
+== Patient Notes
+
+User can append notes for a given patient
+
+=== List All
+
+URL
+
+include::{snippets}/list-patient-notes/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/list-patient-notes/http-request.adoc[]
+
+Response Example
+include::{snippets}/list-patient-notes/http-response.adoc[]
+
+
+
+=== Add a New Note
+
+URL
+
+include::{snippets}/patient-note-add/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/patient-note-add/request-fields.adoc[]
+
+Request Example
+include::{snippets}/patient-note-add/http-request.adoc[]
+
+Response Example
+include::{snippets}/patient-note-add/http-response.adoc[]
+
+
+
+=== Modify a Note
+
+URL
+
+include::{snippets}/change-patient-note-status/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/change-patient-note-status/http-request.adoc[]
+
+Response Example
+include::{snippets}/change-patient-note-status/http-response.adoc[]
+
+== Appointment
+
+Doctor can append appointment
+
+=== Create
+
+URL:
+
+include::{snippets}/create-appointment/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/create-appointment/request-fields.adoc[]
+
+Request Example
+include::{snippets}/create-appointment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/create-appointment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/create-appointment/http-response.adoc[]
+
+=== Update
+
+URL
+
+include::{snippets}/modify-appointment/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/modify-appointment/request-fields.adoc[]
+
+Request Example
+include::{snippets}/modify-appointment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/modify-appointment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/modify-appointment/http-response.adoc[]
+
+=== Remove
+
+URL
+
+include::{snippets}/delete-appointment/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/delete-appointment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/delete-appointment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/delete-appointment/http-response.adoc[]
+
+=== List doctor appointment
+
+URL:
+
+include::{snippets}/list-doctor-appointment/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/list-doctor-appointment/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-doctor-appointment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-doctor-appointment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-doctor-appointment/http-response.adoc[]
+
+=== List clinic appointment
+
+URL:
+
+include::{snippets}/list-clinic-appointment/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/list-clinic-appointment/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-clinic-appointment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-clinic-appointment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-clinic-appointment/http-response.adoc[]
+
+=== Search appointment
+
+URL
+
+include::{snippets}/search-appointment/path-parameters.adoc[]
+
+Request Example
+include::{snippets}/search-appointment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-appointment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-appointment/http-response.adoc[]
+
+=== List conflict appointment
+
+URL:
+
+include::{snippets}/list-conflict-appointment/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/list-conflict-appointment/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-conflict-appointment/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-conflict-appointment/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-conflict-appointment/http-response.adoc[]
+
+=== Find clinic calendar
+
+URL:
+
+include::{snippets}/find-clinic-calendar/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/find-clinic-calendar/request-fields.adoc[]
+
+Request Example
+include::{snippets}/find-clinic-calendar/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/find-clinic-calendar/response-fields.adoc[]
+
+Response Example
+include::{snippets}/find-clinic-calendar/http-response.adoc[]
+
+=== Find doctor calendar
+
+URL:
+
+include::{snippets}/find-doctor-calendar/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/find-doctor-calendar/request-fields.adoc[]
+
+Request Example
+include::{snippets}/find-doctor-calendar/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/find-doctor-calendar/response-fields.adoc[]
+
+Response Example
+include::{snippets}/find-doctor-calendar/http-response.adoc[]
+
+=== Update clinic working hour
+
+URL:
+
+include::{snippets}/update-work-hour/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-work-hour/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-work-hour/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-work-hour/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-work-hour/http-response.adoc[]
+
+=== Update clinic holiday
+
+URL:
+
+include::{snippets}/update-clinic-holiday/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-clinic-holiday/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-clinic-holiday/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-clinic-holiday/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-clinic-holiday/http-response.adoc[]
+
+=== Update doctor leave
+
+URL:
+
+include::{snippets}/update-doctor-leave/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-doctor-leave/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-doctor-leave/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-doctor-leave/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-doctor-leave/http-response.adoc[]
+
+=== Update doctor working day
+
+URL:
+
+include::{snippets}/update-work-day/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-work-day/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-work-day/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-work-day/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-work-day/http-response.adoc[]
+
+=== Add doctor block time
+
+URL:
+
+include::{snippets}/add-block-time/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-block-time/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-block-time/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-block-time/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-block-time/http-response.adoc[]
+
+=== Remove doctor block time
+
+URL:
+
+include::{snippets}/remove-block-time/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/remove-block-time/request-fields.adoc[]
+
+Request Example
+include::{snippets}/remove-block-time/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/remove-block-time/response-fields.adoc[]
+
+Response Example
+include::{snippets}/remove-block-time/http-response.adoc[]
+

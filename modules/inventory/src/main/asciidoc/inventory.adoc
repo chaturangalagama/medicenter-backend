@@ -1,0 +1,581 @@
+= CMS Inventory REST Service API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+== Request Header
+All request should have the following header information
+include::{snippets}/list-order-request/request-headers.adoc[]
+
+== Order Request
+
+=== List Order Request
+
+URL
+
+include::{snippets}/list-order-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/list-order-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-order-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-order-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-order-request/http-response.adoc[]
+
+== Purchase
+
+=== Create purchase request
+
+URL
+
+include::{snippets}/create-purchase-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/create-purchase-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/create-purchase-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/create-purchase-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/create-purchase-request/http-response.adoc[]
+
+=== Update purchase request
+
+URL
+
+include::{snippets}/update-purchase-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-purchase-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-purchase-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-purchase-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-purchase-request/http-response.adoc[]
+
+=== Approve purchase request
+
+URL
+
+include::{snippets}/approve-purchase-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/approve-purchase-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/approve-purchase-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/approve-purchase-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/approve-purchase-request/http-response.adoc[]
+
+=== Reject purchase request
+
+URL
+
+include::{snippets}/reject-purchase-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/reject-purchase-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/reject-purchase-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/reject-purchase-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/reject-purchase-request/http-response.adoc[]
+
+=== Add purchase good received note
+
+URL
+
+include::{snippets}/add-purchase-grn/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-purchase-grn/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-purchase-grn/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-purchase-grn/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-purchase-grn/http-response.adoc[]
+
+=== Add purchase good received void note
+
+URL
+
+include::{snippets}/add-purchase-grvn/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-purchase-grvn/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-purchase-grvn/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-purchase-grvn/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-purchase-grvn/http-response.adoc[]
+
+== Transfer
+
+=== Create transfer request
+
+URL
+
+include::{snippets}/create-transfer-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/create-transfer-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/create-transfer-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/create-transfer-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/create-transfer-request/http-response.adoc[]
+
+=== Update transfer request
+
+URL
+
+include::{snippets}/update-transfer-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/update-transfer-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/update-transfer-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/update-transfer-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/update-transfer-request/http-response.adoc[]
+
+=== Approve transfer request
+
+URL
+
+include::{snippets}/approve-transfer-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/approve-transfer-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/approve-transfer-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/approve-transfer-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/approve-transfer-request/http-response.adoc[]
+
+=== Reject transfer request
+
+URL
+
+include::{snippets}/reject-transfer-request/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/reject-transfer-request/request-fields.adoc[]
+
+Request Example
+include::{snippets}/reject-transfer-request/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/reject-transfer-request/response-fields.adoc[]
+
+Response Example
+include::{snippets}/reject-transfer-request/http-response.adoc[]
+
+=== Add transfer good received note
+
+URL
+
+include::{snippets}/add-transfer-grn/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-transfer-grn/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-transfer-grn/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-transfer-grn/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-transfer-grn/http-response.adoc[]
+
+=== Add transfer good received void note
+
+URL
+
+include::{snippets}/add-transfer-grvn/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-transfer-grvn/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-transfer-grvn/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-transfer-grvn/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-transfer-grvn/http-response.adoc[]
+
+=== Add transfer delivery note
+
+URL
+
+include::{snippets}/add-transfer-dn/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-transfer-dn/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-transfer-dn/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-transfer-dn/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-transfer-dn/http-response.adoc[]
+
+=== Add transfer delivery void note
+
+URL
+
+include::{snippets}/add-transfer-dvn/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/add-transfer-dvn/request-fields.adoc[]
+
+Request Example
+include::{snippets}/add-transfer-dvn/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/add-transfer-dvn/response-fields.adoc[]
+
+Response Example
+include::{snippets}/add-transfer-dvn/http-response.adoc[]
+
+== Drug items
+
+=== Create drug item
+
+URL
+
+include::{snippets}/create-drug-item/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/create-drug-item/request-fields.adoc[]
+
+Request Example
+include::{snippets}/create-drug-item/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/create-drug-item/response-fields.adoc[]
+
+Response Example
+include::{snippets}/create-drug-item/http-response.adoc[]
+
+=== List all drug item
+
+URL
+
+include::{snippets}/list-drug-item/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/list-drug-item/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-drug-item/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-drug-item/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-drug-item/http-response.adoc[]
+
+=== Search drug item
+
+URL
+
+include::{snippets}/search-drug-item/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/search-drug-item/request-fields.adoc[]
+
+Request Example
+include::{snippets}/search-drug-item/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-drug-item/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-drug-item/http-response.adoc[]
+
+=== Find drug item quantity
+
+URL
+
+include::{snippets}/find-drug-item-quantity/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/find-drug-item-quantity/request-fields.adoc[]
+
+Request Example
+include::{snippets}/find-drug-item-quantity/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/find-drug-item-quantity/response-fields.adoc[]
+
+Response Example
+include::{snippets}/find-drug-item-quantity/http-response.adoc[]
+
+== Stock take
+
+=== search stock inventory
+
+URL
+
+include::{snippets}/search-inventory/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/search-inventory/request-fields.adoc[]
+
+Request Example
+include::{snippets}/search-inventory/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-inventory/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-inventory/http-response.adoc[]
+
+=== search stock inventory by item code
+
+URL
+
+include::{snippets}/search-inventory-item-code/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/search-inventory-item-code/request-fields.adoc[]
+
+Request Example
+include::{snippets}/search-inventory-item-code/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/search-inventory-item-code/response-fields.adoc[]
+
+Response Example
+include::{snippets}/search-inventory-item-code/http-response.adoc[]
+
+=== List stock take for approval
+
+URL
+
+include::{snippets}/list-stock-take/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/list-stock-take/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-stock-take/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-stock-take/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-stock-take/http-response.adoc[]
+
+=== List stock take by clinic
+
+URL
+
+include::{snippets}/list-stock-take-clinic/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/list-stock-take-clinic/request-fields.adoc[]
+
+Request Example
+include::{snippets}/list-stock-take-clinic/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/list-stock-take-clinic/response-fields.adoc[]
+
+Response Example
+include::{snippets}/list-stock-take-clinic/http-response.adoc[]
+
+=== Adjust stock take
+
+URL
+
+include::{snippets}/adjustment-stock-take/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/adjustment-stock-take/request-fields.adoc[]
+
+Request Example
+include::{snippets}/adjustment-stock-take/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/adjustment-stock-take/response-fields.adoc[]
+
+Response Example
+include::{snippets}/adjustment-stock-take/http-response.adoc[]
+
+=== Start count stock take
+
+URL
+
+include::{snippets}/start-stock-take/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/start-stock-take/request-fields.adoc[]
+
+Request Example
+include::{snippets}/start-stock-take/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/start-stock-take/response-fields.adoc[]
+
+Response Example
+include::{snippets}/start-stock-take/http-response.adoc[]
+
+=== Stop count stock take
+
+URL
+
+include::{snippets}/stop-stock-take/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/stop-stock-take/request-fields.adoc[]
+
+Request Example
+include::{snippets}/stop-stock-take/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/stop-stock-take/response-fields.adoc[]
+
+Response Example
+include::{snippets}/stop-stock-take/http-response.adoc[]
+
+=== Submit stock take
+
+URL
+
+include::{snippets}/submit-stock-take/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/submit-stock-take/request-fields.adoc[]
+
+Request Example
+include::{snippets}/submit-stock-take/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/submit-stock-take/response-fields.adoc[]
+
+Response Example
+include::{snippets}/submit-stock-take/http-response.adoc[]
+
+=== Approve stock take
+
+URL
+
+include::{snippets}/approve-stock-take/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/approve-stock-take/request-fields.adoc[]
+
+Request Example
+include::{snippets}/approve-stock-take/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/approve-stock-take/response-fields.adoc[]
+
+Response Example
+include::{snippets}/approve-stock-take/http-response.adoc[]
+
+=== Reject stock take
+
+URL
+
+include::{snippets}/reject-stock-take/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/reject-stock-take/request-fields.adoc[]
+
+Request Example
+include::{snippets}/reject-stock-take/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/reject-stock-take/response-fields.adoc[]
+
+Response Example
+include::{snippets}/reject-stock-take/http-response.adoc[]
+
+== UOM Matrix
+
+=== find ratio
+
+URL
+
+include::{snippets}/find-uom-ratio/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/find-uom-ratio/request-fields.adoc[]
+
+Request Example
+include::{snippets}/find-uom-ratio/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/find-uom-ratio/response-fields.adoc[]
+
+Response Example
+include::{snippets}/find-uom-ratio/http-response.adoc[]
+
+=== create UOM matrix
+
+URL
+
+include::{snippets}/create-uom-matrix/path-parameters.adoc[]
+
+Request Parameters
+include::{snippets}/create-uom-matrix/request-fields.adoc[]
+
+Request Example
+include::{snippets}/create-uom-matrix/http-request.adoc[]
+
+Response Parameters
+include::{snippets}/create-uom-matrix/response-fields.adoc[]
+
+Response Example
+include::{snippets}/create-uom-matrix/http-response.adoc[]

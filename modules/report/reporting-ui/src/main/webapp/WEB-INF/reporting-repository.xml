@@ -1,0 +1,27 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">-->
+        <!--<property name="driverClass" value="${jdbc.driver}"/>-->
+        <!--<property name="jdbcUrl" value="${jdbc.url}"/>-->
+        <!--<property name="user" value="${jdbc.username}"/>-->
+        <!--<property name="password" value="${jdbc.password}"/>-->
+        <!--<property name="description" value="integration_ds"/>-->
+        <!--&lt;!&ndash; configuration pool via c3p0&ndash;&gt;-->
+        <!--<property name="acquireIncrement" value="${datasource.acquireIncrement}"/>-->
+        <!--<property name="idleConnectionTestPeriod" value="${datasource.idleConnectionTestPeriod}"/>-->
+        <!--&lt;!&ndash; seconds &ndash;&gt;-->
+        <!--<property name="maxPoolSize" value="${datasource.maxPoolSize}"/>-->
+        <!--<property name="maxStatements" value="${datasource.maxStatements}"/>-->
+        <!--<property name="minPoolSize" value="${datasource.minPoolSize}"/>-->
+        <!--<property name="initialPoolSize" value="${datasource.initialPoolSize}"/>-->
+        <!--<property name="maxIdleTime" value="${datasource.maxIdleTime}"/>-->
+        <!--<property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts}"/>-->
+        <!--<property name="acquireRetryDelay" value="${datasource.acquireRetryDelay}"/>-->
+        <!--<property name="breakAfterAcquireFailure" value="${datasource.breakAfterAcquireFailure}"/>-->
+        <!--<property name="unreturnedConnectionTimeout" value="1000"/>-->
+    <!--</bean>-->
+    
+</beans>

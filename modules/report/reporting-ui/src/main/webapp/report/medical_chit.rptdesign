@@ -1,0 +1,1547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <list-property name="propertyBindings">
+        <structure>
+            <property name="name">queryText</property>
+            <property name="id">1555</property>
+        </structure>
+        <structure>
+            <property name="name">queryTimeOut</property>
+            <property name="id">1555</property>
+        </structure>
+        <structure>
+            <property name="name">rowFetchSize</property>
+            <property name="id">1555</property>
+        </structure>
+    </list-property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">72</property>
+    <parameters>
+        <scalar-parameter name="patientId" id="1112">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">""</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="coverageCode" id="1116">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">""</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="startDate" id="1113">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">"2010-01-01"</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="endDate" id="1114">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">"2019-12-31"</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="clinicId" id="1265">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="12">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">com.mysql.jdbc.Driver</property>
+            <property name="odaURL">jdbc:mysql://localhost:3306/report_new?useUnicode=true</property>
+            <property name="odaUser">root</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">cm9vdA==</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="MedicalChitDataSet" id="13">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">visit_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">visit_id</text-property>
+                    <text-property name="heading">visit_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">start_time</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">start_time</text-property>
+                    <text-property name="heading">start_time</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">visit_number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">visit_number</text-property>
+                    <text-property name="heading">visit_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">patient_number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">patient_number</text-property>
+                    <text-property name="heading">patient_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">patient_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">patient_name</text-property>
+                    <text-property name="heading">patient_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">patient_identity_number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">patient_identity_number</text-property>
+                    <text-property name="heading">patient_identity_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">doctor_name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">doctor_name</text-property>
+                    <text-property name="heading">doctor_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">bill_number</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">bill_number</text-property>
+                    <text-property name="heading">bill_number</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">payment_status</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">payment_status</text-property>
+                    <text-property name="heading">payment_status</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">patient_address</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">patient_address</text-property>
+                    <text-property name="heading">patient_address</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">clinic_group</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">clinic_group</text-property>
+                    <text-property name="heading">clinic_group</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">clinic_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">clinic_code</text-property>
+                    <text-property name="heading">clinic_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_bill_amount</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">total_bill_amount</text-property>
+                    <text-property name="heading">total_bill_amount</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_included_gst_amount</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">total_included_gst_amount</text-property>
+                    <text-property name="heading">total_included_gst_amount</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">medical_class</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">medical_class</text-property>
+                    <text-property name="heading">medical_class</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">coverage_plan</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">coverage_plan</text-property>
+                    <text-property name="heading">coverage_plan</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">charge</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">charge</text-property>
+                    <text-property name="heading">charge</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">quantity</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">quantity</text-property>
+                    <text-property name="heading">quantity</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">chargeable</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">chargeable</text-property>
+                    <text-property name="heading">chargeable</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">diagnosis</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">diagnosis</text-property>
+                    <text-property name="heading">diagnosis</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">date_range</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">date_range</text-property>
+                    <text-property name="heading">date_range</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">startDate</property>
+                    <property name="paramName">startDate</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">-1</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">endDate</property>
+                    <property name="paramName">endDate</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">-1</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">visit_id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">start_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">visit_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">patient_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">patient_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">patient_identity_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">doctor_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">bill_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">payment_status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">patient_address</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">clinic_group</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">clinic_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">total_bill_amount</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">total_included_gst_amount</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">medical_class</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">coverage_plan</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">charge</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">quantity</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">chargeable</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">diagnosis</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">date_range</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[var clinicId = params["clinicId"];
+
+if(clinicId &amp;&amp; clinicId.length > 0){
+    this.queryText = this.queryText.replace("/*clinicId*/", "AND t.clinic_id='" + clinicId + "'");
+}else {
+    this.queryText = this.queryText.replace("/*clinicId*/", " ");
+}
+
+
+
+var coverageCode = params["coverageCode"];
+
+if(coverageCode &amp;&amp; coverageCode.length > 0){
+    this.queryText = this.queryText.replace("/*coverageCode*/", "AND visit_attached_medical_coverages.medical_coverage_code='" + coverageCode + "'");
+}else {
+    this.queryText = this.queryText.replace("/*coverageCode*/", " ");
+}
+
+
+var patientId = params["patientId"];
+
+if(patientId &amp;&amp; patientId.length > 0){
+    this.queryText = this.queryText.replace("/*patientId*/", "AND t.patient_id='" + patientId + "'");
+}else {
+    this.queryText = this.queryText.replace("/*patientId*/", " ");
+}
+]]></method>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">visit_id</property>
+                    <property name="nativeName">visit_id</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">start_time</property>
+                    <property name="nativeName">start_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">visit_number</property>
+                    <property name="nativeName">visit_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">patient_number</property>
+                    <property name="nativeName">patient_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">patient_name</property>
+                    <property name="nativeName">patient_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">patient_identity_number</property>
+                    <property name="nativeName">patient_identity_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">doctor_name</property>
+                    <property name="nativeName">doctor_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">bill_number</property>
+                    <property name="nativeName">bill_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">payment_status</property>
+                    <property name="nativeName">payment_status</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">patient_address</property>
+                    <property name="nativeName">patient_address</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">clinic_group</property>
+                    <property name="nativeName">clinic_group</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">clinic_code</property>
+                    <property name="nativeName">clinic_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">total_bill_amount</property>
+                    <property name="nativeName">total_bill_amount</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">total_included_gst_amount</property>
+                    <property name="nativeName">total_included_gst_amount</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">medical_class</property>
+                    <property name="nativeName">medical_class</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">coverage_plan</property>
+                    <property name="nativeName">coverage_plan</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">charge</property>
+                    <property name="nativeName">charge</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">quantity</property>
+                    <property name="nativeName">quantity</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">chargeable</property>
+                    <property name="nativeName">chargeable</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">diagnosis</property>
+                    <property name="nativeName">diagnosis</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">date_range</property>
+                    <property name="nativeName">date_range</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT tdpm.*,
+  GROUP_CONCAT(CONCAT(purpose, "(", DATE_FORMAT(start_date, '%d-%m-%Y'),  ")[", number_of_days,"]") SEPARATOR "\n") as date_range
+  FROM
+    (SELECT tdp.*,
+    GROUP_CONCAT(CONCAT_WS(" ",diagnosis.icd10code," - ",diagnosis.icd10term," ") SEPARATOR "\n") as diagnosis  
+    FROM
+      (select td.*, 
+--       SUM(chargeable_services.total_amount) as total_charge,
+       GROUP_CONCAT(CONCAT_WS(" ",chargeable_services.item_code," - ",chargeable_services.item_name) SEPARATOR "\n") as charge,
+      GROUP_CONCAT(CONCAT_WS(" ", chargeable_services.quantity, chargeable_services.uom, " ")  SEPARATOR "\n")as quantity,
+      GROUP_CONCAT( concat('$', format(chargeable_services.total_amount + (chargeable_services.price_adjustment*chargeable_services.quantity), 2))  SEPARATOR "\n") AS chargeable
+      FROM
+        (select 
+        t.visit_id,
+        t.start_time,
+        t.visit_number,
+        IFNULL(t.patient_number,"") AS patient_number,
+        t.patient_name,
+        t.patient_identity_number,
+        t.doctor_name,
+        t.bill_number,
+        t.payment_status,
+        t.patient_address,
+        t.clinic_group,
+        t.clinic_code,
+        t.total_bill_amount,
+        t.total_included_gst_amount,
+        GROUP_CONCAT(visit_attached_medical_coverages.coverage_name SEPARATOR "\n") AS medical_class,
+        GROUP_CONCAT(visit_attached_medical_coverages.plan_name SEPARATOR "\n") AS coverage_plan
+
+
+        FROM 
+        `transaction` t
+        LEFT JOIN visit_attached_medical_coverages ON t.visit_id = visit_attached_medical_coverages.visit_id
+        WHERE 
+        (t.start_time >= STR_TO_DATE(?,'%Y-%m-%d') 
+        AND t.start_time < ADDDATE(STR_TO_DATE(?,'%Y-%m-%d') , INTERVAL 1 DAY))
+        /*coverageCode*/
+        /*clinicId*/
+        /*patientId*/
+        GROUP BY t.visit_id) as td
+      LEFT JOIN chargeable_services ON td.visit_id = chargeable_services.visit_id
+      GROUP BY td.visit_id) tdp
+    LEFT JOIN diagnosis ON tdp.visit_id = diagnosis.visit_id
+    GROUP BY tdp.visit_id) as tdpm
+  LEFT JOIN medical_certificates ON medical_certificates.visit_id=tdpm.visit_id
+  GROUP BY tdpm.visit_id
+
+]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ChargeableServices" id="1555">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">visit_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">visit_id</text-property>
+                    <text-property name="heading">visit_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">item_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">item_code</text-property>
+                    <text-property name="heading">item_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">charge</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">charge</text-property>
+                    <text-property name="heading">charge</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">quantity</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">quantity</text-property>
+                    <text-property name="heading">quantity</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">uom</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">uom</text-property>
+                    <text-property name="heading">uom</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">chargeable</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">chargeable</text-property>
+                    <text-property name="heading">chargeable</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">visit_id</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">-1</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">""</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">visit_id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">item_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">charge</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">quantity</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">uom</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">chargeable</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">visit_id</property>
+                    <property name="nativeName">visit_id</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">item_code</property>
+                    <property name="nativeName">item_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">charge</property>
+                    <property name="nativeName">item_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">quantity</property>
+                    <property name="nativeName">quantity</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">uom</property>
+                    <property name="nativeName">uom</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">chargeable</property>
+                    <property name="nativeName">chargeable</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select 
+	chargeable_services.visit_id,
+	chargeable_services.item_code,
+	chargeable_services.item_name as charge,
+	chargeable_services.quantity,
+	chargeable_services.uom,
+	chargeable_services.total_amount + chargeable_services.price_adjustment AS chargeable
+	
+from 
+	chargeable_services
+WHERE
+	chargeable_services.visit_id = ?]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>visit_id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>visit_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>visit_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>item_name</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>charge</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>charge</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>quantity</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>22</design:precision>
+            <design:scale>31</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>quantity</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>quantity</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>uom</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>255</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>uom</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>uom</design:label>
+            <design:formattingHints>
+              <design:displaySize>255</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>chargeable</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>8</design:nativeDataTypeCode>
+            <design:precision>23</design:precision>
+            <design:scale>31</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>chargeable</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>chargeable</design:label>
+            <design:formattingHints>
+              <design:displaySize>23</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">landscape</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="1414">
+            <property name="width">8.819444444444445in</property>
+            <property name="dataSet">MedicalChitDataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">visit_id</property>
+                    <text-property name="displayName">visit_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["visit_id"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">start_time</property>
+                    <text-property name="displayName">start_time</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["start_time"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">visit_number</property>
+                    <text-property name="displayName">visit_number</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["visit_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">patient_number</property>
+                    <text-property name="displayName">patient_number</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["patient_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">patient_name</property>
+                    <text-property name="displayName">patient_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["patient_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">patient_identity_number</property>
+                    <text-property name="displayName">patient_identity_number</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["patient_identity_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">doctor_name</property>
+                    <text-property name="displayName">doctor_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["doctor_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">bill_number</property>
+                    <text-property name="displayName">bill_number</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["bill_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">payment_status</property>
+                    <text-property name="displayName">payment_status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["payment_status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">patient_address</property>
+                    <text-property name="displayName">patient_address</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["patient_address"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">clinic_group</property>
+                    <text-property name="displayName">clinic_group</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clinic_group"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">clinic_code</property>
+                    <text-property name="displayName">clinic_code</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clinic_code"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">medical_class</property>
+                    <text-property name="displayName">medical_class</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["medical_class"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">coverage_plan</property>
+                    <text-property name="displayName">coverage_plan</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["coverage_plan"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">charge</property>
+                    <text-property name="displayName">charge</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["charge"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">quantity</property>
+                    <text-property name="displayName">quantity</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["quantity"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">chargeable</property>
+                    <text-property name="displayName">chargeable</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["chargeable"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">diagnosis</property>
+                    <text-property name="displayName">diagnosis</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["diagnosis"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">date_range</property>
+                    <text-property name="displayName">date_range</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["date_range"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">total_bill_amount</property>
+                    <text-property name="displayName">total_bill_amount</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["total_bill_amount"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">total_included_gst_amount</property>
+                    <text-property name="displayName">total_included_gst_amount</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["total_included_gst_amount"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">total_bill_amount_before_gst</property>
+                    <text-property name="displayName">total_bill_amount_before_gst</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["total_bill_amount"]-dataSetRow["total_included_gst_amount"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="1442">
+                <property name="width">2.111111111111111in</property>
+            </column>
+            <column id="1443">
+                <property name="width">4.055555555555555in</property>
+            </column>
+            <column id="1534">
+                <property name="width">1.0138888888888888in</property>
+            </column>
+            <column id="1523">
+                <property name="width">1.6388888888888888in</property>
+            </column>
+            <column id="1830">
+                <property name="width">1.6388888888888888in</property>
+            </column>
+            <column id="1864">
+                <property name="width">1.6388888888888888in</property>
+            </column>
+            <header>
+                <row id="1415">
+                    <cell id="1416">
+                        <property name="colSpan">6</property>
+                        <property name="rowSpan">1</property>
+                        <label id="1444">
+                            <text-property name="text">MEDICAL CHIT</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="1460">
+                <property name="groupName">VisitGroup</property>
+                <expression name="keyExpr" type="javascript">row["visit_id"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["visit_id"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <property name="pageBreakAfter">always-excluding-last</property>
+            </group>
+            <detail>
+                <row id="1418">
+                    <cell id="1419">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1445">
+                            <text-property name="text">Company / Plan :</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1420">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="1469">
+                            <property name="resultSetColumn">medical_class</property>
+                        </data>
+                        <data id="1468">
+                            <property name="resultSetColumn">coverage_plan</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="1421">
+                    <cell id="1422">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1470">
+                            <text-property name="text">Patient Details :</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1423">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text-data id="1473">
+                            <expression name="valueExpr">"Name : " + row["patient_name"] + "(" + row["patient_number"] + ")&lt;br>"
+ + "NRIC : " + row["patient_identity_number"]</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="1424">
+                    <cell id="1425">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1474">
+                            <text-property name="text">Attending Doctor : </text-property>
+                        </label>
+                    </cell>
+                    <cell id="1426">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="1475">
+                            <property name="fontWeight">bold</property>
+                            <property name="resultSetColumn">doctor_name</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="1427">
+                    <cell id="1428">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1476">
+                            <text-property name="text">Date Seen : </text-property>
+                        </label>
+                    </cell>
+                    <cell id="1429">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text-data id="1477">
+                            <expression name="valueExpr" type="javascript">Formatter.format(row["start_time"], "dd/MM/yyyy HH:mm") + "&amp;emsp;(" + row["visit_number"] + " / " + row["bill_number"] + ")"</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="1430">
+                    <cell id="1431">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1478">
+                            <text-property name="text">Medical Certificate : </text-property>
+                        </label>
+                    </cell>
+                    <cell id="1432">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="1479">
+                            <property name="resultSetColumn">date_range</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="1433">
+                    <cell id="1434">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1480">
+                            <text-property name="text">Diagnosis : </text-property>
+                        </label>
+                    </cell>
+                    <cell id="1435">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="1481">
+                            <property name="resultSetColumn">diagnosis</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="1436">
+                    <cell id="1437">
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1482">
+                            <text-property name="text">Charge Code</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1438">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">double</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                        <table id="1831">
+                            <property name="dataSet">ChargeableServices</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">visit_id</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">row["visit_id"]</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">item_code</property>
+                                    <text-property name="displayName">item_code</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["item_code"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">charge</property>
+                                    <text-property name="displayName">charge</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["charge"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">quantity</property>
+                                    <text-property name="displayName">quantity</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["quantity"]</expression>
+                                    <property name="dataType">float</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">uom</property>
+                                    <text-property name="displayName">uom</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["uom"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">chargeable</property>
+                                    <text-property name="displayName">chargeable</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["chargeable"]</expression>
+                                    <property name="dataType">float</property>
+                                </structure>
+                            </list-property>
+                            <column id="1847">
+                                <property name="width">2.0555555555555554in</property>
+                            </column>
+                            <column id="1848">
+                                <property name="width">3.9305555555555554in</property>
+                            </column>
+                            <column id="1849">
+                                <property name="width">0.9444444444444444in</property>
+                            </column>
+                            <column id="1850">
+                                <property name="width">0.9861111111111112in</property>
+                            </column>
+                            <column id="1868"/>
+                            <detail>
+                                <row id="1837">
+                                    <cell id="1838">
+                                        <data id="1851">
+                                            <property name="fontWeight">bold</property>
+                                            <structure name="stringFormat">
+                                                <property name="category">></property>
+                                                <property name="pattern">></property>
+                                            </structure>
+                                            <property name="resultSetColumn">item_code</property>
+                                        </data>
+                                    </cell>
+                                    <cell id="1839">
+                                        <data id="1869">
+                                            <property name="resultSetColumn">charge</property>
+                                        </data>
+                                    </cell>
+                                    <cell id="1840">
+                                        <data id="1870">
+                                            <property name="textAlign">right</property>
+                                            <property name="resultSetColumn">quantity</property>
+                                        </data>
+                                    </cell>
+                                    <cell id="1841">
+                                        <data id="1871">
+                                            <structure name="stringFormat">
+                                                <property name="category">></property>
+                                                <property name="pattern">></property>
+                                            </structure>
+                                            <property name="resultSetColumn">uom</property>
+                                        </data>
+                                    </cell>
+                                    <cell id="1866">
+                                        <data id="1872">
+                                            <structure name="numberFormat">
+                                                <property name="category">Currency</property>
+                                                <property name="pattern">$###0.00{RoundingMode=HALF_UP}</property>
+                                            </structure>
+                                            <property name="textAlign">right</property>
+                                            <property name="resultSetColumn">chargeable</property>
+                                        </data>
+                                    </cell>
+                                </row>
+                            </detail>
+                        </table>
+                    </cell>
+                </row>
+                <row id="1510">
+                    <cell id="1511">
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                    </cell>
+                    <cell id="1512">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderTopStyle">double</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                        <label id="1506">
+                            <text-property name="text">Subtotal Amount</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1521">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">double</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                        <data id="1503">
+                            <property name="paddingRight">4pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">$###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">total_bill_amount_before_gst</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="1540">
+                    <cell id="1541">
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                    </cell>
+                    <cell id="1542">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                        <label id="1507">
+                            <text-property name="text">GST @ 7%</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1543">
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                    </cell>
+                    <cell id="1544">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                        <data id="1505">
+                            <property name="paddingRight">4pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">$###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">total_included_gst_amount</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="1535">
+                    <cell id="1536">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                    </cell>
+                    <cell id="1537">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                        <label id="1508">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Total Amount</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1538">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                    </cell>
+                    <cell id="1539">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">0pt</property>
+                        <property name="paddingLeft">0pt</property>
+                        <property name="paddingBottom">0pt</property>
+                        <property name="paddingRight">0pt</property>
+                        <data id="1509">
+                            <property name="fontWeight">bold</property>
+                            <property name="paddingRight">4pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">$###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">total_bill_amount</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="1439">
+                    <cell id="1440"/>
+                    <cell id="1441"/>
+                    <cell id="1533"/>
+                    <cell id="1522"/>
+                    <cell id="1829"/>
+                    <cell id="1863"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

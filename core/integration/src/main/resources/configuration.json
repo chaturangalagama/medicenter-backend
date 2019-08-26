@@ -1,0 +1,99 @@
+{
+  "7985": {
+    "category": "ACT",
+    "patientType": "A",
+    "billType": "",
+    "tier": "",
+    "acute": true
+  },
+  "7986": {
+    "category": "CHR",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "1"
+  },
+  "7987": {
+    "category": "CHR",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "2"
+  },
+  "7988": {
+    "category": "ACT",
+    "patientType": "B",
+    "billType": "",
+    "tier": "",
+    "acute": true
+  },
+  "7989": {
+    "category": "CHR",
+    "patientType": "B",
+    "billType": "C",
+    "tier": "1"
+  },
+  "7990": {
+    "category": "CHR",
+    "patientType": "B",
+    "billType": "C",
+    "tier": "2"
+  },
+  "17946": {
+    "category": "ACT",
+    "patientType": "PG",
+    "billType": "",
+    "tier": "",
+    "acute": true
+  },
+  "17947": {
+    "category": "CHR",
+    "patientType": "PG",
+    "billType": "C",
+    "tier": "1"
+  },
+  "17948": {
+    "category": "CHR",
+    "patientType": "PG",
+    "billType": "C",
+    "tier": "2"
+  },
+  "18966": {
+    "category": "ACT",
+    "patientType": "PA",
+    "billType": "",
+    "tier": "",
+    "acute": true
+  },
+  "18967": {
+    "category": "CHR",
+    "patientType": "PA",
+    "billType": "C",
+    "tier": "1"
+  },
+  "18968": {
+    "category": "CHR",
+    "patientType": "PA",
+    "billType": "C",
+    "tier": "2"
+  },
+  "PLAN_ID1": {
+    "category": "ACT",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "1",
+    "acute": true
+  },
+  "PLAN_ID2": {
+    "category": "ACT",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "1",
+    "acute": true
+  },
+  "Plan 1": {
+    "category": "ACT",
+    "patientType": "A",
+    "billType": "C",
+    "tier": "1",
+    "acute": true
+  }
+}
