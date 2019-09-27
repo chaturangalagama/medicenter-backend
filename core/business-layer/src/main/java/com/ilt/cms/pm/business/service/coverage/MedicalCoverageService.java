@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.coverage;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.Status;
@@ -8,6 +8,7 @@ import com.ilt.cms.core.entity.coverage.MedicalServiceScheme;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.coverage.MedicalCoverageDatabaseService;
 import com.ilt.cms.database.policyholder.PolicyHolderDatabaseService;
+import com.ilt.cms.pm.business.service.clinic.ItemService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.CMSConstant;
 import com.lippo.commons.util.StatusCode;

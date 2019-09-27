@@ -2,31 +2,24 @@ package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.Postcode;
-import com.ilt.cms.database.PostcodeDatabaseService;
-import com.ilt.cms.pm.business.service.PostcodeService;
+import com.ilt.cms.pm.business.service.util.PostcodeService;
 import com.ilt.cms.repository.spring.PostcodeRepository;
 //import jdk.jfr.Unsigned;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)

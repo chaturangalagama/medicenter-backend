@@ -3,10 +3,9 @@ package com.ilt.cms.pm.integration.downstream;
 import com.ilt.cms.api.entity.patient.PatientEntity;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.downstream.PatientDownstream;
-import com.ilt.cms.pm.business.service.PatientService;
+import com.ilt.cms.pm.business.service.patient.PatientService;
 import com.ilt.cms.pm.integration.mapper.PatientMapper;
 import com.lippo.cms.exception.PatientException;
-import com.lippo.commons.util.StatusCode;
 import com.lippo.commons.util.exception.RestValidationException;
 import com.lippo.commons.web.api.ApiResponse;
 import com.lippo.commons.web.api.HttpApiResponse;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 

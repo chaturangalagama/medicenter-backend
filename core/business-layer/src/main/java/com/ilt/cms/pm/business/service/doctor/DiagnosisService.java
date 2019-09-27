@@ -1,6 +1,5 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.doctor;
 
-import com.google.common.collect.Iterables;
 import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.diagnosis.Diagnosis;
 import com.ilt.cms.database.coverage.MedicalCoverageDatabaseService;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Service
 public class DiagnosisService {

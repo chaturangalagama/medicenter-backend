@@ -6,7 +6,7 @@ import com.ilt.cms.api.entity.vaccination.VaccinationEntity;
 import com.ilt.cms.core.entity.vaccination.AssociatedCoverageVaccination;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
 import com.ilt.cms.downstream.VaccinationDownstream;
-import com.ilt.cms.pm.business.service.VaccinationService;
+import com.ilt.cms.pm.business.service.patient.VaccinationService;
 import com.ilt.cms.pm.integration.mapper.PatientMapper;
 import com.ilt.cms.pm.integration.mapper.VaccinationMapper;
 import com.lippo.cms.exception.CMSException;

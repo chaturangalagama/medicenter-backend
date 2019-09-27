@@ -8,7 +8,7 @@ import com.ilt.cms.core.entity.coverage.CapLimiter;
 import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
-import com.ilt.cms.pm.business.service.PolicyHolderLimitService;
+import com.ilt.cms.pm.business.service.coverage.PolicyHolderLimitService;
 import com.ilt.cms.repository.spring.CaseRepository;
 import com.ilt.cms.repository.spring.CaseRepositoryImpl;
 import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;

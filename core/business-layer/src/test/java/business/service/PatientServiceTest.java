@@ -12,7 +12,7 @@ import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.patient.PatientCoverage;
-import com.ilt.cms.pm.business.service.PatientService;
+import com.ilt.cms.pm.business.service.patient.PatientService;
 import com.ilt.cms.repository.PolicyHolderRepository;
 import com.ilt.cms.repository.spring.PatientRepository;
 import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;

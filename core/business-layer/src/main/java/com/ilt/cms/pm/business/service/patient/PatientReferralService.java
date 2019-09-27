@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.consultation.PatientReferral;
 import com.ilt.cms.database.visit.PatientReferralDatabaseService;

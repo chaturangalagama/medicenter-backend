@@ -6,11 +6,9 @@ import com.ilt.cms.api.entity.doctor.DoctorEntity;
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.doctor.Doctor;
 import com.ilt.cms.core.entity.doctor.Speciality;
-import com.ilt.cms.pm.business.service.DoctorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

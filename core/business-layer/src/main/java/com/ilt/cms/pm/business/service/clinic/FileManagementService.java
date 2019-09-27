@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.clinic;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -10,7 +10,6 @@ import com.ilt.cms.core.entity.file.FileMetaData;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
-import com.ilt.cms.database.consultation.ConsultationDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
 import com.lippo.cms.exception.CMSException;

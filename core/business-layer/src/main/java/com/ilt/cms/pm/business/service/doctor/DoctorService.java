@@ -1,17 +1,15 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.doctor;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.consultation.ConsultationTemplate;
 import com.ilt.cms.core.entity.doctor.Doctor;
-import com.ilt.cms.core.entity.doctor.Speciality;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.doctor.DoctorDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.CommonUtils;
 import com.lippo.commons.util.StatusCode;
-import org.checkerframework.checker.nullness.Opt;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;

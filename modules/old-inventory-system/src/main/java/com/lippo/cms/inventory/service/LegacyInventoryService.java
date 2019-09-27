@@ -2,7 +2,6 @@ package com.lippo.cms.inventory.service;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.item.Item;
-import com.ilt.cms.pm.business.service.ItemService;
 import com.ilt.cms.repository.spring.ClinicRepository;
 import com.ilt.cms.repository.spring.ItemRepository;
 

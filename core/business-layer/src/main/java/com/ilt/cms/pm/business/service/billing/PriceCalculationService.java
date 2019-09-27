@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.billing;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.Status;
@@ -6,7 +6,6 @@ import com.ilt.cms.core.entity.casem.Case;
 import com.ilt.cms.core.entity.charge.Charge;
 import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.coverage.MedicalCoverage;
-import com.ilt.cms.core.entity.inventory.InventoryDetail;
 import com.ilt.cms.core.entity.inventory.InventoryUsage;
 import com.ilt.cms.core.entity.item.*;
 import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
@@ -19,13 +18,9 @@ import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
 import com.lippo.cms.container.CmsServiceResponse;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
-import com.lippo.commons.web.api.ApiResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;

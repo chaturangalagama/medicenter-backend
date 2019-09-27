@@ -3,7 +3,7 @@ package com.ilt.cms.pm.integration.downstream;
 import com.ilt.cms.api.entity.notification.NotificationEntity;
 import com.ilt.cms.core.entity.notification.Notification;
 import com.ilt.cms.downstream.NotificationDownstream;
-import com.ilt.cms.pm.business.service.NotificationService;
+import com.ilt.cms.pm.business.service.clinic.NotificationService;
 import com.ilt.cms.pm.integration.mapper.NotificationMapper;
 import com.lippo.cms.exception.NotificationException;
 import com.lippo.commons.web.api.ApiResponse;

@@ -6,7 +6,7 @@ import business.mock.MockMedicalCoverage;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.coverage.MedicalCoverage;
-import com.ilt.cms.pm.business.service.MedicalCoverageService;
+import com.ilt.cms.pm.business.service.coverage.MedicalCoverageService;
 import com.ilt.cms.repository.spring.ClinicRepository;
 import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
 import com.ilt.cms.repository.spring.policy.PolicyHolderChasRepository;

@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.visit.VisitPurpose;
 import com.ilt.cms.database.visit.VisitPurposeDatabaseService;

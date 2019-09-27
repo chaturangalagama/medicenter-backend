@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.clinic;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.item.Item;

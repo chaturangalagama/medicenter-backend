@@ -4,7 +4,7 @@ import business.config.service.SpringTestServiceConfiguration;
 import business.mock.MockClinic;
 import business.mock.MockPatientVisitRegistry;
 import com.ilt.cms.core.entity.visit.ConsultationFollowup;
-import com.ilt.cms.pm.business.service.ConsultationFollowupService;
+import com.ilt.cms.pm.business.service.doctor.ConsultationFollowupService;
 import com.ilt.cms.repository.spring.ClinicRepository;
 import com.ilt.cms.repository.spring.consultation.ConsultationFollowupRepository;
 import org.junit.Before;

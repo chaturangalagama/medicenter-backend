@@ -3,7 +3,7 @@ package com.ilt.cms.pm.integration.downstream;
 import com.ilt.cms.api.entity.label.LabelEntity;
 import com.ilt.cms.core.entity.label.Label;
 import com.ilt.cms.downstream.LabelDownstream;
-import com.ilt.cms.pm.business.service.LabelService;
+import com.ilt.cms.pm.business.service.clinic.LabelService;
 import com.ilt.cms.pm.integration.mapper.LabelMapper;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.web.api.ApiResponse;
@@ -11,7 +11,6 @@ import com.lippo.commons.web.api.HttpApiResponse;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

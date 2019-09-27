@@ -10,7 +10,7 @@ import com.ilt.cms.core.entity.patient.PatientVaccination;
 import com.ilt.cms.core.entity.vaccination.AssociatedCoverageVaccination;
 import com.ilt.cms.core.entity.vaccination.Dose;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
-import com.ilt.cms.pm.business.service.VaccinationService;
+import com.ilt.cms.pm.business.service.patient.VaccinationService;
 import com.ilt.cms.repository.spring.PatientRepository;
 import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
 import com.ilt.cms.repository.spring.vaccination.AssociatedCoverageVaccinationRepository;

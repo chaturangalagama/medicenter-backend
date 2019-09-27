@@ -2,25 +2,18 @@ package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.PersistedObject;
-import com.ilt.cms.core.entity.Postcode;
 import com.ilt.cms.core.entity.TemporaryStore;
-import com.ilt.cms.database.store.TemporaryStoreDatabaseService;
-import com.ilt.cms.pm.business.service.TemporaryStoreService;
+import com.ilt.cms.pm.business.service.clinic.TemporaryStoreService;
 import com.ilt.cms.repository.spring.TemporaryStoreRepository;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;

@@ -9,7 +9,7 @@ import com.ilt.cms.core.entity.UserId;
 import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.coverage.PolicyHolder;
-import com.ilt.cms.pm.business.service.PolicyHolderService;
+import com.ilt.cms.pm.business.service.coverage.PolicyHolderService;
 import com.ilt.cms.repository.PolicyHolderRepository;
 import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
 import com.ilt.cms.repository.spring.policy.PolicyHolderChasRepository;

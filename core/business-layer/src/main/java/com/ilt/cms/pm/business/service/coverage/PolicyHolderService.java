@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.coverage;
 
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.UserId;
@@ -7,7 +7,6 @@ import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.coverage.PolicyHolder;
 import com.ilt.cms.core.entity.coverage.RelationshipMapping;
 import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
-import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.database.coverage.MedicalCoverageDatabaseService;
 import com.ilt.cms.database.policyholder.PolicyHolderDatabaseService;
 import com.lippo.cms.exception.PolicyHolderException;

@@ -1,12 +1,12 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.doctor;
 
 import com.ilt.cms.core.entity.Clinic;
-import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.visit.ConsultationFollowup;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.consultation.ConsultationFollowupDatabaseService;
 import com.ilt.cms.database.doctor.DoctorDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
+import com.ilt.cms.pm.business.service.clinic.ClinicService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.UserInfoHelper;
 import com.lippo.commons.util.StatusCode;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ConsultationFollowupService {

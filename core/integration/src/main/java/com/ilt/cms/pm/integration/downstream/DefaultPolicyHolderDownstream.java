@@ -9,8 +9,8 @@ import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.coverage.PolicyHolder;
 
 import com.ilt.cms.downstream.PolicyHolderDownstream;
-import com.ilt.cms.pm.business.service.MedicalCoverageService;
-import com.ilt.cms.pm.business.service.PolicyHolderService;
+import com.ilt.cms.pm.business.service.coverage.MedicalCoverageService;
+import com.ilt.cms.pm.business.service.coverage.PolicyHolderService;
 import com.ilt.cms.pm.integration.mapper.PolicyHolderMapper;
 import com.ilt.cms.pm.integration.mapper.UserIdMapper;
 import com.lippo.cms.exception.PolicyHolderException;
@@ -19,7 +19,6 @@ import com.lippo.commons.web.api.ApiResponse;
 import com.lippo.commons.web.api.HttpApiResponse;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

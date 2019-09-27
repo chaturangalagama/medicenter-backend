@@ -3,7 +3,7 @@ package com.ilt.cms.pm.integration.downstream;
 import com.ilt.cms.api.entity.patientVisitRegistry.VisitPurposeEntity;
 import com.ilt.cms.core.entity.visit.VisitPurpose;
 import com.ilt.cms.downstream.VisitPurposeDownstream;
-import com.ilt.cms.pm.business.service.VisitPurposeService;
+import com.ilt.cms.pm.business.service.patient.VisitPurposeService;
 import com.ilt.cms.pm.integration.mapper.VisitPurposeMapper;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;

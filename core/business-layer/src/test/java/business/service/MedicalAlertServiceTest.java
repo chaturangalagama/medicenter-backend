@@ -2,35 +2,25 @@ package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
 import business.mock.MockMedicalAlert;
-import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.patient.MedicalAlert;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.patient.PatientAllergy;
-import com.ilt.cms.database.patient.MedicalAlertDatabaseService;
-import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.pm.business.service.MedicalAlertService;
+import com.ilt.cms.pm.business.service.patient.MedicalAlertService;
 import com.ilt.cms.repository.spring.MedicalAlertRepository;
 import com.ilt.cms.repository.spring.PatientRepository;
 import com.lippo.cms.exception.MedicalAlertException;
-import com.lippo.commons.util.CommonUtils;
-import com.lippo.commons.util.StatusCode;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

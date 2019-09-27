@@ -6,7 +6,7 @@ import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.allergy.AllergyGroup;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.patient.PatientAllergy;
-import com.ilt.cms.pm.business.service.AllergyGroupService;
+import com.ilt.cms.pm.business.service.patient.AllergyGroupService;
 import com.ilt.cms.repository.spring.AllergyGroupRepository;
 import com.ilt.cms.repository.spring.PatientRepository;
 import com.lippo.cms.exception.AllergyGroupException;

@@ -1,29 +1,16 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.doctor.Doctor;
-import com.ilt.cms.core.entity.notification.Notification;
 import com.ilt.cms.core.entity.patient.PatientNote;
 import com.ilt.cms.database.doctor.DoctorDatabaseService;
-import com.ilt.cms.database.notification.NotificationDatabaseService;
 import com.ilt.cms.database.patient.PatientNoteDatabaseService;
 import com.lippo.cms.exception.CMSException;
-import com.lippo.cms.exception.NotificationException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.core.FindAndModifyOptions;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

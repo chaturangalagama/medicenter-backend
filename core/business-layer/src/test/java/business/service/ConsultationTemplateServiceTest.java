@@ -8,7 +8,7 @@ import com.ilt.cms.core.entity.PersistedObject;
 
 import com.ilt.cms.core.entity.consultation.ConsultationTemplate;
 
-import com.ilt.cms.pm.business.service.ConsultationTemplateService;
+import com.ilt.cms.pm.business.service.doctor.ConsultationTemplateService;
 
 import com.ilt.cms.repository.spring.DoctorRepository;
 import com.ilt.cms.repository.spring.PatientRepository;

@@ -4,7 +4,7 @@ import com.ilt.cms.api.entity.item.ItemEntity;
 import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.core.entity.system.SystemStore;
 import com.ilt.cms.downstream.ItemDownstream;
-import com.ilt.cms.pm.business.service.ItemService;
+import com.ilt.cms.pm.business.service.clinic.ItemService;
 import com.ilt.cms.pm.integration.mapper.ItemMapper;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.web.api.ApiResponse;

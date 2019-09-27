@@ -4,7 +4,7 @@ import com.ilt.cms.api.entity.common.Status;
 import com.ilt.cms.api.entity.patient.PatientNoteEntity;
 import com.ilt.cms.core.entity.patient.PatientNote;
 import com.ilt.cms.downstream.PatientNoteDownstream;
-import com.ilt.cms.pm.business.service.PatientNoteService;
+import com.ilt.cms.pm.business.service.patient.PatientNoteService;
 import com.ilt.cms.pm.integration.mapper.PatientNoteMapper;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.web.api.ApiResponse;

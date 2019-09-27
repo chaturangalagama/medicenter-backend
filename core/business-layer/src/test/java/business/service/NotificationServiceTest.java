@@ -1,43 +1,31 @@
 package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
-import business.mock.MockMedicalAlert;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.notification.Notification;
-import com.ilt.cms.core.entity.patient.MedicalAlert;
-import com.ilt.cms.database.notification.NotificationDatabaseService;
-import com.ilt.cms.pm.business.service.NotificationService;
+import com.ilt.cms.pm.business.service.clinic.NotificationService;
 import com.ilt.cms.repository.spring.NotificationRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.exception.NotificationException;
 import com.lippo.commons.util.StatusCode;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;

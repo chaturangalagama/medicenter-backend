@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream;
 
 import com.ilt.cms.core.entity.consultation.ConsultationTemplate;
 import com.ilt.cms.downstream.ConsultationTemplateDownstream;
-import com.ilt.cms.pm.business.service.ConsultationTemplateService;
+import com.ilt.cms.pm.business.service.doctor.ConsultationTemplateService;
 import com.ilt.cms.pm.integration.mapper.ConsultationTemplateMapper;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;

@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream;
 
 import com.ilt.cms.core.entity.supplier.Supplier;
 import com.ilt.cms.downstream.SupplierDownstream;
-import com.ilt.cms.pm.business.service.SupplierService;
+import com.ilt.cms.pm.business.service.clinic.SupplierService;
 import com.ilt.cms.pm.integration.mapper.SuppliersMapper;
 import com.lippo.commons.web.api.ApiResponse;
 import com.lippo.commons.web.api.HttpApiResponse;

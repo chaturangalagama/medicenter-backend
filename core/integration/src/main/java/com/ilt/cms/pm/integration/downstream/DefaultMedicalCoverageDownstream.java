@@ -5,7 +5,7 @@ import com.ilt.cms.api.entity.coverage.MedicalCoverageEntity;
 import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.downstream.MedicalCoverageDownstream;
-import com.ilt.cms.pm.business.service.MedicalCoverageService;
+import com.ilt.cms.pm.business.service.coverage.MedicalCoverageService;
 import com.ilt.cms.pm.integration.mapper.Mapper;
 import com.ilt.cms.pm.integration.mapper.MedicalCoverageMapper;
 import com.ilt.cms.repository.spring.MedicalCoverageItemRepository;

@@ -3,7 +3,7 @@ package com.ilt.cms.pm.integration.downstream;
 import com.ilt.cms.api.entity.allergy.AllergyGroupEntity;
 import com.ilt.cms.core.entity.allergy.AllergyGroup;
 import com.ilt.cms.downstream.AllergyDownstream;
-import com.ilt.cms.pm.business.service.AllergyGroupService;
+import com.ilt.cms.pm.business.service.patient.AllergyGroupService;
 import com.ilt.cms.pm.integration.mapper.AllergyGroupMapper;
 import com.lippo.cms.exception.AllergyGroupException;
 import com.lippo.commons.web.api.ApiResponse;

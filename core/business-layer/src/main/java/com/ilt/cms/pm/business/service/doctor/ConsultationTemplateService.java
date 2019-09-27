@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.doctor;
 
 import com.ilt.cms.core.entity.CmsConstant;
 import com.ilt.cms.core.entity.consultation.ConsultationTemplate;

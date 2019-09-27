@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream;
 
 import com.ilt.cms.core.entity.consultation.PatientReferral;
 import com.ilt.cms.downstream.PatientReferralDownstream;
-import com.ilt.cms.pm.business.service.PatientReferralService;
+import com.ilt.cms.pm.business.service.patient.PatientReferralService;
 import com.ilt.cms.pm.integration.mapper.MedicalReferenceMapper;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.web.api.ApiResponse;

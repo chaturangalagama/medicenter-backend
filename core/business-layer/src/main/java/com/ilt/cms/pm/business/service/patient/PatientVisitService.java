@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.billing.ItemChargeDetail;
@@ -25,6 +25,13 @@ import com.ilt.cms.database.doctor.DoctorDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
 import com.ilt.cms.pm.business.service.billing.NewCaseService;
+import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
+import com.ilt.cms.pm.business.service.clinic.ItemService;
+import com.ilt.cms.pm.business.service.coverage.MedicalCoverageService;
+import com.ilt.cms.pm.business.service.coverage.PolicyHolderService;
+import com.ilt.cms.pm.business.service.doctor.ConsultationFollowupService;
+import com.ilt.cms.pm.business.service.doctor.ConsultationService;
+import com.ilt.cms.pm.business.service.doctor.DiagnosisService;
 import com.ilt.cms.pm.business.service.queue.QueueService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.UserInfoHelper;

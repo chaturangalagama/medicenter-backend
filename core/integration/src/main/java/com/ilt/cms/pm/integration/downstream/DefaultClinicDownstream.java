@@ -1,14 +1,12 @@
 package com.ilt.cms.pm.integration.downstream;
 
 import com.ilt.cms.api.entity.clinic.ClinicEntity;
-import com.ilt.cms.api.entity.patient.PatientEntity;
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.downstream.ClinicDownstream;
-import com.ilt.cms.pm.business.service.ClinicService;
+import com.ilt.cms.pm.business.service.clinic.ClinicService;
 import com.ilt.cms.pm.integration.mapper.ClinicMapper;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
-import com.lippo.commons.util.exception.RestValidationException;
 import com.lippo.commons.web.api.ApiResponse;
 import com.lippo.commons.web.api.HttpApiResponse;
 import org.springframework.http.ResponseEntity;

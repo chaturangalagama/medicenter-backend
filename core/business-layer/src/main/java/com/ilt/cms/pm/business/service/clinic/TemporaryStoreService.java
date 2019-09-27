@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.clinic;
 
 import com.ilt.cms.core.entity.TemporaryStore;
 import com.ilt.cms.database.store.TemporaryStoreDatabaseService;

@@ -1,19 +1,16 @@
-package com.ilt.cms.pm.business.service;
+package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.patient.PatientCoverage;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.database.RunningNumberService;
-import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.exception.PatientException;
-import com.lippo.commons.util.StatusCode;
 import com.lippo.commons.util.exception.RestValidationException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
