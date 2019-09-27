@@ -5,7 +5,6 @@ import com.ilt.cms.core.entity.casem.SalesItem;
 import com.ilt.cms.core.entity.casem.SalesOrder;
 import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.pm.business.service.claim.ClaimService;
 import com.ilt.cms.repository.spring.ItemRepository;
 import com.ilt.cms.repository.spring.SalesOrderRepository;
 import com.lippo.cms.exception.CMSException;
@@ -26,14 +25,13 @@ public class SalesOrderService {
     private SalesOrderRepository salesOrderRepository;
     private RunningNumberService runningNumberService;
     private ItemRepository itemRepository;
-    private ClaimService claimService;
 
     public SalesOrderService(SalesOrderRepository salesOrderRepository, RunningNumberService runningNumberService,
-                             ItemRepository itemRepository, ClaimService claimService) {
+                             ItemRepository itemRepository) {
         this.salesOrderRepository = salesOrderRepository;
         this.runningNumberService = runningNumberService;
         this.itemRepository = itemRepository;
-        this.claimService = claimService;
+
     }
 
     /**
@@ -51,7 +49,6 @@ public class SalesOrderService {
 
     public SalesOrder updateSalesOrder(SalesOrder salesOrder) throws CMSException {
         logger.debug("Updating sales order [{}]", salesOrder);
-        salesOrder = claimService.populateClaims(salesOrder);
         return salesOrderRepository.save(salesOrder);
     }
 

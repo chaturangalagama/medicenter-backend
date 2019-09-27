@@ -21,7 +21,6 @@ import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.database.RunningNumberService;
 import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
-import com.ilt.cms.pm.business.service.claim.DefaultClaimService;
 import com.ilt.cms.repository.CustomMedicalCoverageRepository;
 import com.ilt.cms.repository.spring.*;
 import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;

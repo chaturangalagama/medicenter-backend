@@ -7,7 +7,6 @@ import com.ilt.cms.core.entity.casem.SalesOrder;
 import com.ilt.cms.database.RunningNumberService;
 import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.item.ItemDatabaseService;
-import com.ilt.cms.pm.business.service.claim.ClaimService;
 import com.ilt.cms.repository.spring.CaseRepository;
 import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
 import com.ilt.cms.repository.spring.SalesOrderRepository;
@@ -41,7 +40,6 @@ public class InvoiceService {
     private CaseDatabaseService caseDatabaseService;
     private RunningNumberService runningNumberService;
     private PatientVisitRegistryRepository patientVisitRegistryRepository;
-    private ClaimService claimService;
     private NewCaseService newCaseService;
     private ItemDatabaseService itemRepository;
 
@@ -50,7 +48,6 @@ public class InvoiceService {
                           CaseDatabaseService caseDatabaseService,
                           RunningNumberService runningNumberService,
                           PatientVisitRegistryRepository patientVisitRegistryRepository,
-                          ClaimService claimService,
                           NewCaseService newCaseService,
                           ItemDatabaseService itemRepository) {
         this.caseRepository = caseRepository;
@@ -58,7 +55,6 @@ public class InvoiceService {
         this.caseDatabaseService = caseDatabaseService;
         this.runningNumberService = runningNumberService;
         this.patientVisitRegistryRepository = patientVisitRegistryRepository;
-        this.claimService = claimService;
         this.newCaseService = newCaseService;
         this.itemRepository = itemRepository;
     }

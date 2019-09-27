@@ -8,7 +8,6 @@ import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.item.ItemDatabaseService;
 import com.ilt.cms.pm.business.service.billing.InvoiceService;
 import com.ilt.cms.pm.business.service.billing.NewCaseService;
-import com.ilt.cms.pm.business.service.claim.ClaimService;
 import com.ilt.cms.repository.spring.CaseRepository;
 import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
 import com.ilt.cms.repository.spring.SalesOrderRepository;
@@ -39,7 +38,6 @@ public class InvoiceServiceTest {
     private CaseRepository caseRepository = Mockito.mock(CaseRepository.class);
     private RunningNumberService runningNumberService = Mockito.mock(RunningNumberService.class);
     private PatientVisitRegistryRepository patientVisitRegistryRepository = Mockito.mock(PatientVisitRegistryRepository.class);
-    private ClaimService claimService = Mockito.mock(ClaimService.class);
     private NewCaseService newCaseService = Mockito.mock(NewCaseService.class);
     private ItemDatabaseService itemDatabaseService = Mockito.mock(ItemDatabaseService.class);
 
@@ -53,7 +51,6 @@ public class InvoiceServiceTest {
                 caseDatabaseService,
                 runningNumberService,
                 patientVisitRegistryRepository,
-                claimService,
                 newCaseService,
                 itemDatabaseService
         );

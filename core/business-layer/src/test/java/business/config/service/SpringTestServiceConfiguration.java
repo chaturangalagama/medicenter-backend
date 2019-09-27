@@ -6,7 +6,6 @@ import com.ilt.cms.pm.business.service.*;
 import com.ilt.cms.pm.business.service.appointment.AppointmentService;
 import com.ilt.cms.pm.business.service.billing.NewCaseService;
 import com.ilt.cms.pm.business.service.billing.SalesOrderService;
-import com.ilt.cms.pm.business.service.claim.ClaimService;
 import com.ilt.cms.pm.business.service.inventory.LegacyInventoryService;
 import com.ilt.cms.pm.business.service.queue.QueueService;
 import com.ilt.cms.repository.spring.ClinicGroupItemMasterRepository;
@@ -149,8 +148,7 @@ public class SpringTestServiceConfiguration {
                         springTestRepositoryConfiguration.patientVisitRegistryRepository(),
                         new SalesOrderService(springTestRepositoryConfiguration.salesOrderRepository(),
                                 serviceConfiguration.mongoRunningNumberService(),
-                                springTestRepositoryConfiguration.itemRepository(),
-                                claimService()),
+                                springTestRepositoryConfiguration.itemRepository()),
                         springTestRepositoryConfiguration.medicalCoverageRepository(),
                         mock(PriceCalculationService.class), mock(PolicyHolderLimitService.class)),
                 serviceConfiguration.mongoRunningNumberService(),
@@ -208,12 +206,6 @@ public class SpringTestServiceConfiguration {
         return new AppointmentService(serviceConfiguration.calendarDatabaseService());
     }
 
-
-    @Bean
-    public ClaimService claimService() {
-        return mock(ClaimService.class);
-    }
-
     @Bean
     public FileManagementService fileManagementService(){
         return new FileManagementService(awsConfig, serviceConfiguration.patientVisitRegistryDatabaseService(),
@@ -224,8 +216,7 @@ public class SpringTestServiceConfiguration {
     public SalesOrderService salesOrderService() {
         return new SalesOrderService(springTestRepositoryConfiguration.salesOrderRepository(),
                 serviceConfiguration.mongoRunningNumberService(),
-                springTestRepositoryConfiguration.itemRepository(),
-                mock(ClaimService.class));
+                springTestRepositoryConfiguration.itemRepository());
     }
 
     @Bean
