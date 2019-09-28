@@ -1,14 +1,11 @@
 package business.service;
 
-import com.ilt.cms.core.entity.casem.*;
+import com.ilt.cms.core.entity.sales.*;
 import com.ilt.cms.core.entity.item.Cost;
 import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.item.ItemDatabaseService;
 import com.ilt.cms.pm.business.service.billing.InvoiceService;
-import com.ilt.cms.pm.business.service.billing.NewCaseService;
-import com.ilt.cms.repository.spring.CaseRepository;
 import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
 import com.ilt.cms.repository.spring.SalesOrderRepository;
 import com.lippo.cms.exception.CMSException;
@@ -34,11 +31,8 @@ import static util.Assert.assertThrows;
 @RunWith(SpringRunner.class)
 public class InvoiceServiceTest {
     private SalesOrderRepository salesOrderRepository = Mockito.mock(SalesOrderRepository.class);
-    private CaseDatabaseService caseDatabaseService = Mockito.mock(CaseDatabaseService.class);
-    private CaseRepository caseRepository = Mockito.mock(CaseRepository.class);
     private RunningNumberService runningNumberService = Mockito.mock(RunningNumberService.class);
     private PatientVisitRegistryRepository patientVisitRegistryRepository = Mockito.mock(PatientVisitRegistryRepository.class);
-    private NewCaseService newCaseService = Mockito.mock(NewCaseService.class);
     private ItemDatabaseService itemDatabaseService = Mockito.mock(ItemDatabaseService.class);
 
     private InvoiceService invoiceService;
@@ -46,12 +40,9 @@ public class InvoiceServiceTest {
     @Before
     public void setUp() throws CMSException {
         invoiceService = new InvoiceService(
-                caseRepository,
                 salesOrderRepository,
-                caseDatabaseService,
                 runningNumberService,
                 patientVisitRegistryRepository,
-                newCaseService,
                 itemDatabaseService
         );
         when(salesOrderRepository.findById(anyString())).thenAnswer(invocationOnMock -> {
@@ -59,13 +50,6 @@ public class InvoiceServiceTest {
             return Optional.of(mockSalesOrderWithId(salesOrderId));
         });
 
-        when(caseDatabaseService.findByCaseId(anyString())).thenAnswer(invocationOnMock -> {
-            String caseId = String.valueOf(invocationOnMock.getArguments()[0]);
-            return new Case() {{
-                this.setId(caseId);
-                this.setSalesOrder(mockSalesOrderWithId("sales-order-1"));
-            }};
-        });
     }
 
     @Test
@@ -82,14 +66,6 @@ public class InvoiceServiceTest {
         }});
 
         when(salesOrderRepository.findById("sales-order-2")).thenReturn(Optional.of(salesOrder));
-
-        when(caseDatabaseService.findByCaseId(anyString())).thenAnswer(invocationOnMock -> {
-            String caseId = String.valueOf(invocationOnMock.getArguments()[0]);
-            return new Case() {{
-                this.setId(caseId);
-                this.setSalesOrder(salesOrder);
-            }};
-        });
 
         dueAmount = invoiceService.calculateDueAmountForCase("case-1");
         assertEquals("Due amount mismatch!", 100, dueAmount);
@@ -129,15 +105,6 @@ public class InvoiceServiceTest {
         SalesOrder salesOrder = mockSalesOrderWithId("sales-order-1");
         salesOrder.setInvoices(invoiceList);
 
-
-        when(caseDatabaseService.findByCaseId(anyString())).thenAnswer(invocationOnMock -> {
-            String caseId = String.valueOf(invocationOnMock.getArguments()[0]);
-            return new Case() {{
-                this.setId(caseId);
-                this.setSalesOrder(salesOrder);
-            }};
-        });
-
         List<Invoice> invoices = invoiceService.makeDirectPaymentForCase("case-1", paymentInfos);
         for (Invoice finalInvoice : invoices) {
             if (finalInvoice.getInvoiceNumber().equals("00001"))
@@ -174,15 +141,6 @@ public class InvoiceServiceTest {
 
         SalesOrder salesOrder = mockSalesOrderWithId("sales-order-1");
         salesOrder.setInvoices(invoiceList);
-
-
-        when(caseDatabaseService.findByCaseId(anyString())).thenAnswer(invocationOnMock -> {
-            String caseId = String.valueOf(invocationOnMock.getArguments()[0]);
-            return new Case() {{
-                this.setId(caseId);
-                this.setSalesOrder(salesOrder);
-            }};
-        });
 
         List<Invoice> invoices = invoiceService.makeDirectPaymentForCase("case-1", paymentInfos);
         for (Invoice finalInvoice : invoices) {

@@ -2,8 +2,6 @@ package com.ilt.cms.database;
 
 public interface RunningNumberService {
 
-    String generateCaseNumber();
-
     String generateSalesOrderNumber();
 
     String generateInvoiceNumber();
@@ -32,5 +30,4 @@ public interface RunningNumberService {
 
     long queueNextNumber(String clinicCode, byte prefix);
 
-    String generateClaimRefNumber();
 }

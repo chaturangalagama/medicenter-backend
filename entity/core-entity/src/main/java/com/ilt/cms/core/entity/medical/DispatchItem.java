@@ -1,11 +1,9 @@
 package com.ilt.cms.core.entity.medical;
 
-import com.ilt.cms.core.entity.casem.ItemPriceAdjustment;
+import com.ilt.cms.core.entity.sales.ItemPriceAdjustment;
 import com.lippo.commons.util.CommonUtils;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 public class DispatchItem {
 

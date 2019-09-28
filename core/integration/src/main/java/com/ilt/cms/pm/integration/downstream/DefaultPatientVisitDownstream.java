@@ -14,7 +14,6 @@ import com.ilt.cms.api.entity.patientVisitRegistry.ConsultationFollowUp;
 import com.ilt.cms.api.entity.patientVisitRegistry.ConsultationFollowupWrapper;
 import com.ilt.cms.api.entity.patientVisitRegistry.VisitRegistryEntity;
 import com.ilt.cms.core.entity.Clinic;
-import com.ilt.cms.core.entity.casem.Case;
 import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.core.entity.medical.DispatchItem;
 import com.ilt.cms.core.entity.medical.MedicalReference;
@@ -26,7 +25,6 @@ import com.ilt.cms.pm.business.service.clinic.ClinicService;
 import com.ilt.cms.pm.business.service.clinic.ItemService;
 import com.ilt.cms.pm.business.service.doctor.ConsultationFollowupService;
 import com.ilt.cms.pm.business.service.doctor.DiagnosisService;
-import com.ilt.cms.pm.business.service.patient.CaseService;
 import com.ilt.cms.pm.business.service.patient.PatientService;
 import com.ilt.cms.pm.business.service.patient.PatientVisitService;
 import com.ilt.cms.pm.business.service.queue.QueueService;
@@ -58,20 +56,18 @@ public class DefaultPatientVisitDownstream implements PatientVisitDownstream {
     private ClinicService clinicService;
     private DiagnosisService diagnosisService;
     private ItemService itemService;
-    private CaseService caseService;
     private PatientService patientService;
     private QueueService queueService;
     private ConsultationFollowupService consultationFollowupService;
 
     public DefaultPatientVisitDownstream(PatientVisitService patientVisitService, ClinicService clinicService,
                                          DiagnosisService diagnosisService, ItemService itemService,
-                                         CaseService caseService, PatientService patientService, QueueService queueService,
+                                         PatientService patientService, QueueService queueService,
                                          ConsultationFollowupService consultationFollowupService) {
         this.patientVisitService = patientVisitService;
         this.clinicService = clinicService;
         this.diagnosisService = diagnosisService;
         this.itemService = itemService;
-        this.caseService = caseService;
         this.patientService = patientService;
         this.queueService = queueService;
         this.consultationFollowupService = consultationFollowupService;
@@ -145,28 +141,16 @@ public class DefaultPatientVisitDownstream implements PatientVisitDownstream {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> removeVisitFromCase(String visitId, String caseId) {
-        try {
-            patientVisitService.detachedVisitFromCase(visitId, caseId);
-        } catch (CMSException e) {
-            logger.error("PatientVisitRegistry remove error [" + e.getStatusCode() + "]:" + e.getMessage());
-            return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
-        }
-        logger.info("PatientVisitRegistry [visitId]: [" + visitId + "] removed from case [caseId]:[" + caseId + "]");
-        return httpApiResponse(new HttpApiResponse(StatusCode.S0000));
-    }
-
-    @Override
     public ResponseEntity<ApiResponse> createVisit(String caseId, VisitRegistryEntity registryEntity, Boolean isSingleVisitCase) {
         try {
             PatientVisitRegistry createdVisitRegistry;
-            if (caseId == null) {
+//            if (caseId == null) {
                 createdVisitRegistry = patientVisitService.createPatientVisitRegistry(PatientVisitRegistryMapper.mapToCore(registryEntity), isSingleVisitCase);
                 logger.info("New PatientVisitRegistry [visitId]:[" + createdVisitRegistry.getVisitNumber() + "] created and added to the new case");
-            } else {
-                createdVisitRegistry = patientVisitService.createPatientVisitRegistryForCase(caseId, PatientVisitRegistryMapper.mapToCore(registryEntity));
-                logger.info("New PatientVisitRegistry [visitId]:[" + createdVisitRegistry.getVisitNumber() + "] created and added to the case [id]:[" + caseId + "]");
-            }
+//            } else {
+//                createdVisitRegistry = patientVisitService.createPatientVisitRegistryForCase(caseId, PatientVisitRegistryMapper.mapToCore(registryEntity));
+//                logger.info("New PatientVisitRegistry [visitId]:[" + createdVisitRegistry.getVisitNumber() + "] created and added to the case [id]:[" + caseId + "]");
+//            }
             return httpApiResponse(new HttpApiResponse(PatientVisitRegistryMapper.mapToEntity(createdVisitRegistry)));
         } catch (CMSException e) {
             logger.error("PatientVisitRegistry create error [" + e.getStatusCode() + "]:" + e.getMessage());
@@ -199,37 +183,6 @@ public class DefaultPatientVisitDownstream implements PatientVisitDownstream {
             return httpApiResponse(new HttpApiResponse(visitPatientWrappers));
         } catch (CMSException e) {
             logger.error("PatientVisitRegistry create error [" + e.getStatusCode() + "]:" + e.getMessage());
-            return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
-        }
-    }
-
-    @Override
-    public ResponseEntity<ApiResponse> attachVisitToCase(List<String> visitIds, String caseId) {
-        try {
-            patientVisitService.attachedVisitToCase(visitIds, caseId);
-        } catch (CMSException e) {
-            logger.error("PatientVisitRegistry attaching error [" + e.getStatusCode() + "]:" + e.getMessage());
-            return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
-        }
-        logger.info("PatientVisitRegistry [visitIds]: [" + visitIds.toString() + "] attached to case [caseId]:[" + caseId + "]");
-        return httpApiResponse(new HttpApiResponse(StatusCode.S0000));
-    }
-
-    @Override
-    public ResponseEntity<ApiResponse> findAttachableVisits(String patientId, String caseId, LocalDateTime startTime, int limit) {
-        try {
-            List<PatientVisitRegistry> visits = patientVisitService.searchVisitByPatentAndMonth(patientId, caseId, startTime, null, limit);
-            List<VisitRegistryEntity> registryEntities = new ArrayList<>();
-            for (PatientVisitRegistry visit : visits) {
-                Case aCase = caseService.findByCaseId(visit.getCaseId());
-                VisitRegistryEntity registryEntity = PatientVisitRegistryMapper.mapToEntity(visit);
-                registryEntity.setCaseNumber(aCase.getCaseNumber());
-                registryEntities.add(registryEntity);
-            }
-            logger.info("Visits found [" + visits.size() + "] for patient [id]:[" + patientId + "] startTime in month [" + startTime + "}");
-            return httpApiResponse(new HttpApiResponse(registryEntities));
-        } catch (CMSException e) {
-            logger.error("Getting attachable visits error [" + e.getStatusCode() + "]:" + e.getMessage());
             return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
         }
     }
@@ -322,47 +275,6 @@ public class DefaultPatientVisitDownstream implements PatientVisitDownstream {
             return httpApiResponse(new HttpApiResponse(container));
         } catch (CMSException e) {
             logger.error("Getting Diagnosis and Dispatch details error [" + e.getStatusCode() + "]:" + e.getMessage());
-            return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
-        }
-    }
-
-    @Override
-    public ResponseEntity<ApiResponse> findVisitDataForCase(String caseId) {
-        try {
-            Case aCase = caseService.findByCaseId(caseId);
-            List<VisitRegistryEntity> visitEntities = patientVisitService.searchByIds(aCase.getVisitIds())
-                    .parallelStream()
-                    .map(PatientVisitRegistryMapper::mapToEntity)
-                    .collect(Collectors.toList());
-
-            for (VisitRegistryEntity visitEntity : visitEntities) {
-                Clinic clinic = clinicService.searchById(visitEntity.getClinicId());
-                if (visitEntity.getMedicalReferenceEntity().getDiagnosisIds() != null) {
-                    List<DiagnosisEntity> diagnosisEntities = diagnosisService.searchById(visitEntity.getMedicalReferenceEntity().getDiagnosisIds())
-                            .parallelStream()
-                            .map(DiagnosisMapper::mapToEntity)
-                            .collect(Collectors.toList());
-                    visitEntity.setDiagnosisEntities(diagnosisEntities);
-                }
-
-                if (visitEntity.getMedicalReferenceEntity().getDispatchItemEntities() != null) {
-                    List<DispatchItemEntity> dispatchItemEntities = new ArrayList<>();
-                    for (DispatchItemEntity dispatchItemEntity : visitEntity.getMedicalReferenceEntity().getDispatchItemEntities()) {
-                        if (dispatchItemEntity.getPurchasedId() == null) {
-                            Item item = itemService.searchItemById(dispatchItemEntity.getItemId());
-                            dispatchItemEntity.setItemCode(item.getCode());
-                            dispatchItemEntity.setItemName(item.getName());
-                            dispatchItemEntities.add(dispatchItemEntity);
-                        }
-                    }
-                    visitEntity.getMedicalReferenceEntity().setDispatchItemEntities(dispatchItemEntities);
-                }
-                visitEntity.setClinicName(clinic.getName());
-            }
-            logger.info("Visits [" + visitEntities.size() + "] found for [caseId]:[" + caseId + "]");
-            return httpApiResponse(new HttpApiResponse(visitEntities));
-        } catch (CMSException e) {
-            logger.error("Getting visits details for caseId error [" + e.getStatusCode() + "]:" + e.getMessage());
             return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
         }
     }

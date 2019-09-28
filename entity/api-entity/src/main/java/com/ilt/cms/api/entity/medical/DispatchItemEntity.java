@@ -1,14 +1,12 @@
 package com.ilt.cms.api.entity.medical;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ilt.cms.api.entity.casem.ItemPriceAdjustmentEntity;
+import com.ilt.cms.api.entity.sales.ItemPriceAdjustmentEntity;
 import com.lippo.cms.util.CMSConstant;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor

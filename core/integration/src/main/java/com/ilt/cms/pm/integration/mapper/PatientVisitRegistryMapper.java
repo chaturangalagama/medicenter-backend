@@ -12,7 +12,6 @@ public class PatientVisitRegistryMapper {
         }
         VisitRegistryEntity registryEntity = new VisitRegistryEntity();
         registryEntity.setVisitId(patientVisitRegistry.getId());
-        registryEntity.setCaseId(patientVisitRegistry.getCaseId());
         registryEntity.setVisitNumber(patientVisitRegistry.getVisitNumber());
         registryEntity.setClinicId(patientVisitRegistry.getClinicId());
         registryEntity.setPatientId(patientVisitRegistry.getPatientId());
@@ -20,7 +19,6 @@ public class PatientVisitRegistryMapper {
         registryEntity.setEndTime(patientVisitRegistry.getEndTime());
         registryEntity.setPreferredDoctorId(patientVisitRegistry.getPreferredDoctorId());
         registryEntity.setVisitPurpose(patientVisitRegistry.getVisitPurpose());
-        registryEntity.setAttachedToCase(patientVisitRegistry.isAttachedToCase());
         if (patientVisitRegistry.getVisitStatus() != null) {
             registryEntity.setVisitStatus(VisitRegistryEntity.PatientVisitState.valueOf(patientVisitRegistry.getVisitStatus().name()));
         }
@@ -38,7 +36,6 @@ public class PatientVisitRegistryMapper {
     public static PatientVisitRegistry mapToCore(VisitRegistryEntity registryEntity) {
         PatientVisitRegistry visitRegistry = new PatientVisitRegistry();
         visitRegistry.setVisitNumber(registryEntity.getVisitNumber());
-        visitRegistry.setCaseId(registryEntity.getCaseId());
         visitRegistry.setClinicId(registryEntity.getClinicId());
         visitRegistry.setPatientId(registryEntity.getPatientId());
         visitRegistry.setStartTime(registryEntity.getStartTime());

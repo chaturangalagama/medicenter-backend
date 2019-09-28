@@ -1,4 +1,4 @@
-package com.ilt.cms.api.entity.casem;
+package com.ilt.cms.api.entity.sales;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lippo.cms.util.CMSConstant;
@@ -9,9 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

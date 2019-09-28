@@ -1,8 +1,8 @@
 package com.ilt.cms.pm.business.service.billing;
 
 import com.ilt.cms.core.entity.Status;
-import com.ilt.cms.core.entity.casem.SalesItem;
-import com.ilt.cms.core.entity.casem.SalesOrder;
+import com.ilt.cms.core.entity.sales.SalesItem;
+import com.ilt.cms.core.entity.sales.SalesOrder;
 import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.database.RunningNumberService;
 import com.ilt.cms.repository.spring.ItemRepository;

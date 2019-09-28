@@ -1,6 +1,6 @@
 package business.mock;
 
-import com.ilt.cms.core.entity.casem.ItemPriceAdjustment;
+import com.ilt.cms.core.entity.sales.ItemPriceAdjustment;
 import com.ilt.cms.core.entity.consultation.Consultation;
 import com.ilt.cms.core.entity.consultation.MedicalCertificate;
 import com.ilt.cms.core.entity.consultation.PatientReferral;
@@ -15,7 +15,6 @@ import com.ilt.cms.core.entity.visit.Priority;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Set;
 
 public class MockPatientVisitRegistry {
 
@@ -23,7 +22,6 @@ public class MockPatientVisitRegistry {
         PatientVisitRegistry registry = new PatientVisitRegistry();
         registry.setId("1245842");
         registry.setVisitNumber("000001");
-        registry.setCaseId("789641");
         registry.setPreferredDoctorId("DOC0001");
         registry.setPatientId("P0001");
         registry.setClinicId("CLI1000");
@@ -31,7 +29,6 @@ public class MockPatientVisitRegistry {
         registry.setPriority(Priority.NORMAL);
         registry.setEndTime(LocalDateTime.now());
         registry.setStartTime(LocalDateTime.now());
-        registry.setAttachedToCase(true);
         registry.setVisitStatus(PatientVisitRegistry.PatientVisitState.INITIAL);
         registry.setMedicalReference(mockMedicalReference());
         registry.setPatientQueue(new PatientVisitRegistry.PatientQueue(10000, true));
@@ -42,7 +39,6 @@ public class MockPatientVisitRegistry {
         PatientVisitRegistry registry = new PatientVisitRegistry();
         registry.setId("1245842");
         registry.setVisitNumber("000001");
-        registry.setCaseId("789641");
         registry.setPreferredDoctorId("DOC0001");
         registry.setPatientId("P0001");
         registry.setClinicId("CLI1000");
@@ -50,7 +46,6 @@ public class MockPatientVisitRegistry {
         registry.setPriority(Priority.NORMAL);
         registry.setEndTime(LocalDateTime.now());
         registry.setStartTime(LocalDateTime.now());
-        registry.setAttachedToCase(true);
         registry.setVisitStatus(PatientVisitRegistry.PatientVisitState.INITIAL);
         registry.setMedicalReference(mockMedicalReferenceTwo());
         registry.setPatientQueue(new PatientVisitRegistry.PatientQueue(10000, true));

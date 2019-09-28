@@ -1,8 +1,8 @@
-package com.ilt.cms.api.entity.casem;
+package com.ilt.cms.api.entity.sales;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ilt.cms.core.entity.casem.Invoice;
-import com.ilt.cms.core.entity.casem.PaymentInfo;
+import com.ilt.cms.core.entity.sales.Invoice;
+import com.ilt.cms.core.entity.sales.PaymentInfo;
 import com.lippo.cms.util.CMSConstant;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +35,5 @@ public class InvoiceEntity {
     private Invoice.InvoiceState invoiceState;
     private Invoice.InvoiceType invoiceType;
     private List<PaymentInfo> paymentInfos;
-    private ClaimEntity claim = new ClaimEntity();
 
 }

@@ -1,4 +1,4 @@
-package com.ilt.cms.core.entity.casem;
+package com.ilt.cms.core.entity.sales;
 
 import com.ilt.cms.core.entity.item.Cost;
 import com.ilt.cms.core.entity.item.Item;
@@ -6,10 +6,6 @@ import com.ilt.cms.core.entity.item.SellingPrice;
 import com.lippo.cms.util.Calculations;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class SalesItem {
 

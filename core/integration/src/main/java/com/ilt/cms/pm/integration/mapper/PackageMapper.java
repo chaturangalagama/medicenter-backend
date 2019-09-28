@@ -1,10 +1,10 @@
 package com.ilt.cms.pm.integration.mapper;
 
-import com.ilt.cms.api.entity.casem.DispatchEntity;
-import com.ilt.cms.api.entity.casem.PackageEntity;
-import com.ilt.cms.api.entity.casem.PackageEntity.PackageStatus;
-import com.ilt.cms.core.entity.casem.Dispatch;
-import com.ilt.cms.core.entity.casem.Package;
+import com.ilt.cms.api.entity.sales.DispatchEntity;
+import com.ilt.cms.api.entity.sales.PackageEntity;
+import com.ilt.cms.api.entity.sales.PackageEntity.PackageStatus;
+import com.ilt.cms.core.entity.sales.Dispatch;
+import com.ilt.cms.core.entity.sales.Package;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;

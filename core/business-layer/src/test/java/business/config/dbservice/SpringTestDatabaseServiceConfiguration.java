@@ -6,7 +6,6 @@ import com.ilt.cms.database.RunningNumberService;
 import com.ilt.cms.database.SupplierDatabaseService;
 import com.ilt.cms.database.allergy.AllergyGroupDatabaseService;
 import com.ilt.cms.database.appointment.CalendarDatabaseService;
-import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.consultation.ConsultationDatabaseService;
 import com.ilt.cms.database.consultation.ConsultationFollowupDatabaseService;
@@ -102,10 +101,6 @@ public class SpringTestDatabaseServiceConfiguration{
     @Bean
     public VisitPurposeDatabaseService visitPurposeDatabaseService(){
         return new MongoVisitPurposeDatabaseService(repositoryConfiguration.visitPurposeRepository());
-    }
-    @Bean
-    public CaseDatabaseService caseDatabaseService() {
-        return new MongoCaseDatabaseService(repositoryConfiguration.caseRepository(), repositoryConfiguration.mongoTemplate());
     }
 
     @Bean

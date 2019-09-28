@@ -104,16 +104,6 @@ public class SpringTestRepositoryConfiguration {
     }
 
     @Bean
-    public CaseRepository caseRepository() {
-        return Mockito.mock(CaseRepository.class);
-    }
-
-    @Bean
-    public CaseRepositoryImpl caseRepositoryImpl() {
-        return Mockito.mock(CaseRepositoryImpl.class);
-    }
-
-    @Bean
     public ConsultationRepository consultationRepository() {
         return Mockito.mock(ConsultationRepository.class);
     }

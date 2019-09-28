@@ -2,7 +2,6 @@ package com.ilt.cms.pm.business.visit.flow.handler.registration;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.pm.business.visit.event.Event;
@@ -24,13 +23,10 @@ public class RegistrationValidationHandler<T extends Event> implements EventHand
 
     private PatientDatabaseService patientService;
     private ClinicDatabaseService clinicService;
-    private CaseDatabaseService caseDatabaseService;
 
-    public RegistrationValidationHandler(PatientDatabaseService patientService, ClinicDatabaseService clinicService,
-                                         CaseDatabaseService caseDatabaseService) {
+    public RegistrationValidationHandler(PatientDatabaseService patientService, ClinicDatabaseService clinicService) {
         this.patientService = patientService;
         this.clinicService = clinicService;
-        this.caseDatabaseService = caseDatabaseService;
     }
 
 
@@ -54,14 +50,6 @@ public class RegistrationValidationHandler<T extends Event> implements EventHand
         if (!clinicOpt.isPresent()) {
             logger.error("Clinic [" + registrationEvent.getClinicId() + "] not found");
             return new DefaultHandlerResponse<>(registrationEvent, StatusCode.E2002);
-        }
-
-        if (registrationEvent.getCaseId() != null) {
-            boolean exists = caseDatabaseService.existsAndActive(registrationEvent.getCaseId());
-            if (!exists) {
-                logger.error("The given case id is not available or not active");
-                return new DefaultHandlerResponse<>(registrationEvent, StatusCode.E2004);
-            }
         }
         return new DefaultHandlerResponse<>(registrationEvent);
     }

@@ -1,4 +1,4 @@
-package com.ilt.cms.api.entity.casem;
+package com.ilt.cms.api.entity.sales;
 
 import lombok.*;
 

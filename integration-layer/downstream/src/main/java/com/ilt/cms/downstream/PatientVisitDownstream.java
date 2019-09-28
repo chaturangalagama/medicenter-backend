@@ -27,17 +27,11 @@ public interface PatientVisitDownstream {
 
     ResponseEntity<ApiResponse> updateVisit(String visitID, VisitRegistryEntity visitEntity);
 
-    ResponseEntity<ApiResponse> removeVisitFromCase(String visitId, String caseId);
-
     ResponseEntity<ApiResponse> createVisit(String caseId, VisitRegistryEntity registryEntity, Boolean isSingleVisitCase);
 
     ResponseEntity<ApiResponse> createVisit(VisitRegistryEntity registryEntity, Boolean isSingleVisitCase);
 
     ResponseEntity<ApiResponse> listVisitsByClinicAndStartTime(String clinicId, LocalDateTime start, LocalDateTime end);
-
-    ResponseEntity<ApiResponse> attachVisitToCase(List<String> visitIds, String caseId);
-
-    ResponseEntity<ApiResponse> findAttachableVisits(String patientId, String caseId, LocalDateTime startTime, int limit);
 
     ResponseEntity<ApiResponse> updateStatusToConsult(String visitId, String doctorId);
 
@@ -50,8 +44,6 @@ public interface PatientVisitDownstream {
     ResponseEntity<ApiResponse> updateStatusToComplete(String visitId);
 
     ResponseEntity<ApiResponse> findDiagnosisDataByVisit(String visitId);
-
-    ResponseEntity<ApiResponse> findVisitDataForCase(String caseId);
 
     ResponseEntity<ApiResponse> updateVisitConsultation(String visitId, ConsultationEntity consultationEntity, List<String> diagnosisIds, Principal principal);
 

@@ -17,7 +17,6 @@ public class PatientVisitRegistry extends PersistedObject {
     }
 
     private String visitNumber;
-    private String caseId;
     private String patientId;
     private String clinicId;
     private String preferredDoctorId;
@@ -27,7 +26,6 @@ public class PatientVisitRegistry extends PersistedObject {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private PatientVisitState visitStatus;
-    private boolean attachedToCase;
     private PatientQueue patientQueue;
     private String remark;
 
@@ -56,15 +54,11 @@ public class PatientVisitRegistry extends PersistedObject {
     }
 
     public PatientVisitRegistry copy(PatientVisitRegistry registry) {
-        //  visitNumber = registry.visitNumber;
-        //  caseId = registry.caseId;
         patientId = registry.patientId;
         clinicId = registry.clinicId;
         preferredDoctorId = registry.preferredDoctorId;
         visitPurpose = registry.visitPurpose;
         priority = registry.priority;
-//        startTime = registry.startTime;
-//        endTime = registry.endTime;
         remark = registry.remark;
         return this;
     }
@@ -75,14 +69,6 @@ public class PatientVisitRegistry extends PersistedObject {
 
     public void setVisitNumber(String visitNumber) {
         this.visitNumber = visitNumber;
-    }
-
-    public String getCaseId() {
-        return caseId;
-    }
-
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
     }
 
     public String getPatientId() {
@@ -156,14 +142,6 @@ public class PatientVisitRegistry extends PersistedObject {
 
     public void setVisitStatus(PatientVisitState visitStatus) {
         this.visitStatus = visitStatus;
-    }
-
-    public boolean isAttachedToCase() {
-        return attachedToCase;
-    }
-
-    public void setAttachedToCase(boolean attachedToCase) {
-        this.attachedToCase = attachedToCase;
     }
 
     public List<FileMetaData> getFileMetaData() {

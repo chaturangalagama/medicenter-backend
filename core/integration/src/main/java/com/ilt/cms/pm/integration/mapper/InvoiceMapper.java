@@ -4,8 +4,7 @@ import com.googlecode.jmapper.JMapper;
 import com.googlecode.jmapper.api.JMapperAPI;
 import com.googlecode.jmapper.api.enums.MappingType;
 import com.ilt.cms.api.entity.charge.InvoiceView;
-import com.ilt.cms.core.entity.casem.Claim;
-import com.ilt.cms.core.entity.casem.Invoice;
+import com.ilt.cms.core.entity.sales.Invoice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import static com.googlecode.jmapper.api.JMapperAPI.*;
 
 @Service("invoiceMapperService")
 public class InvoiceMapper {
-    private static final Logger logger = LoggerFactory.getLogger(ClaimMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(InvoiceMapper.class);
 
     private JMapper<InvoiceView, Invoice> coreToApiMapper;
 
@@ -36,7 +35,7 @@ public class InvoiceMapper {
                         .add(attribute("includedTaxAmount").value("taxAmount"))
                         .add(attribute("planId").value("planId"))
                 )
-                .add(mappedClass(Claim.class).add(global().targetClasses(Claim.class)));
+                .add(mappedClass(InvoiceMapper.class).add(global().targetClasses(InvoiceMapper.class)));
 
         this.coreToApiMapper = new JMapper<>(InvoiceView.class, Invoice.class, coreToApiMapperConfiguration);
     }

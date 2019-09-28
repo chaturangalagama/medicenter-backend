@@ -51,13 +51,6 @@ public class PatientVisitRestController {
         return patientVisitDownstream.listPatientVisits(patientId, page, size);
     }
 
-    @PostMapping("/remove/{visitId}/{caseId}")
-    @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
-    public ResponseEntity removePatientVisitRegistry(Principal principal, @PathVariable("visitId") String visitId, @PathVariable("caseId") String caseId) {
-        logger.info("Removing PatientVisitRegistry [visitId]:[" + visitId + "] for user [" + principal.getName() + "]");
-        return patientVisitDownstream.removeVisitFromCase(visitId, caseId);
-    }
-
     @PostMapping("/update/{visitId}")
     @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
     public ResponseEntity updatePatientVisitRegistry(Principal principal, @PathVariable("visitId") String visitId, @RequestBody VisitRegistryEntity visitRegistryEntity) {
@@ -101,23 +94,6 @@ public class PatientVisitRestController {
         return patientVisitDownstream.callNextPatient(clinicId, doctorId);
     }
 
-    @PostMapping("/attach/{caseId}")
-    @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
-    public ResponseEntity attachPatientVisitRegistyToCase(Principal principal, @PathVariable("caseId") String caseId,
-                                                          @RequestBody List<String> visitIds) {
-        logger.info("Attaching PatientVisitRegistries to case [" + caseId + "] for user [" + principal.getName() + "]");
-        return patientVisitDownstream.attachVisitToCase(visitIds, caseId);
-    }
-
-    @PostMapping("/list/by-month/{patientId}/{month}/{caseId}/{limit}")
-    @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
-    public ResponseEntity getPatientLastVisitsByMonth(Principal principal, @PathVariable("patientId") String patientId,
-                                                      @PathVariable("month") @DateTimeFormat(pattern = CMSConstant.JSON_DATE_FORMAT_WITH_SECONDS) LocalDateTime month,
-                                                      @PathVariable("caseId") String caseId, @PathVariable("limit") int limit) {
-        logger.info("Getting visit details by patient [patentId]:[" + patientId + "] for month [" + month + "] for user [" + principal.getName() + "]");
-        return patientVisitDownstream.findAttachableVisits(patientId, caseId, month, limit);
-    }
-
     @PostMapping("/update/consult/{visitId}/{doctorId}")
     @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
     public ResponseEntity updateToConsultState(Principal principal, @PathVariable("visitId") String visitId,
@@ -155,12 +131,6 @@ public class PatientVisitRestController {
     public ResponseEntity rollbackStatusToPostConsult(Principal principal, @PathVariable("visitId") String visitId) {
         logger.info("rollback PatientVisitRegistry [visitId]:[" + visitId + "] to [POST_CONSULT] status for user [" + principal.getName() + "]");
         return patientVisitDownstream.rollbackStatusToPostConsult(visitId, principal);
-    }
-
-    @PostMapping("/list/by-case/{caseId}")
-    public ResponseEntity findVisitDataByCase(Principal principal, @PathVariable("caseId") String caseId) {
-        logger.info("Get all PatientVisitRegistries data for [caseId]:[" + caseId + "] for user [" + principal.getName() + "]");
-        return patientVisitDownstream.findVisitDataForCase(caseId);
     }
 
     @PostMapping("/update/consultation/{visitId}")

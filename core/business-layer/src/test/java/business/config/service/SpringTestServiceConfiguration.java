@@ -3,7 +3,6 @@ package business.config.service;
 import business.config.dbservice.SpringTestDatabaseServiceConfiguration;
 import business.config.repository.SpringTestRepositoryConfiguration;
 import com.ilt.cms.pm.business.service.appointment.AppointmentService;
-import com.ilt.cms.pm.business.service.billing.NewCaseService;
 import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.billing.SalesOrderService;
 import com.ilt.cms.pm.business.service.clinic.*;
@@ -116,20 +115,12 @@ public class SpringTestServiceConfiguration {
     public PatientVisitService patientVisitService() {
         return new PatientVisitService(serviceConfiguration.patientVisitRegistryDatabaseService(),
                 serviceConfiguration.patientDatabaseService(),
-                serviceConfiguration.caseDatabaseService(),
                 serviceConfiguration.clinicDatabaseService(),
                 serviceConfiguration.doctorDatabaseService(),
                 consultationService(),
                 consultationFollowupService(),
                 patientReferralService(),
                 itemService(),
-                new NewCaseService(springTestRepositoryConfiguration.caseRepository(), springTestRepositoryConfiguration.patientRepository(),
-                        springTestRepositoryConfiguration.clinicRepository(), serviceConfiguration.mongoRunningNumberService(),
-                        springTestRepositoryConfiguration.patientVisitRegistryRepository(),
-                        new SalesOrderService(springTestRepositoryConfiguration.salesOrderRepository(),
-                                serviceConfiguration.mongoRunningNumberService(),
-                                springTestRepositoryConfiguration.itemRepository()),
-                        mock(PriceCalculationService.class)),
                 serviceConfiguration.mongoRunningNumberService(),
                 diagnosisService(), queueService(), priceCalculationService());
     }
@@ -175,7 +166,7 @@ public class SpringTestServiceConfiguration {
     public PriceCalculationService priceCalculationService() {
         return new PriceCalculationService(springTestRepositoryConfiguration.itemRepository(),
                 mock(ClinicGroupItemMasterRepository.class), mock(ClinicItemMasterRepository.class),
-                springTestRepositoryConfiguration.clinicRepository(), springTestRepositoryConfiguration.caseRepository(),
+                springTestRepositoryConfiguration.clinicRepository(),
                 legacyInventoryService());
     }
 

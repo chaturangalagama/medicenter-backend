@@ -1,18 +1,12 @@
 package com.ilt.cms.pm.integration.downstream;
 
 import com.ilt.cms.api.entity.charge.InvoiceView;
-import com.ilt.cms.core.entity.casem.Invoice;
-import com.ilt.cms.core.entity.casem.PaymentInfo;
+import com.ilt.cms.core.entity.sales.Invoice;
+import com.ilt.cms.core.entity.sales.PaymentInfo;
 import com.ilt.cms.downstream.ChargingServiceDownstream;
 import com.ilt.cms.pm.business.service.billing.InvoiceService;
-import com.ilt.cms.core.entity.billing.ItemChargeDetail;
-import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeRequest;
-import com.ilt.cms.pm.business.service.billing.NewCaseService;
 import com.ilt.cms.pm.integration.mapper.InvoiceMapper;
-import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
 import com.lippo.cms.exception.CMSException;
-import com.lippo.commons.util.CommonUtils;
-import com.lippo.commons.util.StatusCode;
 import com.lippo.commons.web.api.ApiResponse;
 import com.lippo.commons.web.api.HttpApiResponse;
 import org.slf4j.Logger;
@@ -20,10 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.lippo.commons.web.CommonWebUtil.httpApiResponse;
@@ -41,13 +33,11 @@ public class DefaultChargingServiceDownstream implements ChargingServiceDownstre
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultChargingServiceDownstream.class);
 
-    private NewCaseService newCaseService;
     private InvoiceService invoiceService;
     private InvoiceMapper invoiceMapper;
 
-    public DefaultChargingServiceDownstream(NewCaseService newCaseService, InvoiceService invoiceService,
+    public DefaultChargingServiceDownstream(InvoiceService invoiceService,
                                             InvoiceMapper invoiceMapper) {
-        this.newCaseService = newCaseService;
         this.invoiceService = invoiceService;
         this.invoiceMapper = invoiceMapper;
     }
@@ -98,32 +88,4 @@ public class DefaultChargingServiceDownstream implements ChargingServiceDownstre
         }
     }
 
-    @Override
-    public ResponseEntity<ApiResponse> findInvoiceBreakdownForCase(String caseId) {
-        try {
-
-            List<Invoice> invoiceBreakdownForItems = newCaseService.findCaseInvoices(caseId);
-            return httpApiResponse(new HttpApiResponse(invoiceBreakdownForItems));
-        } catch (CMSException e) {
-            logger.error("Error processing invoices", e);
-            return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
-        }
-    }
-
-    @Override
-    public ResponseEntity<ApiResponse> findInvoiceBreakdownForCase(String caseId, ItemChargeRequest itemChargeRequest) {
-        try {
-            for (ItemChargeDetail itemChargeDetail : itemChargeRequest.getChargeDetails()) {
-                if (!CommonUtils.isStringValid(itemChargeDetail.getItemId())) {
-                    logger.error("Invalid item id for [" + itemChargeDetail + "]");
-                    return httpApiResponse(new HttpApiResponse(StatusCode.E2000, "Invalid item id"));
-                }
-            }
-            List<Invoice> invoiceBreakdownForItems = newCaseService.invoiceBreakdown(caseId, itemChargeRequest);
-            return httpApiResponse(new HttpApiResponse(invoiceBreakdownForItems));
-        } catch (CMSException e) {
-            logger.error("Error processing invoices", e);
-            return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
-        }
-    }
 }

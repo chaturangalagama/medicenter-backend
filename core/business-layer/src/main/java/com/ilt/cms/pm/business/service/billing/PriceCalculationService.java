@@ -1,8 +1,6 @@
 package com.ilt.cms.pm.business.service.billing;
 
 import com.ilt.cms.core.entity.Clinic;
-import com.ilt.cms.core.entity.Status;
-import com.ilt.cms.core.entity.casem.Case;
 import com.ilt.cms.core.entity.charge.Charge;
 import com.ilt.cms.core.entity.inventory.InventoryUsage;
 import com.ilt.cms.core.entity.item.*;
@@ -30,35 +28,32 @@ public class PriceCalculationService {
     private ClinicGroupItemMasterRepository clinicGroupItemMasterRepository;
     private ClinicItemMasterRepository clinicItemMasterRepository;
     private ClinicRepository clinicRepository;
-    private CaseRepository caseRepository;
     private LegacyInventoryService legacyInventoryService;
 
     public PriceCalculationService(ItemRepository itemRepository, ClinicGroupItemMasterRepository clinicGroupItemMasterRepository,
-                                   ClinicItemMasterRepository clinicItemMasterRepository, ClinicRepository clinicRepository, CaseRepository caseRepository,
-                                   LegacyInventoryService legacyInventoryService) {
+                                   ClinicItemMasterRepository clinicItemMasterRepository, ClinicRepository clinicRepository,                                    LegacyInventoryService legacyInventoryService) {
         this.itemRepository = itemRepository;
         this.clinicGroupItemMasterRepository = clinicGroupItemMasterRepository;
         this.clinicItemMasterRepository = clinicItemMasterRepository;
         this.clinicRepository = clinicRepository;
-        this.caseRepository = caseRepository;
         this.legacyInventoryService = legacyInventoryService;
     }
 
-    public ItemChargeDetailResponse calculateSalesPrice(String caseId, ItemChargeRequest chargeRequests) throws CMSException {
-        Case aCase = caseRepository.findById(caseId).orElseThrow(() -> {
-            logger.error("Case id is invalid [" + caseId + "]");
-            return new CMSException(StatusCode.E2000, "Case id is invalid");
-        });
-        ItemChargeDetailResponse itemChargeDetailResponse = calculateSalesPrice(chargeRequests, aCase.getClinicId());
-        List<ItemChargeDetail> chargeDetails = itemChargeDetailResponse.getChargeDetails();
-        List<InventoryUsage> inventoryUsages = chargeDetails.stream()
-                .map(itemChargeDetail -> new InventoryUsage(InventoryUsage.InventoryType.DRUG, itemChargeDetail.getItemId(), itemChargeDetail.getQuantity()))
-                .collect(Collectors.toList());
-        List<ItemChargeDetailResponse.InventoryData> inventoryDatas = legacyInventoryService.getOldUsage(aCase.getClinicId(), inventoryUsages);
-        itemChargeDetailResponse.setInventoryData(inventoryDatas);
-        return itemChargeDetailResponse;
-
-    }
+//    public ItemChargeDetailResponse calculateSalesPrice(String caseId, ItemChargeRequest chargeRequests) throws CMSException {
+//        Case aCase = caseRepository.findById(caseId).orElseThrow(() -> {
+//            logger.error("Case id is invalid [" + caseId + "]");
+//            return new CMSException(StatusCode.E2000, "Case id is invalid");
+//        });
+//        ItemChargeDetailResponse itemChargeDetailResponse = calculateSalesPrice(chargeRequests, aCase.getClinicId());
+//        List<ItemChargeDetail> chargeDetails = itemChargeDetailResponse.getChargeDetails();
+//        List<InventoryUsage> inventoryUsages = chargeDetails.stream()
+//                .map(itemChargeDetail -> new InventoryUsage(InventoryUsage.InventoryType.DRUG, itemChargeDetail.getItemId(), itemChargeDetail.getQuantity()))
+//                .collect(Collectors.toList());
+//        List<ItemChargeDetailResponse.InventoryData> inventoryDatas = legacyInventoryService.getOldUsage(aCase.getClinicId(), inventoryUsages);
+//        itemChargeDetailResponse.setInventoryData(inventoryDatas);
+//        return itemChargeDetailResponse;
+//
+//    }
 
     public ItemChargeDetailResponse calculateSalesPrice(ItemChargeRequest chargeRequests, String clinicId) throws CMSException {
 

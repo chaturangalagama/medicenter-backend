@@ -1,7 +1,7 @@
 package com.ilt.cms.api.entity.charge;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ilt.cms.core.entity.casem.PaymentInfo;
+import com.ilt.cms.core.entity.sales.PaymentInfo;
 import com.lippo.cms.util.CMSConstant;
 import lombok.Getter;
 import lombok.Setter;

@@ -5,8 +5,7 @@ import business.mock.*;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.QueueStore;
 import com.ilt.cms.core.entity.Status;
-import com.ilt.cms.core.entity.casem.Case;
-import com.ilt.cms.core.entity.casem.SalesOrder;
+import com.ilt.cms.core.entity.sales.SalesOrder;
 import com.ilt.cms.core.entity.consultation.Consultation;
 import com.ilt.cms.core.entity.consultation.PatientReferral;
 import com.ilt.cms.core.entity.doctor.Doctor;
@@ -73,8 +72,6 @@ public class PatientVisitServiceTest {
     private ClinicRepository clinicRepository;
     @Autowired
     private DoctorRepository doctorRepository;
-    @Autowired
-    private CaseRepository caseRepository;
     @Autowired
     private ConsultationRepository consultationRepository;
     @Autowired
@@ -205,8 +202,6 @@ public class PatientVisitServiceTest {
                     return Optional.of(doctor);
                 }
         );
-        when(caseRepository.existsById(anyString())).thenReturn(true);
-        when(caseRepository.existsByIdAndStatus(anyString(), any(Case.CaseStatus.class))).thenReturn(true);
         when(consultationRepository.existsById(anyString())).thenReturn(true);
         when(diagnosisRepository.existsById(anyString())).thenReturn(true);
         when(patientVisitRegistryRepository.existsByVisitNumber(anyString())).thenReturn(true);
@@ -242,8 +237,6 @@ public class PatientVisitServiceTest {
                             return Optional.of(referral);
                         }
                 );
-        when(caseRepository.findById(anyString())).thenReturn(Optional.of(MockCase.createSampleCase()));
-        when(caseRepository.save(any(Case.class))).thenReturn(MockCase.createSampleCase());
         when(itemRepository.findById(anyString())).thenAnswer(
                 (Answer<Optional>) invocation -> {
                     String itemId = invocation.getArgument(0);
@@ -311,13 +304,6 @@ public class PatientVisitServiceTest {
         PatientVisitRegistry registry = MockPatientVisitRegistry.mockVisitRegistry();
         PatientVisitRegistry updateRegistry = patientVisitService.updatePatientVisitRegistry("1245842", registry);
         assertEquals("1245842", updateRegistry.getId());
-    }
-
-    @Test
-    public void createPatientVisitRegistry() throws CMSException {
-        PatientVisitRegistry registry = MockPatientVisitRegistry.mockVisitRegistry();
-        PatientVisitRegistry savedRegistry = patientVisitService.createPatientVisitRegistryForCase("4785145", registry);
-        assertEquals("1245842", savedRegistry.getId());
     }
 
     @Test

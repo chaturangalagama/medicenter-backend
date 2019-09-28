@@ -1,4 +1,4 @@
-package com.ilt.cms.core.entity.casem;
+package com.ilt.cms.core.entity.sales;
 
 import org.springframework.data.annotation.Transient;
 
@@ -35,7 +35,6 @@ public class Invoice {
     private String planName;
     private InvoiceState invoiceState;
     private String reasonForDelete;
-    private Claim claim;
 
 
     public Invoice(String invoiceNumber, InvoiceType invoiceType, String planId) {
@@ -149,15 +148,6 @@ public class Invoice {
         this.reasonForDelete = reasonForDelete;
     }
 
-    public Claim getClaim() {
-        return claim;
-    }
-
-    public void setClaim(Claim claim) {
-        this.claim = claim;
-    }
-
-
     public int getCashAdjustmentRounding() {
         return cashAdjustmentRounding;
     }
@@ -191,7 +181,6 @@ public class Invoice {
                 ", planName='" + planName + '\'' +
                 ", invoiceState=" + invoiceState +
                 ", reasonForDelete='" + reasonForDelete + '\'' +
-                ", claim=" + claim +
                 '}';
     }
 }

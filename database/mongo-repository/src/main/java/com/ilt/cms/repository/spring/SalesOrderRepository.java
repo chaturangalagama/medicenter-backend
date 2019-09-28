@@ -1,7 +1,6 @@
 package com.ilt.cms.repository.spring;
 
-import com.ilt.cms.core.entity.casem.Claim;
-import com.ilt.cms.core.entity.casem.SalesOrder;
+import com.ilt.cms.core.entity.sales.SalesOrder;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

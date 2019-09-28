@@ -48,7 +48,7 @@ public class PriceCalculationServiceTest {
         clinicRepository = mock(ClinicRepository.class);
         when(clinicRepository.findById(anyString())).thenReturn(Optional.of(new Clinic()));
         priceCalculationService = new PriceCalculationService(
-                itemRepository, clinicGroupItemMasterRepository, clinicItemMasterRepository, clinicRepository, mock(CaseRepository.class),
+                itemRepository, clinicGroupItemMasterRepository, clinicItemMasterRepository, clinicRepository,
                 mock(LegacyInventoryService.class));
     }
 

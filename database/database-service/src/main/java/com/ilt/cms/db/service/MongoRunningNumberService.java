@@ -31,7 +31,6 @@ public class MongoRunningNumberService implements RunningNumberService {
 
     private static final Logger logger = LoggerFactory.getLogger(MongoRunningNumberService.class);
 
-    private static final String CASE = "case";
     private static final String SALES_ORDER = "sales-order";
     private static final String PATIENT = "patient";
     private static final String BILL = "bill";
@@ -46,7 +45,6 @@ public class MongoRunningNumberService implements RunningNumberService {
     private static final String DELIVERY_VOID_NOTE = "delivery-void-note";
     private static final String INVOICE = "invoice";
     public static final String QUEUE = "queue";
-    private static final String CLAIM_NUMBER = "claim-number";
 
     private final MongoTemplate mongoTemplate;
 
@@ -57,7 +55,7 @@ public class MongoRunningNumberService implements RunningNumberService {
     @PostConstruct
     public void init() {
         logger.info("Initiating default runner number");
-        for (String name : Arrays.asList(INVOICE, SALES_ORDER, CASE, PATIENT, BILL, VISIT, ADJUSTMENT, MEDICAL_CERTIFICATE, REQUEST,
+        for (String name : Arrays.asList(INVOICE, SALES_ORDER, PATIENT, BILL, VISIT, ADJUSTMENT, MEDICAL_CERTIFICATE, REQUEST,
                 ORDER, GRN, GRVN, DELIVERY_NOTE, DELIVERY_VOID_NOTE)) {
             Query query = Query.query(Criteria.where("_id").is(name));
             if (!mongoTemplate.exists(query, RunningNumber.class)) {
@@ -68,11 +66,6 @@ public class MongoRunningNumberService implements RunningNumberService {
             }
         }
         logger.info("initiation completed");
-    }
-
-    @Override
-    public String generateCaseNumber() {
-        return getNextSequence(CASE);
     }
 
     @Override
@@ -133,11 +126,6 @@ public class MongoRunningNumberService implements RunningNumberService {
     @Override
     public String generateDeliveryNote() {
         return getNextSequence(DELIVERY_NOTE);
-    }
-
-    @Override
-    public String generateClaimRefNumber() {
-        return getNextSequence(CLAIM_NUMBER);
     }
 
     @Override

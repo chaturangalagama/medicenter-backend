@@ -1,28 +1,18 @@
 package com.ilt.cms.pm.business.service.patient;
 
-import com.ilt.cms.core.entity.PersistedObject;
-import com.ilt.cms.core.entity.billing.ItemChargeDetail;
-import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeRequest;
-import com.ilt.cms.core.entity.casem.*;
-import com.ilt.cms.core.entity.charge.Charge;
 import com.ilt.cms.core.entity.consultation.Consultation;
 import com.ilt.cms.core.entity.consultation.MedicalCertificate;
 import com.ilt.cms.core.entity.consultation.PatientReferral;
 import com.ilt.cms.core.entity.doctor.Doctor;
-import com.ilt.cms.core.entity.item.Item;
-import com.ilt.cms.core.entity.item.SellingPrice;
-import com.ilt.cms.core.entity.medical.DispatchItem;
 import com.ilt.cms.core.entity.medical.MedicalReference;
 import com.ilt.cms.core.entity.visit.ConsultationFollowup;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.core.entity.visit.Priority;
 import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.doctor.DoctorDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
-import com.ilt.cms.pm.business.service.billing.NewCaseService;
 import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.clinic.ItemService;
 import com.ilt.cms.pm.business.service.doctor.ConsultationFollowupService;
@@ -43,7 +33,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
@@ -55,14 +44,12 @@ public class PatientVisitService {
     private final int EDITABLE_HOURS = 24;
     private PatientVisitRegistryDatabaseService patientVisitRegistryDatabaseService;
     private PatientDatabaseService patientDatabaseService;
-    private CaseDatabaseService caseDatabaseService;
     private ClinicDatabaseService clinicDatabaseService;
     private DoctorDatabaseService doctorDatabaseService;
     private ConsultationService consultationService;
     private ConsultationFollowupService consultationFollowupService;
     private PatientReferralService patientReferralService;
     private ItemService itemService;
-    private NewCaseService caseService;
     private RunningNumberService runningNumberService;
     private DiagnosisService diagnosisService;
     private QueueService queueService;
@@ -70,22 +57,20 @@ public class PatientVisitService {
 
 
     public PatientVisitService(PatientVisitRegistryDatabaseService patientVisitRegistryDatabaseService,
-                               PatientDatabaseService patientDatabaseService, CaseDatabaseService caseDatabaseService,
+                               PatientDatabaseService patientDatabaseService,
                                ClinicDatabaseService clinicDatabaseService, DoctorDatabaseService doctorDatabaseService,
                                ConsultationService consultationService, ConsultationFollowupService consultationFollowupService,
-                               PatientReferralService patientReferralService, ItemService itemService, NewCaseService caseService,
+                               PatientReferralService patientReferralService, ItemService itemService,
                                RunningNumberService runningNumberService, DiagnosisService diagnosisService,
                                QueueService queueService, PriceCalculationService priceCalculationService) {
         this.patientVisitRegistryDatabaseService = patientVisitRegistryDatabaseService;
         this.patientDatabaseService = patientDatabaseService;
-        this.caseDatabaseService = caseDatabaseService;
         this.clinicDatabaseService = clinicDatabaseService;
         this.doctorDatabaseService = doctorDatabaseService;
         this.consultationService = consultationService;
         this.consultationFollowupService = consultationFollowupService;
         this.patientReferralService = patientReferralService;
         this.itemService = itemService;
-        this.caseService = caseService;
         this.runningNumberService = runningNumberService;
         this.diagnosisService = diagnosisService;
         this.queueService = queueService;
@@ -155,84 +140,9 @@ public class PatientVisitService {
         return savedRegistry;
     }
 
-    public void detachedVisitFromCase(String visitId, String caseId) throws CMSException {
-        if (!caseDatabaseService.exists(caseId)) {
-            logger.debug("Referred case cannot find for [caseId]:[{}]", caseId);
-            throw new CMSException(StatusCode.E1002, "Case Id not valid");
-        }
-        if (!patientVisitRegistryDatabaseService.exists(visitId)) {
-            throw new CMSException(StatusCode.E2000, "visit not found for given visitId");
-        }
-        Case aCase = caseDatabaseService.findByCaseId(caseId);
-        PatientVisitRegistry visitRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
-        if (!aCase.getVisitIds().contains(visitRegistry.getId())) {
-            throw new CMSException(StatusCode.E1002, "Visit Number not valid");
-        }
-
-        List<String> visitIds = aCase.getVisitIds();
-        visitIds.remove(visitRegistry.getId());
-        aCase.setVisitIds(visitIds);
-        caseDatabaseService.save(aCase);
-
-        visitRegistry.setAttachedToCase(false);
-        visitRegistry.setCaseId(null);
-        patientVisitRegistryDatabaseService.save(visitRegistry);
-        logger.debug("PatientVisitRegistry removed [visitId]:[{}]", visitId);
-    }
-
-    public void attachedVisitToCase(List<String> visitIds, String caseId) throws CMSException {
-        if (!caseDatabaseService.exists(caseId)) {
-            logger.debug("Referred case cannot find for [caseId]:[{}]", caseId);
-            throw new CMSException(StatusCode.E1002, "Case Id not valid");
-        }
-        for (String visitId : visitIds) {
-            if (!patientVisitRegistryDatabaseService.exists(visitId)) {
-                logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
-                throw new CMSException(StatusCode.E2000, "visit not found for given visitId");
-            }
-        }
-        for (String visitId : visitIds) {
-            PatientVisitRegistry visitRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
-            if (visitRegistry.isAttachedToCase()) {
-                detachedVisitFromCase(visitId, visitRegistry.getCaseId());
-            }
-            caseDatabaseService.addNewVisitToCase(caseId, visitRegistry.getId());
-            visitRegistry.setAttachedToCase(true);
-            visitRegistry.setCaseId(caseId);
-            patientVisitRegistryDatabaseService.save(visitRegistry);
-            logger.debug("PatientVisitRegistry [visitId]:[{}] attached to case [caseId]:[{}]", visitId, caseId);
-        }
-    }
-
-    public PatientVisitRegistry createPatientVisitRegistryForCase(String caseId, PatientVisitRegistry visitRegistry) throws CMSException {
-        if (!caseDatabaseService.existsAndActive(caseId)) {
-            logger.debug("Referred case not found or its not in open status for [id]:[{}]", caseId);
-            throw new CMSException(StatusCode.E1002);
-        }
-        Case aCase = caseDatabaseService.findByCaseId(caseId);
-        if (aCase.isSingleVisit() && aCase.getVisitIds().size() > 0) {
-            logger.debug("Case id [" + caseId + "] is a single visit case which already has another visit attached to it");
-            throw new CMSException(StatusCode.E2000, "Case ID is not allowed to have multiple visits attached");
-        }
-
-        checkPatientVisitRegistryValidity(visitRegistry);
-        visitRegistry.setVisitNumber(runningNumberService.generateVisitNumber());
-        visitRegistry.setAttachedToCase(true);
-        visitRegistry.setVisitStatus(PatientVisitRegistry.PatientVisitState.INITIAL);
-        visitRegistry.setCaseId(caseId);
-        visitRegistry.setMedicalReference(new MedicalReference());
-        visitRegistry.setStartTime(LocalDateTime.now());
-        visitRegistry.setPatientQueue(queueService.generateQueueNumber(visitRegistry.getClinicId(), visitRegistry.getVisitPurpose()));
-        PatientVisitRegistry createVisitRegistry = patientVisitRegistryDatabaseService.save(visitRegistry);
-        caseService.attachedVisitToCase(caseId, createVisitRegistry.getId());
-        logger.debug("PatientVisitRegistry [id]:[{}] created and added to the case [id]:[{}]", createVisitRegistry.getId(), caseId);
-        return createVisitRegistry;
-    }
-
     public PatientVisitRegistry createPatientVisitRegistry(PatientVisitRegistry visitRegistry, Boolean isSingleVisitCase) throws CMSException {
         checkPatientVisitRegistryValidity(visitRegistry);
         visitRegistry.setVisitNumber(runningNumberService.generateVisitNumber());
-        visitRegistry.setAttachedToCase(true);
         visitRegistry.setVisitStatus(PatientVisitRegistry.PatientVisitState.INITIAL);
         visitRegistry.setMedicalReference(new MedicalReference());
         visitRegistry.setStartTime(LocalDateTime.now());
@@ -243,12 +153,7 @@ public class PatientVisitService {
         visitRegistry.setPatientQueue(patientQueue);
         PatientVisitRegistry createVisitRegistry = patientVisitRegistryDatabaseService.save(visitRegistry);
 
-        Case aCase = new Case();
-        aCase.setClinicId(createVisitRegistry.getClinicId());
-        aCase.setPatientId(createVisitRegistry.getPatientId());
-//        aCase.setAttachedMedicalCoverages(checkAndAttachMedicalCoverages(coverageIds, createVisitRegistry.getPatientId()));
-        Case createdCase = caseService.createNewCase(aCase, isSingleVisitCase == null || isSingleVisitCase, createVisitRegistry.getId());
-        logger.debug("PatientVisitRegistry [visitId]:[{}] created and added to the case [id]:[{}]", createVisitRegistry.getVisitNumber(), createdCase.getId());
+        logger.debug("PatientVisitRegistry [visitId]:[{}] created", createVisitRegistry.getVisitNumber());
         return createVisitRegistry;
     }
 
@@ -284,9 +189,7 @@ public class PatientVisitService {
             List<PatientVisitRegistry> attachableVisits = new ArrayList<>();
             for (PatientVisitRegistry visitRegistry : visitRegistries) {
                 if (attachableVisits.size() < limit) {
-                    if (caseDatabaseService.existsAndActive(visitRegistry.getCaseId()) && !visitRegistry.getCaseId().equals(caseId)) {
-                        attachableVisits.add(visitRegistry);
-                    }
+                    attachableVisits.add(visitRegistry);
                 } else {
                     break;
                 }
@@ -398,7 +301,7 @@ public class PatientVisitService {
 
             currentRegistry.setMedicalReference(validateAndUpdateMedicalReference(principal, currentRegistry, medicalReference, currentRegistry.getMedicalReference()));
             if (medicalReference.getDispatchItems() != null) {
-                updateSalesOrderPurchaseItems(currentRegistry.getCaseId(), visitId, medicalReference.getDispatchItems(), planMaxUsage);
+//                updateSalesOrderPurchaseItems(currentRegistry.getCaseId(), visitId, medicalReference.getDispatchItems(), planMaxUsage);
             }
         }
 
@@ -409,53 +312,47 @@ public class PatientVisitService {
         return savedRegistry;
     }
 
-    private void updateSalesOrderPurchaseItems(String caseId, String visitId, List<DispatchItem> dispatchItems,
-                                               Map<String, Integer> planMaxUsage) throws CMSException {
-        Case aCase = caseDatabaseService.findByCaseId(caseId);
-        SalesOrder salesOrder = aCase.getSalesOrder();
-        List<SalesItem> items = new ArrayList<>();
-
-        Map<String, Item> itemMap = itemService.searchItemByIds(dispatchItems.stream()
-                .map(DispatchItem::getItemId)
-                .collect(Collectors.toList()))
-                .stream()
-                .collect(Collectors.toMap(PersistedObject::getId, item -> item));
-
-        List<ItemChargeDetail> itemChargeDetails = dispatchItems.stream()
-                .map(item -> new ItemChargeDetail(item.getItemId(), item.getQuantity(), null, null))
-                .collect(Collectors.toList());
-
-        Map<String, ItemChargeDetail> itemPriceMapping = priceCalculationService
-                .calculateSalesPrice(caseId, new ItemChargeRequest(planMaxUsage, itemChargeDetails)).getChargeDetails()
-                .stream()
-                .collect(Collectors.toMap(ItemChargeDetail::getItemId, itemChargeDetail -> itemChargeDetail));
-
-        for (DispatchItem dispatchItem : dispatchItems) {
-            Item item = itemMap.get(dispatchItem.getItemId());
-            SalesItem salesItem = new SalesItem(item, null);
-
-            Charge itemChargeablePrice = itemPriceMapping.get(dispatchItem.getItemId()).getCharge();
-            salesItem.setSellingPrice(new SellingPrice(itemChargeablePrice.getPrice(), itemChargeablePrice.isTaxIncluded()));
-
-            salesItem.setItemRefId(dispatchItem.getItemId());
-            salesItem.setCost(item.getCost());
-            salesItem.setPurchaseQty(dispatchItem.getQuantity());
-            salesItem.setDosage(dispatchItem.getDosage());
-            salesItem.setDuration(dispatchItem.getDuration());
-            salesItem.setPurchaseUom(item.getPurchaseUom());
-            salesItem.setInstruct(dispatchItem.getInstruct());
-            salesItem.setBatchNo(dispatchItem.getBatchNo());
-            salesItem.setRemarks(dispatchItem.getRemarks());
-            salesItem.setExpireDate(dispatchItem.getExpiryDate());
-            salesItem.setItemPriceAdjustment(dispatchItem.getItemPriceAdjustment());
-            salesItem.populateSoldPrice();
-            items.add(salesItem);
-        }
-
-        salesOrder.updatePurchaseItems(items);
-        caseService.updateSalesOrder(aCase.getId(), salesOrder.getPurchaseItems());
-        caseService.generateAndSaveInvoices(aCase.getId(), visitId, planMaxUsage);
-    }
+//    private void updateSalesOrderPurchaseItems(String caseId, String visitId, List<DispatchItem> dispatchItems,
+//                                               Map<String, Integer> planMaxUsage) throws CMSException {
+//        List<SalesItem> items = new ArrayList<>();
+//
+//        Map<String, Item> itemMap = itemService.searchItemByIds(dispatchItems.stream()
+//                .map(DispatchItem::getItemId)
+//                .collect(Collectors.toList()))
+//                .stream()
+//                .collect(Collectors.toMap(PersistedObject::getId, item -> item));
+//
+//        List<ItemChargeDetail> itemChargeDetails = dispatchItems.stream()
+//                .map(item -> new ItemChargeDetail(item.getItemId(), item.getQuantity(), null, null))
+//                .collect(Collectors.toList());
+//
+//        Map<String, ItemChargeDetail> itemPriceMapping = priceCalculationService
+//                .calculateSalesPrice(caseId, new ItemChargeRequest(planMaxUsage, itemChargeDetails)).getChargeDetails()
+//                .stream()
+//                .collect(Collectors.toMap(ItemChargeDetail::getItemId, itemChargeDetail -> itemChargeDetail));
+//
+//        for (DispatchItem dispatchItem : dispatchItems) {
+//            Item item = itemMap.get(dispatchItem.getItemId());
+//            SalesItem salesItem = new SalesItem(item, null);
+//
+//            Charge itemChargeablePrice = itemPriceMapping.get(dispatchItem.getItemId()).getCharge();
+//            salesItem.setSellingPrice(new SellingPrice(itemChargeablePrice.getPrice(), itemChargeablePrice.isTaxIncluded()));
+//
+//            salesItem.setItemRefId(dispatchItem.getItemId());
+//            salesItem.setCost(item.getCost());
+//            salesItem.setPurchaseQty(dispatchItem.getQuantity());
+//            salesItem.setDosage(dispatchItem.getDosage());
+//            salesItem.setDuration(dispatchItem.getDuration());
+//            salesItem.setPurchaseUom(item.getPurchaseUom());
+//            salesItem.setInstruct(dispatchItem.getInstruct());
+//            salesItem.setBatchNo(dispatchItem.getBatchNo());
+//            salesItem.setRemarks(dispatchItem.getRemarks());
+//            salesItem.setExpireDate(dispatchItem.getExpiryDate());
+//            salesItem.setItemPriceAdjustment(dispatchItem.getItemPriceAdjustment());
+//            salesItem.populateSoldPrice();
+//            items.add(salesItem);
+//        }
+//    }
 
     public PatientVisitRegistry rollbackStatusToPostConsult(String visitId) throws CMSException {
         PatientVisitRegistry currentVisit = patientVisitRegistryDatabaseService.searchById(visitId);
@@ -472,7 +369,6 @@ public class PatientVisitService {
         currentVisit.setVisitStatus(PatientVisitRegistry.PatientVisitState.POST_CONSULT);
         PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentVisit);
         logger.info("removing invoices for rollback for visit [" + visitId + "]");
-        caseService.removeInvoicesForVisit(currentVisit.getCaseId(), visitId);
         return savedRegistry;
     }
 
@@ -484,15 +380,9 @@ public class PatientVisitService {
             throw new CMSException(StatusCode.E2000);
         }
 
-        Case aCase = caseDatabaseService.findByCaseId(currentVisit.getCaseId());
-        if (aCase == null) {
-            logger.error("Case not found for [caseId]:[{}]", currentVisit.getCaseId());
-            throw new CMSException(StatusCode.E1002);
-        }
         currentVisit.setVisitStatus(PatientVisitRegistry.PatientVisitState.COMPLETE);
         currentVisit.setEndTime(LocalDateTime.now());
         PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentVisit);
-        caseService.processCaseClosure(savedRegistry.getCaseId());
 //        if (invoiceCalculationService.calculateDueAmount(aCase.getId()) <= 0 && aCase.isSingleVisit()) {
 //            caseService.closeCase(aCase.getId());
 //            logger.debug("Case status changed to closed since single visit and no due amount");

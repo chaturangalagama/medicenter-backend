@@ -1,11 +1,9 @@
 package com.ilt.cms.pm.integration.mapper;
 
-import com.ilt.cms.api.entity.casem.*;
-import com.ilt.cms.api.entity.casem.ClaimEntity.ClaimStatus;
-import com.ilt.cms.api.entity.casem.SalesOrderEntity.SalesStatus;
-import com.ilt.cms.core.entity.casem.*;
-import com.ilt.cms.core.entity.casem.Claim.AppealRejection;
-import com.ilt.cms.core.entity.casem.ItemPriceAdjustment.PaymentType;
+import com.ilt.cms.api.entity.sales.*;
+import com.ilt.cms.api.entity.sales.SalesOrderEntity.SalesStatus;
+import com.ilt.cms.core.entity.sales.*;
+import com.ilt.cms.core.entity.sales.ItemPriceAdjustment.PaymentType;
 import com.ilt.cms.core.entity.item.Cost;
 import com.ilt.cms.core.entity.item.SellingPrice;
 
@@ -80,8 +78,6 @@ public class SalesOrderMapper extends Mapper {
         invoice.setPaidAmount(ie.getPaidAmount());
         invoice.setPayableAmount(ie.getPayableAmount());
         invoice.setPlanId(ie.getPlanId());
-//        invoice.setReference(ie.getReference());
-        invoice.setClaim(mapToClaimCore(ie.getClaim()));
         setPaymentModeToCore(ie, invoice);
         return invoice;
     }
@@ -96,10 +92,6 @@ public class SalesOrderMapper extends Mapper {
         ie.setPayableAmount(invoice.getPayableAmount());
         ie.setPaidTime(invoice.getPaidTime());
         ie.setPlanId(invoice.getPlanId());
-//        ie.setReference(invoice.getReference());
-        if (invoice.getClaim() != null){
-            ie.setClaim(mapToClaimCoreEntity(invoice.getClaim()));
-        }
         setEnumStatesToEntity(invoice, ie);
         return ie;
     }
@@ -113,148 +105,6 @@ public class SalesOrderMapper extends Mapper {
 
         ie.setInvoiceState(invoice.getInvoiceState());
         ie.setInvoiceType(invoice.getInvoiceType());
-    }
-
-    private static Claim mapToClaimCore(ClaimEntity ce) {
-        Claim claim = new Claim();
-        if (ce == null) return claim;
-        if (ce.getAppealRejections() != null) {
-            claim.setAppealRejections(ce.getAppealRejections().stream().map(SalesOrderMapper::mapToAppealRejection).collect(Collectors.toList()));
-        }
-        claim.setAttendingDoctorId(ce.getAttendingDoctorId());
-        claim.setClaimDoctorId(ce.getClaimDoctorId());
-        claim.setClaimId(ce.getClaimId());
-        setClaimStatus(ce, claim);
-        claim.setDiagnosisCodes(ce.getDiagnosisCodes());
-        claim.setGstAmount(ce.getGstAmount());
-        claim.setClaimExpectedAmt(ce.getClaimExpectedAmt());
-        claim.setConsultationAmt(ce.getConsultationAmt());
-        claim.setMedicalTestAmt(ce.getMedicalTestAmt());
-        claim.setMedicationAmt(ce.getMedicationAmt());
-        claim.setOtherAmt(ce.getOtherAmt());
-        claim.setClaimResult(mapToClaimResult(ce.getClaimResult()));
-        claim.setPaidResult(mapToClaimResult(ce.getPaidResult()));
-        claim.setPayersName(ce.getPayersName());
-        claim.setPayersNric(ce.getPayersNric());
-        claim.setRemark(ce.getRemark());
-        claim.setSubmissionDateTime(ce.getSubmissionDateTime());
-        claim.setSubmissionResult(mapToSubmissionResult(ce.getSubmissionResult()));
-        return claim;
-    }
-
-    private static ClaimEntity mapToClaimCoreEntity(Claim ce) {
-        ClaimEntity claim = new ClaimEntity();
-        if (ce == null) return claim;
-        if (ce.getAppealRejections() != null) {
-            claim.setAppealRejections(ce.getAppealRejections().stream().map(SalesOrderMapper::mapToAppealRejectionEntity).collect(Collectors.toList()));
-        }
-        claim.setAttendingDoctorId(ce.getAttendingDoctorId());
-        claim.setClaimDoctorId(ce.getClaimDoctorId());
-        claim.setClaimId(ce.getClaimId());
-        setClaimStatusToEntity(ce, claim);
-        claim.setDiagnosisCodes(ce.getDiagnosisCodes());
-        claim.setGstAmount(ce.getGstAmount());
-        claim.setClaimExpectedAmt(ce.getClaimExpectedAmt());
-        claim.setConsultationAmt(ce.getConsultationAmt());
-        claim.setMedicalTestAmt(ce.getMedicalTestAmt());
-        claim.setMedicationAmt(ce.getMedicationAmt());
-        claim.setOtherAmt(ce.getOtherAmt());
-        claim.setClaimResult(mapToClaimResultEntity(ce.getClaimResult()));
-        claim.setPaidResult(mapToClaimResultEntity(ce.getPaidResult()));
-        claim.setPayersName(ce.getPayersName());
-        claim.setPayersNric(ce.getPayersNric());
-        claim.setRemark(ce.getRemark());
-        claim.setSubmissionDateTime(ce.getSubmissionDateTime());
-        claim.setSubmissionResult(mapToSubmissionResultEntity(ce.getSubmissionResult()));
-        return claim;
-    }
-
-    private static void setClaimStatus(ClaimEntity ce, Claim claim) {
-        if (ClaimStatus.APPEALED.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.APPEALED);
-        } else if (ClaimStatus.APPROVED.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.APPROVED);
-        } else if (ClaimStatus.FAILED.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.FAILED);
-        } else if (ClaimStatus.PAID.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.PAID);
-        } else if (ClaimStatus.PENDING.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.PENDING);
-        } else if (ClaimStatus.REJECTED.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.REJECTED);
-        } else if (ClaimStatus.REJECTED_PERMANENT.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.REJECTED_PERMANENT);
-        } else if (ClaimStatus.SUBMITTED.equals(ce.getClaimStatus())) {
-            claim.setClaimStatus(Claim.ClaimStatus.SUBMITTED);
-        }
-    }
-
-    private static void setClaimStatusToEntity(Claim claim, ClaimEntity ce) {
-        if (Claim.ClaimStatus.APPEALED.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.APPEALED);
-        } else if (Claim.ClaimStatus.APPROVED.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.APPROVED);
-        } else if (Claim.ClaimStatus.FAILED.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.FAILED);
-        } else if (Claim.ClaimStatus.PAID.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.PAID);
-        } else if (Claim.ClaimStatus.PENDING.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.PENDING);
-        } else if (Claim.ClaimStatus.REJECTED.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.REJECTED);
-        } else if (Claim.ClaimStatus.REJECTED_PERMANENT.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.REJECTED_PERMANENT);
-        } else if (Claim.ClaimStatus.SUBMITTED.equals(claim.getClaimStatus())) {
-            ce.setClaimStatus(ClaimStatus.SUBMITTED);
-        }
-    }
-
-    private static Claim.AppealRejection mapToAppealRejection(ClaimEntity.AppealRejection appealRejection) {
-        if (appealRejection == null) return new AppealRejection();
-        return new AppealRejection(appealRejection.getReason());
-    }
-
-    private static ClaimEntity.AppealRejection mapToAppealRejectionEntity(Claim.AppealRejection appealRejection) {
-        if (appealRejection == null) return new ClaimEntity.AppealRejection();
-        return new ClaimEntity.AppealRejection(appealRejection.getReason());
-    }
-
-    private static Claim.ClaimResult mapToClaimResult(ClaimEntity.ClaimResult claimResult) {
-        Claim.ClaimResult claimResultCore = new Claim.ClaimResult();
-        if (claimResult == null) return claimResultCore;
-        claimResultCore.setAmount(claimResult.getAmount());
-        claimResultCore.setReferenceNumber(claimResult.getReferenceNumber());
-        claimResultCore.setRemark(claimResult.getRemark());
-        claimResultCore.setResultDateTime(claimResult.getResultDateTime());
-        claimResultCore.setStatusCode(claimResult.getStatusCode());
-        return claimResultCore;
-    }
-
-    private static ClaimEntity.ClaimResult mapToClaimResultEntity(Claim.ClaimResult claimResult) {
-        ClaimEntity.ClaimResult claimResultCore = new ClaimEntity.ClaimResult();
-        if (claimResult == null) return claimResultCore;
-        claimResultCore.setAmount(claimResult.getAmount());
-        claimResultCore.setReferenceNumber(claimResult.getReferenceNumber());
-        claimResultCore.setRemark(claimResult.getRemark());
-        claimResultCore.setResultDateTime(claimResult.getResultDateTime());
-        claimResultCore.setStatusCode(claimResult.getStatusCode());
-        return claimResultCore;
-    }
-
-    private static Claim.SubmissionResult mapToSubmissionResult(ClaimEntity.SubmissionResult submissionResult) {
-        if (submissionResult == null) return new Claim.SubmissionResult();
-        return new Claim.SubmissionResult(
-                submissionResult.getClaimNo(),
-                submissionResult.getStatusCode(),
-                submissionResult.getStatusDescription());
-    }
-
-    private static ClaimEntity.SubmissionResult mapToSubmissionResultEntity(Claim.SubmissionResult submissionResult) {
-        if (submissionResult == null) return new ClaimEntity.SubmissionResult();
-        return new ClaimEntity.SubmissionResult(
-                submissionResult.getClaimNo(),
-                submissionResult.getStatusCode(),
-                submissionResult.getStatusDescription());
     }
 
     public static SalesItem mapToSalesItem(SalesItemEntity sie) {

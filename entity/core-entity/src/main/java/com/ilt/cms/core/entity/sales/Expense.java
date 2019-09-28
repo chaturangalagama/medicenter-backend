@@ -1,4 +1,4 @@
-package com.ilt.cms.core.entity.casem;
+package com.ilt.cms.core.entity.sales;
 
 import com.ilt.cms.core.entity.PersistedObject;
 

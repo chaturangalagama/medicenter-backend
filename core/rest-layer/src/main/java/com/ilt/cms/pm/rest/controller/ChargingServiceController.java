@@ -1,9 +1,6 @@
 package com.ilt.cms.pm.rest.controller;
 
-import com.ilt.cms.api.entity.casem.ItemPriceRequest;
-import com.ilt.cms.api.entity.casem.SalesItemEntity;
-import com.ilt.cms.core.entity.billing.ItemChargeDetail;
-import com.ilt.cms.core.entity.casem.PaymentInfo;
+import com.ilt.cms.core.entity.sales.PaymentInfo;
 import com.ilt.cms.downstream.ChargingServiceDownstream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,23 +30,6 @@ public class ChargingServiceController {
 
     @Autowired
     private ChargingServiceDownstream chargingServiceDownstream;
-
-    @PostMapping("/invoice/breakdown/{caseId}")
-    @RolesAllowed({"ROLE_CREATE_INVOICE"})
-    public ResponseEntity findInvoiceBreakdownForCase(@PathVariable("caseId") String caseId, Principal principal) {
-        logger.info("Request received for calculating invoices for Case Id [" + caseId + "]" + " User [" + principal.getName() + "]");
-        return chargingServiceDownstream.findInvoiceBreakdownForCase(caseId);
-    }
-
-    @PostMapping("/invoice/breakdown-dynamic/{caseId}")
-    @RolesAllowed({"ROLE_CREATE_INVOICE"})
-    public ResponseEntity invoiceBreakdownForCase(@RequestBody ItemChargeDetail.ItemChargeRequest itemChargeRequest,
-                                                  @PathVariable("caseId") String caseId,
-                                                  Principal principal) {
-        logger.info("Request received for dynamic calculating invoices for items  [" + itemChargeRequest + "] by [" + principal.getName() + "]" +
-                " User [" + principal.getName() + "]");
-        return chargingServiceDownstream.findInvoiceBreakdownForCase(caseId, itemChargeRequest);
-    }
 
     @PostMapping("/payment/direct/{caseId}")
     @RolesAllowed({"ROLE_CREATE_INVOICE"})

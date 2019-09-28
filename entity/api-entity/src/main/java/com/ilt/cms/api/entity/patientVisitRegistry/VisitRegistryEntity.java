@@ -29,7 +29,6 @@ public class VisitRegistryEntity {
 
     private String visitId;
     private String visitNumber;
-    private String caseId;
     private String patientId;
     private String clinicId;
     private String preferredDoctorId;
@@ -37,7 +36,6 @@ public class VisitRegistryEntity {
     private Priority priority;
     private MedicalReferenceEntity medicalReferenceEntity;
     private PatientVisitState visitStatus;
-    private Boolean attachedToCase;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern=CMSConstant.JSON_DATE_FORMAT_WITH_SECONDS)
     @DateTimeFormat(pattern = CMSConstant.JSON_DATE_FORMAT_WITH_SECONDS)
     private LocalDateTime startTime;
@@ -51,7 +49,6 @@ public class VisitRegistryEntity {
     //Not mapped used only for data transfer
     private String clinicName;
     private List<DiagnosisEntity> diagnosisEntities;
-    private String caseNumber;
 
     private PatientVisitRegistry.PatientQueue patientQueue;
 }

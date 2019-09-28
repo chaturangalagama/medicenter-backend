@@ -1,8 +1,7 @@
 package com.ilt.cms.repository.spring;
 
-import com.ilt.cms.core.entity.casem.Claim;
-import com.ilt.cms.core.entity.casem.Invoice;
-import com.ilt.cms.core.entity.casem.SalesOrder;
+import com.ilt.cms.core.entity.sales.Invoice;
+import com.ilt.cms.core.entity.sales.SalesOrder;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.FieldDefinitionBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
@@ -19,7 +18,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -76,66 +74,6 @@ public class SalesOrderRepositoryTest {
             }
         };
         mongoTemplate.dropCollection(SalesOrder.class);
-    }
-
-    @Test
-    public void updateClaimByInvoiceIdAndClaimId() {
-        initializeContext();
-        SalesOrder salesOrder = salesOrderRandomizer.getRandomValue();
-        salesOrder.getInvoices().stream().sequential().forEach(invoice -> {
-            invoice.setPlanId("TEST-COVERAGE-PLAN-00" + counter.incrementAndGet());
-            invoice.setInvoiceTime(LocalDate.now().atStartOfDay());
-            Claim claim = invoice.getClaim();
-            if (counter.get() == 1) {
-                claim.setClaimStatus(Claim.ClaimStatus.PENDING);
-            } else {
-                claim.setClaimStatus(Claim.ClaimStatus.SUBMITTED);
-            }
-        });
-
-        mongoTemplate.save(salesOrder);
-
-//        List<SalesOrder> salesOrders = salesOrderRepository.listClaimForSubmission(Arrays.asList("TEST-COVERAGE-PLAN-001"),
-//                LocalDateTime.now().minusDays(4), LocalDateTime.now().plusDays(1));
-
-//        assertNotNull("SalesOrder was not found", salesOrders);
-//        assertEquals("SalesOrder was not found", 1, salesOrders.size());
-//        Optional<Invoice> invoiceOptional = salesOrders.get(0).getInvoices()
-//                .stream().filter(invoice -> invoice.getClaim().getClaimStatus() == Claim.ClaimStatus.PENDING)
-//                .findFirst();
-//        assertTrue(invoiceOptional.isPresent());
-//        assertEquals("Plan id was different", "TEST-COVERAGE-PLAN-001", invoiceOptional.get().getPlanId());
-
-    }
-
-    @Test
-    public void listClaimForStatusCheck() {
-        initializeContext();
-        SalesOrder salesOrder = salesOrderRandomizer.getRandomValue();
-        salesOrder.getInvoices().stream().sequential().forEach(invoice -> {
-            invoice.setPlanId("TEST-COVERAGE-PLAN-00" + counter.incrementAndGet());
-            invoice.setInvoiceTime(LocalDate.now().atStartOfDay());
-            Claim claim = invoice.getClaim();
-            if (counter.get() == 1) {
-                claim.setClaimStatus(Claim.ClaimStatus.PENDING);
-            } else {
-                claim.setClaimStatus(Claim.ClaimStatus.SUBMITTED);
-            }
-        });
-
-        mongoTemplate.save(salesOrder);
-
-//        List<SalesOrder> salesOrders = salesOrderRepository.listClaimForStatusCheck(Arrays.asList("TEST-COVERAGE-PLAN-001"),
-//                LocalDateTime.now().plusDays(1), Arrays.asList(Claim.ClaimStatus.PENDING));
-//
-//        assertNotNull("SalesOrder was not found", salesOrders);
-//        assertEquals("SalesOrder was not found", 1, salesOrders.size());
-//        Optional<Invoice> invoiceOptional = salesOrders.get(0).getInvoices()
-//                .stream().filter(invoice -> invoice.getClaim().getClaimStatus() == Claim.ClaimStatus.PENDING)
-//                .findFirst();
-//        assertTrue(invoiceOptional.isPresent());
-//        assertEquals("Plan id was different", "TEST-COVERAGE-PLAN-001", invoiceOptional.get().getPlanId());
-
     }
 
     @Test
