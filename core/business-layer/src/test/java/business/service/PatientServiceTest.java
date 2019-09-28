@@ -1,25 +1,13 @@
 package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
-import business.mock.MockMedicalCoverage;
 import business.mock.MockPatient;
-import business.mock.MockPolicyHolder;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.RunningNumber;
-import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.UserId;
-import com.ilt.cms.core.entity.coverage.CoveragePlan;
-import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.core.entity.patient.PatientCoverage;
 import com.ilt.cms.pm.business.service.patient.PatientService;
-import com.ilt.cms.repository.PolicyHolderRepository;
 import com.ilt.cms.repository.spring.PatientRepository;
-import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderChasRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderCorporateRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderInsuranceRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderMediSaveRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.exception.PatientException;
 import com.lippo.commons.util.exception.RestValidationException;
@@ -64,18 +52,6 @@ public class PatientServiceTest {
     private PatientRepository patientRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
-    @Autowired
-    private PolicyHolderRepository policyHolderRepository;
-    @Autowired
-    private PolicyHolderChasRepository chasRepository;
-    @Autowired
-    private PolicyHolderMediSaveRepository mediSaveRepository;
-    @Autowired
-    private PolicyHolderInsuranceRepository insuranceRepository;
-    @Autowired
-    private PolicyHolderCorporateRepository corporateRepository;
-    @Autowired
-    private MedicalCoverageRepository medicalCoverageRepository;
 
     @Before
     public void setUp() throws Exception{
@@ -141,31 +117,6 @@ public class PatientServiceTest {
         when(mongoTemplate.findAndModify(any(Query.class),any(Update.class), any(FindAndModifyOptions.class), any())).thenReturn(new RunningNumber());
         when(mongoTemplate.exists(any(Query.class), (Class<?>) any())).thenReturn(false);
         when(mongoTemplate.exists(any(Query.class), anyString())).thenReturn(true);
-
-        when(medicalCoverageRepository.findById(anyString())).thenAnswer(
-        (Answer<Optional>) invocation -> {
-            String idStr = invocation.getArgument(0);
-            MedicalCoverage medicalCoverage = MockMedicalCoverage.mockMedicalCoverage();
-            Field id = PersistedObject.class.getDeclaredField("id");
-            id.setAccessible(true);
-            id.set(medicalCoverage, idStr);
-            CoveragePlan coveragePlan = MockMedicalCoverage.mockCoveragePlan();
-            Field planId = CoveragePlan.class.getDeclaredField("id");
-            planId.setAccessible(true);
-            planId.set(coveragePlan, "P332222");
-            medicalCoverage.getCoveragePlans().add(coveragePlan);
-            return Optional.of(medicalCoverage);
-        }
-        );
-
-        when(chasRepository.findByIdentificationNumber(any(UserId.class)))
-                .thenReturn(Arrays.asList(MockPolicyHolder.mockPolicyHolderChas()));
-        when(mediSaveRepository.findByIdentificationNumber(any(UserId.class)))
-                .thenReturn(Arrays.asList(MockPolicyHolder.mockPolicyHolderMediSave()));
-        when(insuranceRepository.findAllByIdentificationNumberAndStatus(any(UserId.class), any(Status.class)))
-                .thenReturn(Arrays.asList(MockPolicyHolder.mockPolicyHolderInsurance()));
-        when(corporateRepository.findAllByIdentificationNumber(any(UserId.class)))
-                .thenReturn(Arrays.asList(MockPolicyHolder.mockPolicyHolderCorporate()));
     }
 
     @Test
@@ -207,14 +158,6 @@ public class PatientServiceTest {
         Patient patient = MockPatient.mockPatient();
         Patient updatePatient = patientService.updatePatient("I0001", patient);
         assertEquals( "I0001", updatePatient.getId());
-    }
-
-    @Test
-    public void removeCoveragePlan() throws PatientException {
-        PatientCoverage patientCoverage = MockPatient.mockPatientCoverage();
-        Patient patient = patientService.removeCoveragePlan("I0001", patientCoverage);
-        assertEquals("I0001", patient.getId());
-
     }
 
     @Test

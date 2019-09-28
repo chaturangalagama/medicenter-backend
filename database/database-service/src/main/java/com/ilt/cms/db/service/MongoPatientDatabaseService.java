@@ -2,10 +2,8 @@ package com.ilt.cms.db.service;
 
 import com.ilt.cms.core.entity.UserId;
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.core.entity.patient.PatientCoverage;
 import com.ilt.cms.database.RunningNumberService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.db.service.builder.PatientBuilder;
 import com.ilt.cms.repository.spring.PatientRepository;
 import com.lippo.cms.exception.PatientException;
 import com.lippo.commons.util.StatusCode;
@@ -29,18 +27,15 @@ public class MongoPatientDatabaseService implements PatientDatabaseService {
     private static final Logger logger = LoggerFactory.getLogger(MongoPatientDatabaseService.class);
     private PatientRepository patientRepository;
 
-    private PatientBuilder patientBuilder;
     private RunningNumberService runningNumberService;
     private MongoTemplate mongoTemplate;
 
     public MongoPatientDatabaseService(PatientRepository patientRepository,
                                        RunningNumberService runningNumberService,
-                                       MongoTemplate mongoTemplate,
-                                       PatientBuilder builder) {
+                                       MongoTemplate mongoTemplate) {
         this.patientRepository = patientRepository;
         this.runningNumberService = runningNumberService;
         this.mongoTemplate = mongoTemplate;
-        this.patientBuilder = builder;
     }
 
     //@Override
@@ -117,7 +112,7 @@ public class MongoPatientDatabaseService implements PatientDatabaseService {
         if (!patientOpt.isPresent()) {
             throw new PatientException(StatusCode.E2000);
         }
-        Patient patient = patientBuilder.buildCoverages(patientOpt.get());
+        Patient patient = patientOpt.get();
         return patient;
     }
 
@@ -143,20 +138,6 @@ public class MongoPatientDatabaseService implements PatientDatabaseService {
         } else {
             Patient patient = foundPatient.get();
             updatePatientInformation(patient, patientUpdate);
-            Patient newPatient = patientRepository.save(patient);
-            //return new HttpApiResponse(newPatient);
-            return newPatient;
-        }
-    }
-
-    @Override
-    public Patient removeCoveragePlan(String systemUserId, PatientCoverage coverage) throws PatientException {
-        Optional<Patient> foundPatient = patientRepository.findById(systemUserId);
-        if (!foundPatient.isPresent()) {
-            throw new PatientException(StatusCode.E2000);
-        } else {
-            Patient patient = foundPatient.get();
-            patient.removeCoverage(coverage);
             Patient newPatient = patientRepository.save(patient);
             //return new HttpApiResponse(newPatient);
             return newPatient;

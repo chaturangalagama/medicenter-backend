@@ -34,6 +34,5 @@ public class SalesItemEntity {
     private LocalDate expireDate;
     private ItemPriceAdjustmentEntity priceAdjustment;
     private String remarks;
-    private Set<String> excludedCoveragePlanIds = new HashSet<>();
 
 }

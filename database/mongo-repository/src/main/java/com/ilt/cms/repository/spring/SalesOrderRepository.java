@@ -17,16 +17,4 @@ public interface SalesOrderRepository extends MongoRepository<SalesOrder, String
                                                                                   LocalDateTime searchStartDate,
                                                                                   LocalDateTime searchEndDate);
 
-
-    @Query("{'invoices.planId' : { $in : ?0}, " +
-            "'invoices.invoiceTime' : { $gte: ?1, $lt: ?2},  " +
-            "'invoices.claim.claimStatus' : {$in : ['PENDING']}" +
-            " }")
-    List<SalesOrder> listClaimForSubmission(List<String> autoSubmitMedicalCoverageId, LocalDateTime invoiceDateStart, LocalDateTime invoiceDateEnd);
-
-    @Query("{'invoices.planId' : { $in : ?0}, " +
-            "'invoices.invoiceTime' : { $lt: ?1},  " +
-            "'invoices.claim.claimStatus' : {$in : ?2}" +
-            " }")
-    List<SalesOrder> listClaimForStatusCheck(List<String> autoSubmitPlanIdList, LocalDateTime invoiceDate, List<Claim.ClaimStatus> singletonList);
 }

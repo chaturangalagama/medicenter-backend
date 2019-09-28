@@ -27,8 +27,6 @@ public class IssuedMedicalTest {
         private String testId;
         private String suggestedLocation;
         private UserPaymentOption priceAdjustment;
-        private Set<String> excludedCoveragePlanIds = new HashSet<>();
-
 //        private List<FileMetaData> fileMetaData = new ArrayList<>();
     }
 }

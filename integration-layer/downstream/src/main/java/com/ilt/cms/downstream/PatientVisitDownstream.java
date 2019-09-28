@@ -29,9 +29,9 @@ public interface PatientVisitDownstream {
 
     ResponseEntity<ApiResponse> removeVisitFromCase(String visitId, String caseId);
 
-    ResponseEntity<ApiResponse> createVisit(String caseId, VisitRegistryEntity registryEntity, List<String> attachedMedicalCoverages, Boolean isSingleVisitCase);
+    ResponseEntity<ApiResponse> createVisit(String caseId, VisitRegistryEntity registryEntity, Boolean isSingleVisitCase);
 
-    ResponseEntity<ApiResponse> createVisit(VisitRegistryEntity registryEntity, List<String> attachedMedicalCoverages, Boolean isSingleVisitCase);
+    ResponseEntity<ApiResponse> createVisit(VisitRegistryEntity registryEntity, Boolean isSingleVisitCase);
 
     ResponseEntity<ApiResponse> listVisitsByClinicAndStartTime(String clinicId, LocalDateTime start, LocalDateTime end);
 

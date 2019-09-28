@@ -4,7 +4,6 @@ import com.ilt.cms.core.entity.casem.Case;
 import com.ilt.cms.core.entity.casem.Claim;
 import com.ilt.cms.core.entity.casem.Invoice;
 import com.ilt.cms.core.entity.casem.SalesOrder;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.FieldDefinitionBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
@@ -249,31 +248,22 @@ public class CaseRepositoryTest {
 
         mongoTemplate.insert(mockSalesOrder);
 
-        List<AttachedMedicalCoverage> attachedMedicalCoverageList = Arrays.asList(
-                new AttachedMedicalCoverage("COVERAGE-PLAN-001"),
-                new AttachedMedicalCoverage("COVERAGE-PLAN-002"),
-                new AttachedMedicalCoverage("COVERAGE-PLAN-003")
-        );
-
         Case mockCase = caseRandomEnhancer.nextObject(Case.class);
         mockCase.setId("MOCK-CASE-001");
         mockCase.setClinicId("CLINIC-001");
         mockCase.setPatientId("PATIENT-001");
         mockCase.setSalesOrder(mockSalesOrder);
-        mockCase.setAttachedMedicalCoverages(attachedMedicalCoverageList);
 
         Case mockCase2 = caseRandomEnhancer.nextObject(Case.class);
         mockCase2.setId("MOCK-CASE-002");
         mockCase2.setClinicId("CLINIC-002");
         mockCase2.setPatientId("PATIENT-002");
-        mockCase2.setAttachedMedicalCoverages(attachedMedicalCoverageList);
         mockCase2.setSalesOrder(mockSalesOrder);
         Case mockCase3 = caseRandomEnhancer.nextObject(Case.class);
         mockCase3.setId("MOCK-CASE-003");
         mockCase3.setClinicId("CLINIC-002");
         mockCase3.setPatientId("PATIENT-003");
         mockCase3.setSalesOrder(mockSalesOrder);
-        mockCase3.setAttachedMedicalCoverages(attachedMedicalCoverageList);
 
         mongoTemplate.insertAll(Arrays.asList(mockCase, mockCase2, mockCase3));
 
@@ -301,29 +291,20 @@ public class CaseRepositoryTest {
 
         mongoTemplate.insert(mockSalesOrder);
 
-        List<AttachedMedicalCoverage> attachedMedicalCoverageList = Arrays.asList(
-                new AttachedMedicalCoverage("COVERAGE-PLAN-001"),
-                new AttachedMedicalCoverage("COVERAGE-PLAN-002"),
-                new AttachedMedicalCoverage("COVERAGE-PLAN-003")
-        );
 
         Case mockCase = caseRandomEnhancer.nextObject(Case.class);
         mockCase.setId("MOCK-CASE-001");
         mockCase.setClinicId("CLINIC-001");
         mockCase.setPatientId("PATIENT-001");
         mockCase.setSalesOrder(mockSalesOrder);
-        mockCase.setAttachedMedicalCoverages(Arrays.asList(new AttachedMedicalCoverage("COVERAGE-PLAN-005")));
-
         Case mockCase2 = caseRandomEnhancer.nextObject(Case.class);
         mockCase2.setId("MOCK-CASE-002");
         mockCase2.setClinicId("CLINIC-002");
         mockCase2.setPatientId("PATIENT-002");
-        mockCase2.setAttachedMedicalCoverages(attachedMedicalCoverageList);
         Case mockCase3 = caseRandomEnhancer.nextObject(Case.class);
         mockCase3.setId("MOCK-CASE-003");
         mockCase3.setClinicId("CLINIC-002");
         mockCase3.setPatientId("PATIENT-003");
-        mockCase3.setAttachedMedicalCoverages(attachedMedicalCoverageList);
 
         mongoTemplate.insertAll(Arrays.asList(mockCase, mockCase2, mockCase3));
 

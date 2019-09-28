@@ -4,8 +4,6 @@ package com.ilt.cms.core.entity.patient;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.UserId;
-import com.ilt.cms.core.entity.coverage.CoveragePlan;
-import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.file.FileMetaData;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -62,8 +60,6 @@ public class Patient extends PersistedObject {
     private List<PatientVaccination> patientVaccinations = new ArrayList<>();
     private List<OnGoingMedication> onGoingMedications = new ArrayList<>();
     //not stored part of patient collection
-    @Transient
-    private List<PatientCoverage> coverages = new ArrayList<>();
     private List<FileMetaData> fileMetaData = new ArrayList<>();
     private List<PatientPayable> patientPayables;
 
@@ -71,27 +67,13 @@ public class Patient extends PersistedObject {
         return address.getAddress() + "\n" + address.getPostalCode() + "\n" + address.getCountry();
     }
 
-    public void removeCoverage(PatientCoverage remove) {
-        coverages = coverages.stream()
-                .filter(coverage -> !coverage.equals(remove))
-                .collect(Collectors.toList());
-
-    }
-
     public boolean removePatientVaccination(String patientVaccinationId) {
         return patientVaccinations.removeIf(vaccination -> vaccination.getId().equals(patientVaccinationId));
-    }
-
-    public void supplyCoverageDetails(MedicalCoverage coverage, CoveragePlan coveragePlan) {
-        PatientCoverage pc = new PatientCoverage();
-        pc.populateFields(coverage, coveragePlan);
-        coverages.add(pc);
     }
 
     public void resetNewPatientRegistrationDetails() {
         super.id = null;
         patientVaccinations.clear();
-        coverages.clear();
         status = Status.ACTIVE;
     }
 
@@ -339,14 +321,6 @@ public class Patient extends PersistedObject {
         this.primaryCareNetwork = primaryCareNetwork;
     }
 
-    public List<PatientCoverage> getCoverages() {
-        return coverages;
-    }
-
-    public void setCoverages(List<PatientCoverage> coverages) {
-        this.coverages = coverages;
-    }
-
     public List<FileMetaData> getFileMetaData() {
         return fileMetaData;
     }
@@ -384,7 +358,6 @@ public class Patient extends PersistedObject {
                 ", allergies=" + allergies +
                 ", onGoingMedications=" + onGoingMedications +
                 ", patientVaccinations=" + patientVaccinations +
-                ", coverages=" + coverages +
                 ", fileMetaData=" + fileMetaData +
                 ", primaryCareNetwork=" + primaryCareNetwork +
                 '}';

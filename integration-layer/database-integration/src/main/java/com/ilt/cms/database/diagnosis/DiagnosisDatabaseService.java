@@ -10,6 +10,4 @@ public interface DiagnosisDatabaseService {
     List<Diagnosis> search(String term);
 
     boolean exists(String diagnosisId);
-
-    List<Diagnosis> searchFilerByPlan(List<String> planIds, String term);
 }

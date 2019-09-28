@@ -1,6 +1,5 @@
 package com.ilt.cms.pm.rest.controller;
 
-import com.ilt.cms.api.entity.vaccination.AssociatedCoverageVaccinationEntity;
 import com.ilt.cms.api.entity.vaccination.VaccinationEntity;
 import com.ilt.cms.downstream.VaccinationDownstream;
 import com.lippo.commons.web.api.ApiResponse;
@@ -84,38 +83,4 @@ public class VaccinationRestController {
         return serviceResponse;
     }
 
-
-
-    @RolesAllowed("ROLE_VACCINATION_MODIFY")
-    @PostMapping("/coverage/association/add")
-    public ResponseEntity addVaccinationAssociation(
-                                                    @RequestBody AssociatedCoverageVaccinationEntity associatedCoverageVaccinationEntity) {
-        logger.info("adding a new association to vaccination [" + associatedCoverageVaccinationEntity.getMedicalCoverageId() + "]");
-        ResponseEntity<ApiResponse> serviceResponse = vaccinationDownstream.vaccinationAssociation(associatedCoverageVaccinationEntity, false);
-        return serviceResponse;
-
-
-    }
-
-    @RolesAllowed("ROLE_VACCINATION_MODIFY")
-    @PostMapping("/coverage/association/update")
-    public ResponseEntity updateVaccinationAssociation(
-                                                       @RequestBody AssociatedCoverageVaccinationEntity associatedCoverageVaccinationEntity) {
-        logger.info("adding a new association to vaccination [" + associatedCoverageVaccinationEntity.getMedicalCoverageId() + "]");
-        ResponseEntity<ApiResponse> serviceResponse = vaccinationDownstream.vaccinationAssociation(associatedCoverageVaccinationEntity, true);
-        return serviceResponse;
-
-
-    }
-
-    @RolesAllowed("ROLE_VACCINATION_MODIFY")
-    @PostMapping("/coverage/association/remove/{medicalCoverageId}/{associationCoverageId}")
-    public ResponseEntity removeVaccinationAssociation(
-                                                       @PathVariable("medicalCoverageId") String medicalCoverageId,
-                                                       @PathVariable("associationCoverageId") String associationCoverageId) {
-        logger.info("removing association from medical coverage [" + medicalCoverageId + "] associationCoverageId[" + associationCoverageId + "]");
-        ResponseEntity<ApiResponse> serviceResponse= vaccinationDownstream.removeAssociation(medicalCoverageId, associationCoverageId);
-        return serviceResponse;
-
-    }
 }

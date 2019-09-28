@@ -157,11 +157,11 @@ public class DefaultPatientVisitDownstream implements PatientVisitDownstream {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> createVisit(String caseId, VisitRegistryEntity registryEntity, List<String> attachedMedicalCoverages, Boolean isSingleVisitCase) {
+    public ResponseEntity<ApiResponse> createVisit(String caseId, VisitRegistryEntity registryEntity, Boolean isSingleVisitCase) {
         try {
             PatientVisitRegistry createdVisitRegistry;
             if (caseId == null) {
-                createdVisitRegistry = patientVisitService.createPatientVisitRegistry(PatientVisitRegistryMapper.mapToCore(registryEntity), attachedMedicalCoverages, isSingleVisitCase);
+                createdVisitRegistry = patientVisitService.createPatientVisitRegistry(PatientVisitRegistryMapper.mapToCore(registryEntity), isSingleVisitCase);
                 logger.info("New PatientVisitRegistry [visitId]:[" + createdVisitRegistry.getVisitNumber() + "] created and added to the new case");
             } else {
                 createdVisitRegistry = patientVisitService.createPatientVisitRegistryForCase(caseId, PatientVisitRegistryMapper.mapToCore(registryEntity));
@@ -175,9 +175,9 @@ public class DefaultPatientVisitDownstream implements PatientVisitDownstream {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> createVisit(VisitRegistryEntity registryEntity, List<String> attachedMedicalCoverages, Boolean isSingleVisitCase) {
+    public ResponseEntity<ApiResponse> createVisit(VisitRegistryEntity registryEntity, Boolean isSingleVisitCase) {
         try {
-            PatientVisitRegistry createdVisitRegistry = patientVisitService.createPatientVisitRegistry(PatientVisitRegistryMapper.mapToCore(registryEntity), attachedMedicalCoverages, isSingleVisitCase);
+            PatientVisitRegistry createdVisitRegistry = patientVisitService.createPatientVisitRegistry(PatientVisitRegistryMapper.mapToCore(registryEntity), isSingleVisitCase);
             logger.info("New PatientVisitRegistry [visitId]:[" + createdVisitRegistry.getVisitNumber() + "] created and added to the new case");
             return httpApiResponse(new HttpApiResponse(PatientVisitRegistryMapper.mapToEntity(createdVisitRegistry)));
         } catch (CMSException e) {

@@ -5,8 +5,6 @@ import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.UserId;
 import com.ilt.cms.core.entity.charge.Charge;
 import com.ilt.cms.core.entity.common.Relationship;
-import com.ilt.cms.core.entity.coverage.CapLimiter;
-import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.file.FileMetaData;
 import com.ilt.cms.core.entity.patient.*;
 
@@ -61,25 +59,6 @@ public class MockPatient {
         patient.setFileMetaData(new ArrayList<>(Arrays.asList(new FileMetaData("patient/2019/5c36a936819737b028fc4d26/91006379399707189251548313296650100000",
                 "test", "test_file", "admin", "5ab99ffadbea1b2384db9af8", "xlsx", 45415, "\"for test\""))));
         return patient;
-    }
-
-    public static PatientCoverage mockPatientCoverage(){
-        PatientCoverage patientCoverage = new PatientCoverage();
-        patientCoverage.setMedicalCoverageId("00001");
-        patientCoverage.setMedicalCoverageName("medical coverage 01");
-        patientCoverage.setPlanName("plan name");
-        patientCoverage.setPlanId("00001");
-        patientCoverage.setType(MedicalCoverage.CoverageType.INSURANCE);
-        patientCoverage.setCapPerVisit(new CapLimiter(1,2));
-        patientCoverage.setCapPerWeek(new CapLimiter(1,2));
-        patientCoverage.setCapPerMonth(new CapLimiter(1,2));
-        patientCoverage.setCapPerYear(new CapLimiter(1,2));
-        patientCoverage.setCapPerLifeTime(new CapLimiter(1,2));
-        patientCoverage.setCode("HVC");
-        patientCoverage.setRemarks("remark here");
-        patientCoverage.setExcludedClinics(Arrays.asList("C08", "C98"));
-
-        return patientCoverage;
     }
 
 }

@@ -187,7 +187,6 @@ public class MedicalReferenceMapper {
                         dispatchItem.getDuration(),
                         dispatchItem.getDosage(),
                         dispatchItem.getQuantity(),
-                        dispatchItem.getExcludedCoveragePlanIds(),
                         dispatchItem.getOriTotalPrice(),
                         dispatchItem.getBatchNo(),
                         dispatchItem.getExpiryDate(),
@@ -209,7 +208,6 @@ public class MedicalReferenceMapper {
                         dispatchItemEntity.getBatchNo(),
                         dispatchItemEntity.getExpiryDate(),
                         SalesOrderMapper.mapToCore(dispatchItemEntity.getItemPriceAdjustment()),
-                        dispatchItemEntity.getExcludedCoveragePlanIds(),
                         dispatchItemEntity.getRemarks(),
                         dispatchItemEntity.getDosageInstruction());
     }
@@ -222,7 +220,6 @@ public class MedicalReferenceMapper {
                 dispatchItem.getDuration(),
                 dispatchItem.getDosage(),
                 dispatchItem.getQuantity(),
-                dispatchItem.getExcludedCoveragePlanIds(),
                 dispatchItem.getOriTotalPrice(),
                 dispatchItem.getBatchNo(),
                 dispatchItem.getExpiryDate(),
@@ -243,7 +240,6 @@ public class MedicalReferenceMapper {
                 dispatchItemEntity.getBatchNo(),
                 dispatchItemEntity.getExpiryDate(),
                 SalesOrderMapper.mapToCore(dispatchItemEntity.getItemPriceAdjustment()),
-                dispatchItemEntity.getExcludedCoveragePlanIds(),
                 dispatchItemEntity.getRemarks(),
                 dispatchItemEntity.getDosageInstruction());
     }

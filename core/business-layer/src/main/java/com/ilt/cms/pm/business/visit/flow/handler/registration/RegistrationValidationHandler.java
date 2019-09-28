@@ -2,10 +2,8 @@ package com.ilt.cms.pm.business.visit.flow.handler.registration;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
-import com.ilt.cms.database.coverage.MedicalCoverageDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.pm.business.visit.event.Event;
 import com.ilt.cms.pm.business.visit.event.RegistrationEvent;
@@ -17,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,14 +24,12 @@ public class RegistrationValidationHandler<T extends Event> implements EventHand
 
     private PatientDatabaseService patientService;
     private ClinicDatabaseService clinicService;
-    private MedicalCoverageDatabaseService medicalCoverageService;
     private CaseDatabaseService caseDatabaseService;
 
     public RegistrationValidationHandler(PatientDatabaseService patientService, ClinicDatabaseService clinicService,
-                                         MedicalCoverageDatabaseService medicalCoverageService, CaseDatabaseService caseDatabaseService) {
+                                         CaseDatabaseService caseDatabaseService) {
         this.patientService = patientService;
         this.clinicService = clinicService;
-        this.medicalCoverageService = medicalCoverageService;
         this.caseDatabaseService = caseDatabaseService;
     }
 
@@ -61,18 +56,6 @@ public class RegistrationValidationHandler<T extends Event> implements EventHand
             return new DefaultHandlerResponse<>(registrationEvent, StatusCode.E2002);
         }
 
-        List<AttachedMedicalCoverage> attachedMedicalCoverages = registrationEvent.getAttachedMedicalCoverages();
-        if (attachedMedicalCoverages != null && attachedMedicalCoverages.size() > 0) {
-
-            boolean match = attachedMedicalCoverages.stream()
-                    .allMatch(this::medicalCoverageValid);
-
-            if (!match) {
-                logger.error("The attached medical coverages did not have valid ");
-                return new DefaultHandlerResponse<>(registrationEvent, StatusCode.E2001);
-            }
-        }
-
         if (registrationEvent.getCaseId() != null) {
             boolean exists = caseDatabaseService.existsAndActive(registrationEvent.getCaseId());
             if (!exists) {
@@ -81,10 +64,5 @@ public class RegistrationValidationHandler<T extends Event> implements EventHand
             }
         }
         return new DefaultHandlerResponse<>(registrationEvent);
-    }
-
-    private boolean medicalCoverageValid(AttachedMedicalCoverage attachedMedicalCoverage) {
-        return attachedMedicalCoverage.areParametersValid()
-                && medicalCoverageService.findActivePlan(attachedMedicalCoverage.getPlanId()) != null;
     }
 }

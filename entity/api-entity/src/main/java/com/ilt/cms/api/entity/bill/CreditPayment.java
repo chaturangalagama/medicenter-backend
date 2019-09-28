@@ -8,8 +8,6 @@ import lombok.*;
 @Setter
 @ToString
 public class CreditPayment {
-    private String medicalCoverageId;
-    private String planId;
     private String costCenter;
     private String billTransactionId;
     private double amount;

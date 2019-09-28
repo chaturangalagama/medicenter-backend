@@ -261,7 +261,6 @@ public class SalesOrderMapper extends Mapper {
         SalesItem salesItem = new SalesItem(); // since this is mapper removing 'SalesItem(itemMap.get(si.getItemRefId()), si)'
         if (sie == null) return salesItem;
         salesItem.setSoldPrice(sie.getOriginalTotalPrice());
-        salesItem.setExcludedCoveragePlanIds(sie.getExcludedCoveragePlanIds());
         salesItem.setItemRefId(sie.getItemRefId());
         salesItem.setPurchaseQty(sie.getPurchaseQty());
         salesItem.setDosage(sie.getDosage());
@@ -282,7 +281,6 @@ public class SalesOrderMapper extends Mapper {
         SalesItemEntity sie = new SalesItemEntity();
         if (salesItem == null) return sie;
         sie.setOriginalTotalPrice(salesItem.getSoldPrice());
-        sie.setExcludedCoveragePlanIds(salesItem.getExcludedCoveragePlanIds());
         sie.setCost(mapToCost(salesItem.getCost()));
         sie.setItemRefId(salesItem.getItemRefId());
         sie.setPurchaseQty(salesItem.getPurchaseQty());

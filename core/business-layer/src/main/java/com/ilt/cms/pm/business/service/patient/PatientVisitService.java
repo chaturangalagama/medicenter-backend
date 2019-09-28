@@ -13,8 +13,6 @@ import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.core.entity.item.SellingPrice;
 import com.ilt.cms.core.entity.medical.DispatchItem;
 import com.ilt.cms.core.entity.medical.MedicalReference;
-import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.core.entity.visit.ConsultationFollowup;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.core.entity.visit.Priority;
@@ -27,8 +25,6 @@ import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
 import com.ilt.cms.pm.business.service.billing.NewCaseService;
 import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.clinic.ItemService;
-import com.ilt.cms.pm.business.service.coverage.MedicalCoverageService;
-import com.ilt.cms.pm.business.service.coverage.PolicyHolderService;
 import com.ilt.cms.pm.business.service.doctor.ConsultationFollowupService;
 import com.ilt.cms.pm.business.service.doctor.ConsultationService;
 import com.ilt.cms.pm.business.service.doctor.DiagnosisService;
@@ -69,8 +65,6 @@ public class PatientVisitService {
     private NewCaseService caseService;
     private RunningNumberService runningNumberService;
     private DiagnosisService diagnosisService;
-    private MedicalCoverageService medicalCoverageService;
-    private PolicyHolderService policyHolderService;
     private QueueService queueService;
     private PriceCalculationService priceCalculationService;
 
@@ -81,7 +75,6 @@ public class PatientVisitService {
                                ConsultationService consultationService, ConsultationFollowupService consultationFollowupService,
                                PatientReferralService patientReferralService, ItemService itemService, NewCaseService caseService,
                                RunningNumberService runningNumberService, DiagnosisService diagnosisService,
-                               MedicalCoverageService medicalCoverageService, PolicyHolderService policyHolderService,
                                QueueService queueService, PriceCalculationService priceCalculationService) {
         this.patientVisitRegistryDatabaseService = patientVisitRegistryDatabaseService;
         this.patientDatabaseService = patientDatabaseService;
@@ -95,8 +88,6 @@ public class PatientVisitService {
         this.caseService = caseService;
         this.runningNumberService = runningNumberService;
         this.diagnosisService = diagnosisService;
-        this.medicalCoverageService = medicalCoverageService;
-        this.policyHolderService = policyHolderService;
         this.queueService = queueService;
         this.priceCalculationService = priceCalculationService;
     }
@@ -238,7 +229,7 @@ public class PatientVisitService {
         return createVisitRegistry;
     }
 
-    public PatientVisitRegistry createPatientVisitRegistry(PatientVisitRegistry visitRegistry, List<String> coverageIds, Boolean isSingleVisitCase) throws CMSException {
+    public PatientVisitRegistry createPatientVisitRegistry(PatientVisitRegistry visitRegistry, Boolean isSingleVisitCase) throws CMSException {
         checkPatientVisitRegistryValidity(visitRegistry);
         visitRegistry.setVisitNumber(runningNumberService.generateVisitNumber());
         visitRegistry.setAttachedToCase(true);
@@ -255,32 +246,10 @@ public class PatientVisitService {
         Case aCase = new Case();
         aCase.setClinicId(createVisitRegistry.getClinicId());
         aCase.setPatientId(createVisitRegistry.getPatientId());
-        aCase.setAttachedMedicalCoverages(checkAndAttachMedicalCoverages(coverageIds, createVisitRegistry.getPatientId()));
+//        aCase.setAttachedMedicalCoverages(checkAndAttachMedicalCoverages(coverageIds, createVisitRegistry.getPatientId()));
         Case createdCase = caseService.createNewCase(aCase, isSingleVisitCase == null || isSingleVisitCase, createVisitRegistry.getId());
         logger.debug("PatientVisitRegistry [visitId]:[{}] created and added to the case [id]:[{}]", createVisitRegistry.getVisitNumber(), createdCase.getId());
         return createVisitRegistry;
-    }
-
-    private List<AttachedMedicalCoverage> checkAndAttachMedicalCoverages(List<String> coverageIds, String patientId) throws CMSException {
-        Optional<Patient> foundPatientOpt = patientDatabaseService.findPatientById(patientId);
-        if (!foundPatientOpt.isPresent()) {
-            throw new CMSException(StatusCode.E2000, "Patient not found");
-        }
-        Patient foundPatient = foundPatientOpt.get();
-        List<AttachedMedicalCoverage> attachedMedicalCoverages = new ArrayList<>();
-        for (String coverageId : coverageIds) {
-            if (medicalCoverageService.findCoverageByPlan(coverageId) != null) {
-                attachedMedicalCoverages.add(new AttachedMedicalCoverage(coverageId));
-            } else {
-                logger.debug("Medical coverages are not valid");
-                throw new CMSException(StatusCode.E1002, "Invalid medical coverage plans");
-            }
-        }
-        if (!policyHolderService.areCoveragesValid(foundPatient.getUserId(), attachedMedicalCoverages)) {
-            logger.debug("One or more of the medical coverage is not valid");
-            throw new CMSException(StatusCode.E1005, "One or more of the medical coverage is not valid");
-        }
-        return attachedMedicalCoverages;
     }
 
     public List<PatientVisitRegistry> searchClinicAndDateRange(String clinicId, LocalDateTime start, LocalDateTime end) throws CMSException {
@@ -453,7 +422,7 @@ public class PatientVisitService {
                 .collect(Collectors.toMap(PersistedObject::getId, item -> item));
 
         List<ItemChargeDetail> itemChargeDetails = dispatchItems.stream()
-                .map(item -> new ItemChargeDetail(item.getItemId(), item.getQuantity(), null, null, item.getExcludedCoveragePlanIds()))
+                .map(item -> new ItemChargeDetail(item.getItemId(), item.getQuantity(), null, null))
                 .collect(Collectors.toList());
 
         Map<String, ItemChargeDetail> itemPriceMapping = priceCalculationService
@@ -479,7 +448,6 @@ public class PatientVisitService {
             salesItem.setRemarks(dispatchItem.getRemarks());
             salesItem.setExpireDate(dispatchItem.getExpiryDate());
             salesItem.setItemPriceAdjustment(dispatchItem.getItemPriceAdjustment());
-            salesItem.setExcludedCoveragePlanIds(dispatchItem.getExcludedCoveragePlanIds());
             salesItem.populateSoldPrice();
             items.add(salesItem);
         }

@@ -32,14 +32,13 @@ public class DispatchItemEntity {
     private LocalDate expiryDate;
     private String remarks;
     private ItemPriceAdjustmentEntity itemPriceAdjustment;
-    private Set<String> excludedCoveragePlanIds = new HashSet<>();
 
     //No need to map this filed used only for sent data
     private String itemCode;
     private String itemName;
 
     public DispatchItemEntity(String purchasedId, String itemId, String dosageUom, String instruct, int duration, int dosage,
-                              int quantity, Set<String> excludedCoveragePlanIds, int oriTotalPrice, String batchNo,
+                              int quantity, int oriTotalPrice, String batchNo,
                               LocalDate expiryDate, ItemPriceAdjustmentEntity itemPriceAdjustment, String remarks, String dosageInstruction) {
         this.purchasedId = purchasedId;
         this.itemId = itemId;
@@ -48,7 +47,6 @@ public class DispatchItemEntity {
         this.duration = duration;
         this.dosage = dosage;
         this.quantity = quantity;
-        this.excludedCoveragePlanIds = excludedCoveragePlanIds;
         this.oriTotalPrice = oriTotalPrice;
         this.batchNo = batchNo;
         this.expiryDate = expiryDate;

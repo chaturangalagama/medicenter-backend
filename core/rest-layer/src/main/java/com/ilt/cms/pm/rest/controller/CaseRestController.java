@@ -63,14 +63,6 @@ public class CaseRestController {
         logger.info("Request to update case [" + caseEntity + "]. " + "user: " + principal.getName());
         return caseDownstream.updateCase(caseId, caseEntity);
     }
-
-//    @RolesAllowed("ROLE_UPDATE_CASE")
-    @PostMapping("/update/medical-coverage/{caseId}")
-    public ResponseEntity updateCaseMedicalCoverage(@PathVariable("caseId") String caseId, @RequestBody List<String> planIds, Principal principal) {
-        logger.info("Request to update case medical coverages [" + planIds + "]. " + "user: " + principal.getName());
-        return caseDownstream.updateCaseMedicalCoverages(caseId, planIds);
-    }
-
     @PostMapping("/package/search/{caseId}")
     public ResponseEntity getCasePackage(@PathVariable("caseId") String caseId, Principal principal) {
         logger.info("Request to get package of case id [" + caseId + "]. "+ "user: " + principal.getName());

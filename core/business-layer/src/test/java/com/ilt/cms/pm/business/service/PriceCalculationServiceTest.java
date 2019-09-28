@@ -1,20 +1,14 @@
 package com.ilt.cms.pm.business.service;
 
 import com.ilt.cms.core.entity.Clinic;
-import com.ilt.cms.core.entity.Status;
-import com.ilt.cms.core.entity.charge.Charge;
-import com.ilt.cms.core.entity.coverage.CoveragePlan;
-import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.item.*;
 import com.ilt.cms.core.entity.item.ClinicItemMaster.ClinicItemPrice;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.core.entity.billing.ItemChargeDetail;
 import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeDetailResponse;
 import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeRequest;
 import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.inventory.LegacyInventoryService;
 import com.ilt.cms.repository.spring.*;
-import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
 import com.lippo.cms.exception.CMSException;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +26,6 @@ public class PriceCalculationServiceTest {
 
 
     private PriceCalculationService priceCalculationService;
-    private MedicalCoverageRepository medicalCoverageRepository;
-    private MedicalCoverageItemRepository medicalCoverageItemRepository;
     private ItemRepository itemRepository;
     private ClinicGroupItemMasterRepository clinicGroupItemMasterRepository;
     private ClinicItemMasterRepository clinicItemMasterRepository;
@@ -42,15 +34,6 @@ public class PriceCalculationServiceTest {
 
     @Before
     public void setup() {
-        medicalCoverageRepository = mock(MedicalCoverageRepository.class);
-        when(medicalCoverageRepository.findMedicalCoverageByPlanId(anyString(), eq(Status.ACTIVE)))
-                .thenReturn(Arrays.asList(mockMedicalCoverage()));
-
-        medicalCoverageItemRepository = mock(MedicalCoverageItemRepository.class);
-        when(medicalCoverageItemRepository.findByPlanAndItemId(any(), eq("I0001")))
-                .thenReturn(new MedicalCoverageItem("PL0001",
-                        Arrays.asList(new ItemCoverageScheme("I0001",
-                                new Charge(100, false))), Collections.emptyList()));
 
         itemRepository = mock(ItemRepository.class);
         when(itemRepository.findById(anyString())).thenReturn(Optional.of(mockItem()));
@@ -64,7 +47,7 @@ public class PriceCalculationServiceTest {
 
         clinicRepository = mock(ClinicRepository.class);
         when(clinicRepository.findById(anyString())).thenReturn(Optional.of(new Clinic()));
-        priceCalculationService = new PriceCalculationService(medicalCoverageRepository, medicalCoverageItemRepository,
+        priceCalculationService = new PriceCalculationService(
                 itemRepository, clinicGroupItemMasterRepository, clinicItemMasterRepository, clinicRepository, mock(CaseRepository.class),
                 mock(LegacyInventoryService.class));
     }
@@ -86,21 +69,14 @@ public class PriceCalculationServiceTest {
         return item;
     }
 
-    private MedicalCoverage mockMedicalCoverage() {
-        MedicalCoverage medicalCoverage = new MedicalCoverage();
-        medicalCoverage.setType(MedicalCoverage.CoverageType.CORPORATE);
-        medicalCoverage.setCoveragePlans(Arrays.asList(new CoveragePlan()));
-        return medicalCoverage;
-    }
-
     @Test
     public void testPriceCalculator() throws CMSException {
-        ItemChargeDetailResponse itemChargeDetailResponse = priceCalculationService.calculateSalesPrice(Arrays.asList(new AttachedMedicalCoverage("PL0001")),
+        ItemChargeDetailResponse itemChargeDetailResponse = priceCalculationService.calculateSalesPrice(
                 new ItemChargeRequest(null,
-                        Arrays.asList(new ItemChargeDetail("I0001", 1, null, null, Collections.emptySet()),
-                                new ItemChargeDetail("I0002", 2, null, null, Collections.emptySet()),
-                                new ItemChargeDetail("I0003", 3, null, null, Collections.emptySet()),
-                                new ItemChargeDetail("I0004", 4, null, null, Collections.emptySet()))),
+                        Arrays.asList(new ItemChargeDetail("I0001", 1, null, null),
+                                new ItemChargeDetail("I0002", 2, null, null),
+                                new ItemChargeDetail("I0003", 3, null, null),
+                                new ItemChargeDetail("I0004", 4, null, null))),
                 "CL0001");
         for (ItemChargeDetail chargeDetail : itemChargeDetailResponse.getChargeDetails()) {
             if (chargeDetail.getItemId().equals("I0001")) {

@@ -9,16 +9,12 @@ import com.ilt.cms.core.entity.casem.Invoice;
 import com.ilt.cms.core.entity.casem.SalesItem;
 import com.ilt.cms.core.entity.casem.SalesOrder;
 import com.ilt.cms.core.entity.charge.Charge;
-import com.ilt.cms.core.entity.coverage.CoveragePlan;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.pm.business.service.coverage.PolicyHolderLimitService;
 import com.ilt.cms.repository.spring.CaseRepository;
 import com.ilt.cms.repository.spring.ClinicRepository;
 import com.ilt.cms.repository.spring.PatientRepository;
 import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
-import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.Calculations;
 import com.lippo.commons.util.StatusCode;
@@ -40,18 +36,14 @@ public class NewCaseService {
     private RunningNumberService runningNumberService;
     private PatientVisitRegistryRepository visitRepository;
     private SalesOrderService salesOrderService;
-    private MedicalCoverageRepository medicalCoverageRepository;
     private PriceCalculationService priceCalculationService;
-    private PolicyHolderLimitService policyHolderLimitService;
 
     @Value("${system.gst.value:7}")
     private int systemGstValue;
 
     public NewCaseService(CaseRepository caseRepository, PatientRepository patientRepository,
                           ClinicRepository clinicRepository, RunningNumberService runningNumberService,
-                          PatientVisitRegistryRepository visitRepository, SalesOrderService salesOrderService,
-                          MedicalCoverageRepository medicalCoverageRepository, PriceCalculationService priceCalculationService,
-                          PolicyHolderLimitService policyHolderLimitService) {
+                          PatientVisitRegistryRepository visitRepository, SalesOrderService salesOrderService, PriceCalculationService priceCalculationService) {
 
         this.caseRepository = caseRepository;
         this.patientRepository = patientRepository;
@@ -59,9 +51,7 @@ public class NewCaseService {
         this.runningNumberService = runningNumberService;
         this.visitRepository = visitRepository;
         this.salesOrderService = salesOrderService;
-        this.medicalCoverageRepository = medicalCoverageRepository;
         this.priceCalculationService = priceCalculationService;
-        this.policyHolderLimitService = policyHolderLimitService;
     }
 
     public Case createNewCase(Case aCase, boolean singleVisitCase) throws CMSException {
@@ -108,7 +98,7 @@ public class NewCaseService {
         List<Invoice> invoiceBreakdown = invoiceBreakdown(aCase, new ItemChargeDetailResponse(planMaxUsage, salesOrder.getPurchaseItems().stream()
                 .map(salesItem -> new ItemChargeDetail(salesItem.getItemRefId(), salesItem.getPurchaseQty(),
                         new Charge(salesItem.getSellingPrice().getPrice(), salesItem.getSellingPrice().isTaxIncluded()),
-                        salesItem.getItemPriceAdjustment(), salesItem.getExcludedCoveragePlanIds()))
+                        salesItem.getItemPriceAdjustment()))
                 .collect(Collectors.toList())));
 
         for (Invoice invoice : invoiceBreakdown) {
@@ -227,14 +217,13 @@ public class NewCaseService {
 
     public List<Invoice> invoiceBreakdown(String caseId, ItemChargeRequest itemChargeDetails) throws CMSException {
         Case aCase = loadCase(caseId);
-        ItemChargeDetailResponse itemChargingMetadata = priceCalculationService.calculateSalesPrice(aCase.getAttachedMedicalCoverages(),
-                itemChargeDetails, aCase.getClinicId());
+        ItemChargeDetailResponse itemChargingMetadata = priceCalculationService.calculateSalesPrice(itemChargeDetails, aCase.getClinicId());
         return invoiceBreakdown(aCase, itemChargingMetadata);
     }
 
     private List<Invoice> invoiceBreakdown(Case aCase, ItemChargeDetailResponse chargingMetadata) {
 
-        Map<String, Integer> availableLimits = policyHolderLimitService.findAvailableLimits(aCase.getAttachedMedicalCoverages(), aCase.getPatientId());
+//        Map<String, Integer> availableLimits = policyHolderLimitService.findAvailableLimits(aCase.getAttachedMedicalCoverages(), aCase.getPatientId());
         logger.info("breaking invoices for items[" + chargingMetadata + "]");
 
         Map<String, Invoice> invoices = new HashMap<>();
@@ -263,65 +252,36 @@ public class NewCaseService {
             itemPayableAmount += Calculations.multiplyWithHalfRoundUp(itemChargeDetail.getQuantity(),
                     itemChargeDetail.calculateAdjustedPrice());
 
-            for (AttachedMedicalCoverage coverage : aCase.getAttachedMedicalCoverages()) {
-
-                if (shouldExcludeCoverage(chargingMetadata, existingInvoices, itemChargeDetail, coverage, availableLimits.get(coverage.getPlanId()))) {
-                    logger.debug("Item excluded or part of existing invoice so ignoring from calculation or value is set as -1 ["
-                            + availableLimits.get(coverage.getPlanId()) + "]");
-                    continue;
-                }
-                Invoice planInvoice = invoices.computeIfAbsent(coverage.getPlanId(),
-                        (planId) -> new Invoice(runningNumberService.generateInvoiceNumber(), Invoice.InvoiceType.CREDIT, coverage.getPlanId()));
-
-                int maxLimit = chargingMetadata.getPlanMaxUsage()
-                        .computeIfAbsent(coverage.getPlanId(), availableLimits::get);
-
-                itemPayableAmount = calculatePayable(planInvoice, itemPayableAmount, maxLimit);
-            }
+//            for (AttachedMedicalCoverage coverage : aCase.getAttachedMedicalCoverages()) {
+//
+//                if (shouldExcludeCoverage(chargingMetadata, existingInvoices, itemChargeDetail, coverage, availableLimits.get(coverage.getPlanId()))) {
+//                    logger.debug("Item excluded or part of existing invoice so ignoring from calculation or value is set as -1 ["
+//                            + availableLimits.get(coverage.getPlanId()) + "]");
+//                    continue;
+//                }
+//                Invoice planInvoice = invoices.computeIfAbsent(coverage.getPlanId(),
+//                        (planId) -> new Invoice(runningNumberService.generateInvoiceNumber(), Invoice.InvoiceType.CREDIT, coverage.getPlanId()));
+//
+//                int maxLimit = chargingMetadata.getPlanMaxUsage()
+//                        .computeIfAbsent(coverage.getPlanId(), availableLimits::get);
+//
+//                itemPayableAmount = calculatePayable(planInvoice, itemPayableAmount, maxLimit);
+//            }
         }
         if (itemPayableAmount > 0) {
             directPayment.setPayableAmount(directPayment.getPayableAmount() + itemPayableAmount);
         }
 
-        Map<String, CoveragePlan> planMap = aCase.getAttachedMedicalCoverages().stream()
-                .map(attachedMedicalCoverage -> medicalCoverageRepository
-                        .findMedicalCoverageByPlanId(attachedMedicalCoverage.getPlanId())
-                        .findPlan(attachedMedicalCoverage.getPlanId()))
-                .collect(Collectors.toMap(CoveragePlan::getId, plan -> plan));
-
-        computeCoPayAndTax(invoices, directPayment, planMap);
+        computeCoPayAndTax(invoices, directPayment);
         directPayment.priceAdjustmentForCash();
         directPayment.setPayableAmount(directPayment.getPayableAmount() - cashPaidAmount);
         invoices.put("DIRECT", directPayment);
         return new ArrayList<>(invoices.values());
     }
 
-    private boolean shouldExcludeCoverage(ItemChargeDetailResponse chargingMetadata, Set<String> existingInvoices,
-                                          ItemChargeDetail itemChargeDetail, AttachedMedicalCoverage coverage,
-                                          int coveragePlanAvailableLimit) {
-        return itemChargeDetail.getExcludedPlans().contains(coverage.getPlanId())
-                || existingInvoices.contains(coverage.getPlanId())
-                || chargingMetadata.getPlanMaxUsage().getOrDefault(coverage.getPlanId(), coveragePlanAvailableLimit) < 0;
-    }
-
-    private void computeCoPayAndTax(Map<String, Invoice> invoices, Invoice directPayment, Map<String, CoveragePlan> planMap) {
+    private void computeCoPayAndTax(Map<String, Invoice> invoices, Invoice directPayment) {
 
         for (Map.Entry<String, Invoice> invoiceEntry : invoices.entrySet()) {
-
-            CoveragePlan coveragePlan = planMap.get(invoiceEntry.getKey());
-
-            if (coveragePlan.getCopayment() != null) {
-                if (coveragePlan.getCopayment().getPaymentType() == CopayAmount.PaymentType.DOLLAR) {
-                    invoiceEntry.getValue().setPayableAmount(invoiceEntry.getValue().getPayableAmount() - coveragePlan.getCopayment().getValue());
-                    directPayment.setPayableAmount(directPayment.getPayableAmount() + coveragePlan.getCopayment().getValue());
-                } else {
-                    int copayAmount = Calculations.calculatePercentage(invoiceEntry.getValue().getPayableAmount(),
-                            coveragePlan.getCopayment().getValue());
-                    invoiceEntry.getValue().setPayableAmount(invoiceEntry.getValue().getPayableAmount() - copayAmount);
-                    directPayment.setPayableAmount(directPayment.getPayableAmount() + copayAmount);
-                }
-            }
-            invoiceEntry.getValue().setPlanName(coveragePlan.getName());
             int taxAmount = Calculations.calculatePercentage(invoiceEntry.getValue().getPayableAmount(), systemGstValue);
             invoiceEntry.getValue().setTaxAmount(taxAmount);
             invoiceEntry.getValue().setPayableAmount(invoiceEntry.getValue().getPayableAmount() + taxAmount);

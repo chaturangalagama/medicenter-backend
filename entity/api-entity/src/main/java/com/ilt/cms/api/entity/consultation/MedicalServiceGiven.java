@@ -26,6 +26,5 @@ public class MedicalServiceGiven {
         private ChargeEntity chargeAmount;
 
         private UserPaymentOption availablePriceAdjustment;
-        private Set<String> excludedCoveragePlanIds = new HashSet<>();
     }
 }

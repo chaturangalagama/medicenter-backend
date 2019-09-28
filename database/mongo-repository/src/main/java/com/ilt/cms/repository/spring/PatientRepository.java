@@ -23,12 +23,6 @@ public interface PatientRepository extends MongoRepository<Patient, String> {
 
     List<Patient> findAllByNameLike(String name);
 
-    @ExistsQuery(value = "{ 'coverages.medicalCoverageId' : ?0 }")
-    boolean isMedicalServiceIdUsed(String medicalCoverageId);
-
-    @ExistsQuery(value = "{ 'coverages.medicalCoverageId' : ?0, 'coverages.planId' : ?1}")
-    boolean isMedicalPlanIdUsed(String medicalCoverageId, String planId);
-
     @Query("{ $text: {$search: ?0 } }")
     List<Patient> patientLikeSearch(String value, Pageable pageable);
 

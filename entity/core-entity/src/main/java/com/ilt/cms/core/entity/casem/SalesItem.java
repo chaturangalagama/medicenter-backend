@@ -3,7 +3,6 @@ package com.ilt.cms.core.entity.casem;
 import com.ilt.cms.core.entity.item.Cost;
 import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.core.entity.item.SellingPrice;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.lippo.cms.util.Calculations;
 
 import java.time.LocalDate;
@@ -28,7 +27,6 @@ public class SalesItem {
     private String remarks;
     private ItemPriceAdjustment itemPriceAdjustment;
     private Item.ItemType itemType;
-    private Set<String> excludedCoveragePlanIds = new HashSet<>();
 
     public SalesItem() {
     }
@@ -50,7 +48,6 @@ public class SalesItem {
             expireDate = si.getExpireDate();
             remarks = si.getRemarks();
             itemPriceAdjustment = si.getItemPriceAdjustment();
-            excludedCoveragePlanIds = si.getExcludedCoveragePlanIds();
 
             //calculate the sold price
 
@@ -94,14 +91,6 @@ public class SalesItem {
             }
         }
         return chargeAmount;
-    }
-
-    public List<String> receiveUsedPlans(List<AttachedMedicalCoverage> caseAttachedPlanIds) {
-        return caseAttachedPlanIds
-                .stream()
-                .map(AttachedMedicalCoverage::getPlanId)
-                .filter(s -> !excludedCoveragePlanIds.contains(s))
-                .collect(Collectors.toList());
     }
 
     public String getInstruct() {
@@ -187,15 +176,6 @@ public class SalesItem {
         this.remarks = remarks;
     }
 
-    public Set<String> getExcludedCoveragePlanIds() {
-        if (excludedCoveragePlanIds == null) excludedCoveragePlanIds = new HashSet<>();
-        return excludedCoveragePlanIds;
-    }
-
-    public void setExcludedCoveragePlanIds(Set<String> excludedCoveragePlanIds) {
-        this.excludedCoveragePlanIds = excludedCoveragePlanIds;
-    }
-
     public SellingPrice getSellingPrice() {
         return sellingPrice;
     }
@@ -245,7 +225,6 @@ public class SalesItem {
                 ", remarks='" + remarks + '\'' +
                 ", itemPriceAdjustment=" + itemPriceAdjustment +
                 ", itemType=" + itemType +
-                ", excludedCoveragePlanIds=" + excludedCoveragePlanIds +
                 '}';
     }
 }

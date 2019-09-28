@@ -22,7 +22,7 @@ public class ItemChargeDetail {
     public ItemChargeDetail() {
     }
 
-    public ItemChargeDetail(String itemId, int quantity, Charge charge, ItemPriceAdjustment itemPriceAdjustment, Set<String> excludedPlans) {
+    public ItemChargeDetail(String itemId, int quantity, Charge charge, ItemPriceAdjustment itemPriceAdjustment) {
         this.itemId = itemId;
         this.quantity = quantity;
         this.charge = charge;

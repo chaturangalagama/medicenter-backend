@@ -37,7 +37,6 @@ public class MedicalServiceGiven extends PersistedObject {
         private Charge chargeAmount;
         //this is only used for storage purposes
         private UserPaymentOption availablePriceAdjustment;
-        private Set<String> excludedCoveragePlanIds = new HashSet<>();
 
         public MedicalService() {
         }
@@ -116,14 +115,6 @@ public class MedicalServiceGiven extends PersistedObject {
             this.chargeAmount = chargeAmount;
         }
 
-        public Set<String> getExcludedCoveragePlanIds() {
-            return excludedCoveragePlanIds;
-        }
-
-        public void setExcludedCoveragePlanIds(Set<String> excludedCoveragePlanIds) {
-            this.excludedCoveragePlanIds = excludedCoveragePlanIds;
-        }
-
         @Override
         public String toString() {
             return "MedicalService{" +
@@ -133,7 +124,6 @@ public class MedicalServiceGiven extends PersistedObject {
                     ", name='" + name + '\'' +
                     ", chargeAmount=" + chargeAmount +
                     ", availablePriceAdjustment=" + availablePriceAdjustment +
-                    ", excludedCoveragePlanIds=" + excludedCoveragePlanIds +
                     '}';
         }
     }

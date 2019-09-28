@@ -37,5 +37,4 @@ public interface CaseDownstream {
 
     ResponseEntity<ApiResponse> getItemChangePriceCalculation(String caseId, ItemChargeDetail.ItemChargeRequest caseItemPriceRequests);
 
-    ResponseEntity<ApiResponse> updateCaseMedicalCoverages(String caseId, List<String> planIds);
 }

@@ -4,7 +4,6 @@ import com.ilt.cms.api.entity.casem.CaseEntity;
 import com.ilt.cms.api.entity.casem.CaseEntity.VisitView;
 import com.ilt.cms.core.entity.casem.Case;
 import com.ilt.cms.core.entity.casem.Case.CaseStatus;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 
 import java.util.stream.Collectors;
 
@@ -26,9 +25,6 @@ public class CaseMapper extends Mapper {
         }
         aCase.setPurchasedPackage(PackageMapper.mapToCore(caseEntity.getPurchasedPackage()));
         aCase.setSalesOrder(SalesOrderMapper.mapToSalesOrder(caseEntity.getSalesOrder()));
-        caseEntity.getCoverages().forEach(coverageView -> {
-            aCase.getAttachedMedicalCoverages().add(new AttachedMedicalCoverage(coverageView.getPlanId()));
-        });
         aCase.setSingleVisit(caseEntity.isSingleVisit());
         return aCase;
     }

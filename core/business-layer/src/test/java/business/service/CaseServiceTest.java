@@ -7,11 +7,7 @@ import com.ilt.cms.core.entity.casem.Invoice;
 import com.ilt.cms.core.entity.casem.ItemPriceAdjustment;
 import com.ilt.cms.core.entity.casem.SalesOrder;
 import com.ilt.cms.core.entity.charge.Charge;
-import com.ilt.cms.core.entity.coverage.CoveragePlan;
-import com.ilt.cms.core.entity.coverage.MedicalCoverage;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.pm.business.service.coverage.PolicyHolderLimitService;
 import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.billing.NewCaseService;
 import com.ilt.cms.pm.business.service.billing.SalesOrderService;
@@ -19,7 +15,6 @@ import com.ilt.cms.repository.spring.CaseRepository;
 import com.ilt.cms.repository.spring.ClinicRepository;
 import com.ilt.cms.repository.spring.PatientRepository;
 import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
-import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
 import com.lippo.cms.exception.CMSException;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +38,6 @@ public class CaseServiceTest {
     private PriceCalculationService priceCalculationService;
     private CaseRepository caseRepository;
     private SalesOrderService salesOrderService;
-    private PolicyHolderLimitService holderLimitService;
 
     @Before
     public void setUp() throws Exception {
@@ -59,35 +53,12 @@ public class CaseServiceTest {
         PatientVisitRegistryRepository visitRepository = mock(PatientVisitRegistryRepository.class);
         salesOrderService = mock(SalesOrderService.class);
 
-        MedicalCoverageRepository medicalCoverageRepository = mock(MedicalCoverageRepository.class);
-        when(medicalCoverageRepository.findMedicalCoverageByPlanId(any())).thenAnswer((Answer<MedicalCoverage>) invocation -> {
-            String planId = invocation.getArgument(0);
-            MedicalCoverage coverage = new MedicalCoverage();
-            CoveragePlan plan = new CoveragePlan(planId, planId);
-            if (planId.equals("PL-COPAY-01")) {
-                plan.setCopayment(new CopayAmount(1000, CopayAmount.PaymentType.DOLLAR));
-            }
 
-            if (planId.equals("PL-COPAY-02")) {
-                plan.setCopayment(new CopayAmount(10, CopayAmount.PaymentType.PERCENTAGE));
-            }
-
-            coverage.setCoveragePlans(Arrays.asList(plan));
-            return coverage;
-        });
 
         priceCalculationService = mock(PriceCalculationService.class);
 
-        holderLimitService = mock(PolicyHolderLimitService.class);
-        HashMap<String, Integer> policyLimits = new HashMap<>();
-        policyLimits.put("PL001", 10000);
-        policyLimits.put("PL002", 15000);
-        policyLimits.put("PL-COPAY-01", 15000);
-        policyLimits.put("PL-COPAY-02", 15000);
-        when(holderLimitService.findAvailableLimits(any(), any())).thenReturn(policyLimits);
-
         caseService = new NewCaseService(caseRepository, patientRepository, clinicRepository, runningNumberService, visitRepository, salesOrderService,
-                medicalCoverageRepository, priceCalculationService, holderLimitService);
+                priceCalculationService);
 
         caseService.setSystemGstValue(SYSTEM_GST_VALUE);
     }
@@ -98,13 +69,11 @@ public class CaseServiceTest {
 
         Case aCase = new Case();
         aCase.setSalesOrder(SalesOrder.newSalesOrder(SYSTEM_GST_VALUE, "10000"));
-        aCase.setAttachedMedicalCoverages(Arrays.asList(new AttachedMedicalCoverage("PL001"), new AttachedMedicalCoverage("PL002")));
         when(caseRepository.findById(any())).thenReturn(Optional.of(aCase));
 
         List<ItemChargeDetail> chargeDetails = chargeItemList();
 
         ItemChargeDetailResponse chargeDetailResponse = new ItemChargeDetailResponse(new HashMap<>(), chargeDetails);
-        when(priceCalculationService.calculateSalesPrice(any(), any(), any())).thenReturn(chargeDetailResponse);
 
         List<Invoice> invoices = caseService.invoiceBreakdown("CA0001", new ItemChargeRequest(new HashMap<>(), chargeDetails));
         for (Invoice invoice : invoices) {
@@ -121,22 +90,14 @@ public class CaseServiceTest {
 
     @Test
     public void testInvoiceBreakdownWithLimitExceededPlan() throws CMSException {
-        HashMap<String, Integer> policyLimits = new HashMap<>();
-        policyLimits.put("PL001", -1);
-        policyLimits.put("PL002", 15000);
-        policyLimits.put("PL-COPAY-01", 15000);
-        policyLimits.put("PL-COPAY-02", 15000);
-        when(holderLimitService.findAvailableLimits(any(), any())).thenReturn(policyLimits);
 
         Case aCase = new Case();
         aCase.setSalesOrder(SalesOrder.newSalesOrder(SYSTEM_GST_VALUE, "10000"));
-        aCase.setAttachedMedicalCoverages(Arrays.asList(new AttachedMedicalCoverage("PL001"), new AttachedMedicalCoverage("PL002")));
         when(caseRepository.findById(any())).thenReturn(Optional.of(aCase));
 
         List<ItemChargeDetail> chargeDetails = chargeItemList();
 
         ItemChargeDetailResponse chargeDetailResponse = new ItemChargeDetailResponse(new HashMap<>(), chargeDetails);
-        when(priceCalculationService.calculateSalesPrice(any(), any(), any())).thenReturn(chargeDetailResponse);
 
         List<Invoice> invoices = caseService.invoiceBreakdown("CA0001", new ItemChargeRequest(new HashMap<>(), chargeDetails));
         assertEquals("There should be only 2 invoices generated", 2, invoices.size());
@@ -156,13 +117,11 @@ public class CaseServiceTest {
 
         Case aCase = new Case();
         aCase.setSalesOrder(SalesOrder.newSalesOrder(SYSTEM_GST_VALUE, "10000"));
-        aCase.setAttachedMedicalCoverages(Arrays.asList(new AttachedMedicalCoverage("PL-COPAY-01"), new AttachedMedicalCoverage("PL-COPAY-02")));
         when(caseRepository.findById(any())).thenReturn(Optional.of(aCase));
 
         List<ItemChargeDetail> chargeDetails = chargeItemList();
 
         ItemChargeDetailResponse chargeDetailResponse = new ItemChargeDetailResponse(new HashMap<>(), chargeDetails);
-        when(priceCalculationService.calculateSalesPrice(any(), any(), any())).thenReturn(chargeDetailResponse);
 
         List<Invoice> invoices = caseService.invoiceBreakdown("CA0001", new ItemChargeRequest(new HashMap<>(), chargeDetails));
         for (Invoice invoice : invoices) {
@@ -181,12 +140,10 @@ public class CaseServiceTest {
 
         Case aCase = new Case();
         aCase.setSalesOrder(SalesOrder.newSalesOrder(SYSTEM_GST_VALUE, "10000"));
-        aCase.setAttachedMedicalCoverages(Collections.emptyList());
         when(caseRepository.findById(any())).thenReturn(Optional.of(aCase));
 
         List<ItemChargeDetail> chargeDetails = chargeItemList();
         ItemChargeDetailResponse chargeDetailResponse = new ItemChargeDetailResponse(new HashMap<>(), chargeDetails);
-        when(priceCalculationService.calculateSalesPrice(any(), any(), any())).thenReturn(chargeDetailResponse);
 
         List<Invoice> invoices = caseService.invoiceBreakdown("CA0001", new ItemChargeRequest(new HashMap<>(), chargeDetails));
         assertEquals("Only one invoice", 1, invoices.size());
@@ -213,7 +170,6 @@ public class CaseServiceTest {
         invoice.setInvoiceNumber("123456677");
 
         aCase.getSalesOrder().setInvoices(Arrays.asList(invoice));
-        aCase.setAttachedMedicalCoverages(Collections.emptyList());
         when(caseRepository.findById(any())).thenReturn(Optional.of(aCase));
         when(salesOrderService.updateSalesOrder(any(SalesOrder.class))).thenReturn(aCase.getSalesOrder());
 
@@ -256,7 +212,6 @@ public class CaseServiceTest {
 
 
         aCase.getSalesOrder().setInvoices(invoiceList);
-        aCase.setAttachedMedicalCoverages(Collections.emptyList());
         when(caseRepository.findById(any())).thenReturn(Optional.of(aCase));
         when(salesOrderService.updateSalesOrder(any(SalesOrder.class))).thenReturn(aCase.getSalesOrder());
 
@@ -268,11 +223,11 @@ public class CaseServiceTest {
 
     private List<ItemChargeDetail> chargeItemList() {
         ItemChargeDetail item1 = new ItemChargeDetail("I0001", 100, new Charge(1000, false),
-                new ItemPriceAdjustment(), Collections.emptySet());
+                new ItemPriceAdjustment());
         ItemChargeDetail item2 = new ItemChargeDetail("I0002", 100, new Charge(1000, false),
-                new ItemPriceAdjustment(), Collections.emptySet());
+                new ItemPriceAdjustment());
         ItemChargeDetail item3 = new ItemChargeDetail("I0003", 100, new Charge(1000, false),
-                new ItemPriceAdjustment(), Collections.emptySet());
+                new ItemPriceAdjustment());
 
         return Arrays.asList(item1, item2, item3);
     }

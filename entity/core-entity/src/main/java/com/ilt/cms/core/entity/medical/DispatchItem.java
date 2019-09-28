@@ -21,7 +21,6 @@ public class DispatchItem {
     private String batchNo;
     private LocalDate expiryDate;
     private ItemPriceAdjustment itemPriceAdjustment;
-    private Set<String> excludedCoveragePlanIds;
     private String remarks;
 
     public DispatchItem() {
@@ -29,7 +28,7 @@ public class DispatchItem {
 
     public DispatchItem(String purchasedId, String itemId, String dosageUom, String instruct, int duration, int dosage,
                         int quantity, int oriTotalPrice, String batchNo, LocalDate expiryDate,
-                        ItemPriceAdjustment itemPriceAdjustment, Set<String> excludedCoveragePlanIds, String remarks, String dosageInstruction) {
+                        ItemPriceAdjustment itemPriceAdjustment, String remarks, String dosageInstruction) {
         this.purchasedId = purchasedId;
         this.itemId = itemId;
         this.dosageUom = dosageUom;
@@ -41,7 +40,6 @@ public class DispatchItem {
         this.batchNo = batchNo;
         this.expiryDate = expiryDate;
         this.itemPriceAdjustment = itemPriceAdjustment;
-        this.excludedCoveragePlanIds = excludedCoveragePlanIds;
         this.remarks = remarks;
         this.dosageInstruction = dosageInstruction;
     }
@@ -58,7 +56,6 @@ public class DispatchItem {
         duration = dispatchItem.duration;
         dosage = dispatchItem.dosage;
         quantity = dispatchItem.quantity;
-        excludedCoveragePlanIds = new HashSet<>(dispatchItem.excludedCoveragePlanIds);
         oriTotalPrice = dispatchItem.oriTotalPrice;
         batchNo = dispatchItem.batchNo;
         expiryDate = dispatchItem.expiryDate;
@@ -164,14 +161,6 @@ public class DispatchItem {
         this.itemPriceAdjustment = itemPriceAdjustment;
     }
 
-    public Set<String> getExcludedCoveragePlanIds() {
-        return excludedCoveragePlanIds;
-    }
-
-    public void setExcludedCoveragePlanIds(Set<String> excludedCoveragePlanIds) {
-        this.excludedCoveragePlanIds = excludedCoveragePlanIds;
-    }
-
     public String getDosageInstruction() {
         return dosageInstruction;
     }
@@ -195,7 +184,6 @@ public class DispatchItem {
                 ", batchNo='" + batchNo + '\'' +
                 ", expiryDate=" + expiryDate +
                 ", itemPriceAdjustment=" + itemPriceAdjustment +
-                ", excludedCoveragePlanIds=" + excludedCoveragePlanIds +
                 ", remarks='" + remarks + '\'' +
                 '}';
     }

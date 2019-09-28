@@ -1,6 +1,5 @@
 package com.ilt.cms.api.container;
 
-import com.ilt.cms.api.entity.coverage.MedicalCoverageEntity;
 import com.ilt.cms.api.entity.patientVisitRegistry.VisitRegistryEntity;
 import lombok.*;
 
@@ -14,7 +13,6 @@ import java.util.List;
 public class VisitRegistryWrapper {
 
     private VisitRegistryEntity registryEntity;
-    private List<String> attachedMedicalCoverages;
     private Boolean singleVisitCase;
 
 }

@@ -1,15 +1,10 @@
 package com.ilt.cms.pm.business.service.patient;
 
-import com.ilt.cms.core.entity.coverage.CoveragePlan;
-import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.patient.PatientVaccination;
-import com.ilt.cms.core.entity.vaccination.AssociatedCoverageVaccination;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
 import com.ilt.cms.core.entity.vaccination.VaccinationScheme;
-import com.ilt.cms.database.coverage.MedicalCoverageDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.database.vaccination.AssociatedCoverageVaccinationDatabaseService;
 import com.ilt.cms.database.vaccination.VaccinationDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.CMSConstant;
@@ -29,17 +24,11 @@ public class VaccinationService {
     private static final Logger logger = LoggerFactory.getLogger(VaccinationService.class);
     private VaccinationDatabaseService vaccinationDatabaseService;
     private PatientDatabaseService patientDatabaseService;
-    private AssociatedCoverageVaccinationDatabaseService associatedCoverageVaccinationDatabaseService;
-    private MedicalCoverageDatabaseService medicalCoverageDatabaseService;
 
     public VaccinationService(VaccinationDatabaseService vaccinationDatabaseService,
-                              PatientDatabaseService patientDatabaseService,
-                              AssociatedCoverageVaccinationDatabaseService associatedCoverageVaccinationDatabaseService,
-                              MedicalCoverageDatabaseService medicalCoverageDatabaseService) {
+                              PatientDatabaseService patientDatabaseService) {
         this.vaccinationDatabaseService = vaccinationDatabaseService;
         this.patientDatabaseService = patientDatabaseService;
-        this.associatedCoverageVaccinationDatabaseService = associatedCoverageVaccinationDatabaseService;
-        this.medicalCoverageDatabaseService = medicalCoverageDatabaseService;
     }
 
     public HashMap<String, Object> listVaccines(int page, int size) {
@@ -123,44 +112,6 @@ public class VaccinationService {
         return vaccinations;
     }
 
-    public AssociatedCoverageVaccination vaccinationAssociation(AssociatedCoverageVaccination associatedCoverageVaccination, boolean update) throws CMSException {
-        MedicalCoverage medicalCoverage = medicalCoverageDatabaseService.findOne(associatedCoverageVaccination.getMedicalCoverageId());
-
-        if (medicalCoverage == null) {
-            //return new CmsServiceResponse<>(StatusCode.E1005, "Medical Coverage not found");
-            throw new CMSException(StatusCode.E1005, "Medical Coverage not found");
-        } else {
-            List<CoveragePlan> coveragePlans = medicalCoverage.getCoveragePlans();
-
-            Optional<CoveragePlan> coveragePlanOptional = coveragePlans.stream()
-                    .filter(plan -> plan.getId().equals(associatedCoverageVaccination.getCoveragePlanId()))
-                    .findFirst();
-
-            if (!coveragePlanOptional.isPresent()) {
-                //return new CmsServiceResponse<>(StatusCode.E1005, "Plan not found");
-                throw new CMSException(StatusCode.E1005, "Plan not found");
-            } else {
-                boolean valid = areMedicalTestSchemesValid(associatedCoverageVaccination.getModifiedVaccinationScheme(),
-                        associatedCoverageVaccination.getExcludedVaccinationScheme());
-                if (!valid) {
-                    logger.warn("Medical Test ID specified not valid");
-                    //return new CmsServiceResponse<>(StatusCode.E1005, "Some or all specified Vaccination dose ID not valid");
-                    throw new CMSException(StatusCode.E1005, "Some or all specified Vaccination dose ID not valid");
-                } else {
-                    associatedCoverageVaccination.clearFieldsForPersistence();
-                    if (update) {
-                        logger.info("Update method called, dropping association [" + associatedCoverageVaccination.getMedicalCoverageId()
-                                + "] before merging planId[" + associatedCoverageVaccination.getCoveragePlanId() + "]");
-                        associatedCoverageVaccinationDatabaseService.deleteByMedicalCoverageIdAndCoveragePlanId(associatedCoverageVaccination.getMedicalCoverageId(),
-                                associatedCoverageVaccination.getCoveragePlanId());
-                    }
-                    AssociatedCoverageVaccination persistedAssociatedCoverage = associatedCoverageVaccinationDatabaseService.save(associatedCoverageVaccination);
-                    return persistedAssociatedCoverage;
-                }
-            }
-        }
-    }
-
     private boolean areMedicalTestSchemesValid(List<VaccinationScheme> modifiedMedicalTestScheme, List<VaccinationScheme> excludedMedicalTestScheme) {
         boolean valid = true;
         if (!modifiedMedicalTestScheme.isEmpty()) {
@@ -173,11 +124,6 @@ public class VaccinationService {
                     .allMatch(vaccinationScheme -> vaccinationDatabaseService.checkIfAllVaccinationDoseIdExists(vaccinationScheme.getDoseId()));
         }
         return valid;
-    }
-
-    public boolean removeAssociation(String medicalCoverageId, String associationCoverageId) {
-        associatedCoverageVaccinationDatabaseService.deleteByIdAndMedicalCoverageId(associationCoverageId, medicalCoverageId);
-        return true;
     }
 
     public Vaccination findFirstByDosesIn(String doseId){

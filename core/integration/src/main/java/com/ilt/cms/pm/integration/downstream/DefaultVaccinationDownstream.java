@@ -1,9 +1,7 @@
 package com.ilt.cms.pm.integration.downstream;
 
 import com.ilt.cms.api.entity.patient.PatientVaccination;
-import com.ilt.cms.api.entity.vaccination.AssociatedCoverageVaccinationEntity;
 import com.ilt.cms.api.entity.vaccination.VaccinationEntity;
-import com.ilt.cms.core.entity.vaccination.AssociatedCoverageVaccination;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
 import com.ilt.cms.downstream.VaccinationDownstream;
 import com.ilt.cms.pm.business.service.patient.VaccinationService;
@@ -64,12 +62,6 @@ public class DefaultVaccinationDownstream implements VaccinationDownstream {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> removeAssociation(String medicalCoverageId, String associationCoverageId) {
-        boolean success = vaccinationService.removeAssociation(medicalCoverageId, associationCoverageId);
-        return httpApiResponse(new HttpApiResponse(StatusCode.S0000));
-    }
-
-    @Override
     public ResponseEntity<ApiResponse> addVaccination(VaccinationEntity vaccination) {
         try {
             Vaccination newVaccination = vaccinationService.addVaccination(VaccinationMapper.mapToCore(vaccination));
@@ -92,15 +84,4 @@ public class DefaultVaccinationDownstream implements VaccinationDownstream {
         }
     }
 
-    @Override
-    public ResponseEntity<ApiResponse> vaccinationAssociation(AssociatedCoverageVaccinationEntity associatedCoverageVaccinationEntity, boolean b) {
-        try {
-            AssociatedCoverageVaccination associatedCoverageVaccination =
-                    vaccinationService.vaccinationAssociation(VaccinationMapper.mapToAssociatedCoverageVaccinationCore(associatedCoverageVaccinationEntity), b);
-            return httpApiResponse(new HttpApiResponse(VaccinationMapper.mapToAssociatedCoverageVaccinationEntity(associatedCoverageVaccination)));
-        } catch (CMSException e) {
-            logger.error(e.getCode() + ":"+e.getMessage());
-            return httpApiResponse(new HttpApiResponse(e.getCode(), e.getMessage()));
-        }
-    }
 }

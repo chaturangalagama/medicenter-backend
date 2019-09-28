@@ -1,8 +1,6 @@
 package business.config.repository;
 
-import com.ilt.cms.repository.CustomMedicalCoverageRepository;
 import com.ilt.cms.repository.CustomPatientRepository;
-import com.ilt.cms.repository.PolicyHolderRepository;
 import com.ilt.cms.repository.spring.*;
 import com.ilt.cms.repository.spring.calendar.AppointmentRepository;
 import com.ilt.cms.repository.spring.calendar.ClinicCalendarRepository;
@@ -10,14 +8,7 @@ import com.ilt.cms.repository.spring.calendar.DoctorCalendarRepository;
 import com.ilt.cms.repository.spring.consultation.ConsultationFollowupRepository;
 import com.ilt.cms.repository.spring.consultation.ConsultationRepository;
 import com.ilt.cms.repository.spring.consultation.ConsultationTemplateRepository;
-import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
-import com.ilt.cms.repository.spring.coverage.PolicyHolderLimitRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderChasRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderCorporateRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderInsuranceRepository;
-import com.ilt.cms.repository.spring.policy.PolicyHolderMediSaveRepository;
 import com.ilt.cms.repository.spring.system.SystemStoreRepository;
-import com.ilt.cms.repository.spring.vaccination.AssociatedCoverageVaccinationRepository;
 import com.ilt.cms.repository.spring.vaccination.VaccinationRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -54,28 +45,12 @@ public class SpringTestRepositoryConfiguration {
         return Mockito.mock(DoctorRepository.class);
     }
     @Bean
-    public PolicyHolderRepository policyHolderRepository(){
-        return new PolicyHolderRepository(mongoTemplate, chasRepository(), corporateRepository(), insuranceRepository(), mediSaveRepository());
-    }
-    @Bean
-    public CustomMedicalCoverageRepository customMedicalCoverageRepository(){
-        return new CustomMedicalCoverageRepository(medicalCoverageRepository(), mongoTemplate);
-    }
-    @Bean
     public PatientRepository patientRepository(){
         return Mockito.mock(PatientRepository.class);
     }
     @Bean
-    public MedicalCoverageRepository medicalCoverageRepository(){
-        return Mockito.mock(MedicalCoverageRepository.class);
-    }
-    @Bean
     public CustomPatientRepository customPatientRepository(){
         return new CustomPatientRepository(patientRepository(), mongoTemplate());
-    }
-    @Bean
-    public CustomMedicalCoverageRepository custommedicalCoverageRepository(){
-        return new CustomMedicalCoverageRepository(medicalCoverageRepository(), mongoTemplate());
     }
     @Bean
     public ConsultationTemplateRepository consultationTemplateRepository(){
@@ -83,29 +58,8 @@ public class SpringTestRepositoryConfiguration {
     }
 
     @Bean
-    public PolicyHolderChasRepository chasRepository(){
-        return Mockito.mock(PolicyHolderChasRepository.class);
-    }
-    @Bean
-    public PolicyHolderCorporateRepository corporateRepository(){
-        return Mockito.mock(PolicyHolderCorporateRepository.class);
-    }
-    @Bean
-    public PolicyHolderInsuranceRepository insuranceRepository(){
-        return Mockito.mock(PolicyHolderInsuranceRepository.class);
-    }
-    @Bean
-    public PolicyHolderMediSaveRepository mediSaveRepository(){
-        return Mockito.mock(PolicyHolderMediSaveRepository.class);
-    }
-    @Bean
     public DiagnosisRepository diagnosisRepository(){
         return Mockito.mock(DiagnosisRepository.class);
-    }
-
-    @Bean
-    public AssociatedCoverageVaccinationRepository associatedCoverageVaccinationRepository(){
-        return Mockito.mock(AssociatedCoverageVaccinationRepository.class);
     }
     @Bean
     public SupplierRepository supplierRepository(){
@@ -157,11 +111,6 @@ public class SpringTestRepositoryConfiguration {
     @Bean
     public CaseRepositoryImpl caseRepositoryImpl() {
         return Mockito.mock(CaseRepositoryImpl.class);
-    }
-
-    @Bean
-    public PolicyHolderLimitRepository policyHolderLimitRepository() {
-        return Mockito.mock(PolicyHolderLimitRepository.class);
     }
 
     @Bean

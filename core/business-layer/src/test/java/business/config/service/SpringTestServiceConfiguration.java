@@ -7,9 +7,6 @@ import com.ilt.cms.pm.business.service.billing.NewCaseService;
 import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.billing.SalesOrderService;
 import com.ilt.cms.pm.business.service.clinic.*;
-import com.ilt.cms.pm.business.service.coverage.MedicalCoverageService;
-import com.ilt.cms.pm.business.service.coverage.PolicyHolderLimitService;
-import com.ilt.cms.pm.business.service.coverage.PolicyHolderService;
 import com.ilt.cms.pm.business.service.doctor.*;
 import com.ilt.cms.pm.business.service.inventory.LegacyInventoryService;
 import com.ilt.cms.pm.business.service.patient.*;
@@ -17,7 +14,6 @@ import com.ilt.cms.pm.business.service.queue.QueueService;
 import com.ilt.cms.pm.business.service.util.PostcodeService;
 import com.ilt.cms.repository.spring.ClinicGroupItemMasterRepository;
 import com.ilt.cms.repository.spring.ClinicItemMasterRepository;
-import com.ilt.cms.repository.spring.MedicalCoverageItemRepository;
 import com.lippo.cms.util.AWSConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -39,15 +35,6 @@ public class SpringTestServiceConfiguration {
     private SpringTestDatabaseServiceConfiguration serviceConfiguration;
     @Autowired
     private SpringTestRepositoryConfiguration springTestRepositoryConfiguration;
-
-    @Bean
-    public PolicyHolderLimitService policyHolderLimitService() {
-        return new PolicyHolderLimitService(springTestRepositoryConfiguration.caseRepositoryImpl(),
-                springTestRepositoryConfiguration.caseRepository(),
-                springTestRepositoryConfiguration.medicalCoverageRepository(),
-                springTestRepositoryConfiguration.patientVisitRegistryRepository(),
-                springTestRepositoryConfiguration.salesOrderRepository());
-    }
 
     @Bean
     public LabelService labelService() {
@@ -76,7 +63,7 @@ public class SpringTestServiceConfiguration {
 
     @Bean
     public DiagnosisService diagnosisService() {
-        return new DiagnosisService(serviceConfiguration.diagnosisDatabaseService(), serviceConfiguration.medicalCoverageDatabaseService());
+        return new DiagnosisService(serviceConfiguration.diagnosisDatabaseService());
     }
 
     @Bean
@@ -117,26 +104,12 @@ public class SpringTestServiceConfiguration {
     @Bean
     public VaccinationService vaccinationService() {
         return new VaccinationService(serviceConfiguration.vaccinationDatabaseService(),
-                serviceConfiguration.patientDatabaseService(),
-                serviceConfiguration.associatedCoverageVaccinationDatabaseService(),
-                serviceConfiguration.medicalCoverageDatabaseService());
+                serviceConfiguration.patientDatabaseService());
     }
 
     @Bean
     public VisitPurposeService visitPurposeService() {
         return new VisitPurposeService(serviceConfiguration.visitPurposeDatabaseService());
-    }
-
-    @Bean
-    public PolicyHolderService policyHolderService() {
-        return new PolicyHolderService(serviceConfiguration.policyHolderDatabaseService(), serviceConfiguration.medicalCoverageDatabaseService());
-    }
-
-    @Bean
-    public MedicalCoverageService medicalCoverageService() {
-        return new MedicalCoverageService(serviceConfiguration.medicalCoverageDatabaseService(), serviceConfiguration.policyHolderDatabaseService(),
-                serviceConfiguration.clinicDatabaseService(), new ItemService(serviceConfiguration.itemDatabaseService(),
-                serviceConfiguration.systemStoreDatabaseService(), serviceConfiguration.clinicDatabaseService()), policyHolderService());
     }
 
     @Bean
@@ -156,10 +129,9 @@ public class SpringTestServiceConfiguration {
                         new SalesOrderService(springTestRepositoryConfiguration.salesOrderRepository(),
                                 serviceConfiguration.mongoRunningNumberService(),
                                 springTestRepositoryConfiguration.itemRepository()),
-                        springTestRepositoryConfiguration.medicalCoverageRepository(),
-                        mock(PriceCalculationService.class), mock(PolicyHolderLimitService.class)),
+                        mock(PriceCalculationService.class)),
                 serviceConfiguration.mongoRunningNumberService(),
-                diagnosisService(), medicalCoverageService(), policyHolderService(), queueService(), priceCalculationService());
+                diagnosisService(), queueService(), priceCalculationService());
     }
 
     @Bean
@@ -201,8 +173,7 @@ public class SpringTestServiceConfiguration {
 
     @Bean
     public PriceCalculationService priceCalculationService() {
-        return new PriceCalculationService(springTestRepositoryConfiguration.medicalCoverageRepository(),
-                mock(MedicalCoverageItemRepository.class), springTestRepositoryConfiguration.itemRepository(),
+        return new PriceCalculationService(springTestRepositoryConfiguration.itemRepository(),
                 mock(ClinicGroupItemMasterRepository.class), mock(ClinicItemMasterRepository.class),
                 springTestRepositoryConfiguration.clinicRepository(), springTestRepositoryConfiguration.caseRepository(),
                 legacyInventoryService());

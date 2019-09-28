@@ -11,7 +11,6 @@ import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.consultation.ConsultationDatabaseService;
 import com.ilt.cms.database.consultation.ConsultationFollowupDatabaseService;
 import com.ilt.cms.database.consultation.ConsultationTemplateDatabaseService;
-import com.ilt.cms.database.coverage.MedicalCoverageDatabaseService;
 import com.ilt.cms.database.diagnosis.DiagnosisDatabaseService;
 import com.ilt.cms.database.doctor.DoctorDatabaseService;
 import com.ilt.cms.database.item.ItemDatabaseService;
@@ -20,18 +19,14 @@ import com.ilt.cms.database.notification.NotificationDatabaseService;
 import com.ilt.cms.database.patient.MedicalAlertDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.database.patient.PatientNoteDatabaseService;
-import com.ilt.cms.database.policyholder.*;
 import com.ilt.cms.database.store.SystemStoreDatabaseService;
 import com.ilt.cms.database.store.TemporaryStoreDatabaseService;
-import com.ilt.cms.database.vaccination.AssociatedCoverageVaccinationDatabaseService;
 import com.ilt.cms.database.vaccination.VaccinationDatabaseService;
 import com.ilt.cms.database.visit.PatientReferralDatabaseService;
 import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
 import com.ilt.cms.database.visit.VisitPurposeDatabaseService;
 import com.ilt.cms.db.service.*;
 import com.ilt.cms.db.service.appointment.MongoCalendarDatabaseService;
-import com.ilt.cms.db.service.builder.PatientBuilder;
-import com.ilt.cms.db.service.policyholder.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -43,10 +38,6 @@ public class SpringTestDatabaseServiceConfiguration{
     @Autowired
     private SpringTestRepositoryConfiguration repositoryConfiguration;
 
-    @Bean
-    public PatientBuilder patientBuilder(){
-        return new PatientBuilder(repositoryConfiguration.customMedicalCoverageRepository(), repositoryConfiguration.policyHolderRepository());
-    }
     @Bean
     public AllergyGroupDatabaseService allergyGroupDatabaseService(){
         return new MongoAllergyGroupDatabaseService(repositoryConfiguration.allergyGroupRepository());
@@ -70,7 +61,7 @@ public class SpringTestDatabaseServiceConfiguration{
     }
     @Bean
     public PatientDatabaseService patientDatabaseService(){
-        return new MongoPatientDatabaseService(repositoryConfiguration.patientRepository(), mongoRunningNumberService(), repositoryConfiguration.mongoTemplate(), patientBuilder());
+        return new MongoPatientDatabaseService(repositoryConfiguration.patientRepository(), mongoRunningNumberService(), repositoryConfiguration.mongoTemplate());
     }
     @Bean
     public ConsultationTemplateDatabaseService consultationTemplateDatabaseService(){
@@ -83,10 +74,6 @@ public class SpringTestDatabaseServiceConfiguration{
     @Bean
     public SupplierDatabaseService supplierDatabaseService(){
         return new MongoSupplierDatabaseService(repositoryConfiguration.supplierRepository());
-    }
-    @Bean
-    public MedicalCoverageDatabaseService medicalCoverageDatabaseService(){
-        return new MongoMedicalCoverageDatabaseService(repositoryConfiguration.medicalCoverageRepository(), repositoryConfiguration.customMedicalCoverageRepository());
     }
     @Bean
     public MedicalAlertDatabaseService medicalAlertDatabaseService(){
@@ -113,34 +100,8 @@ public class SpringTestDatabaseServiceConfiguration{
         return new MongoVaccinationDatabaseService(repositoryConfiguration.vaccinationRepository());
     }
     @Bean
-    public AssociatedCoverageVaccinationDatabaseService associatedCoverageVaccinationDatabaseService(){
-        return new MongoAssociatedCoverageVaccinationDatabaseService(repositoryConfiguration.associatedCoverageVaccinationRepository());
-    }
-    @Bean
     public VisitPurposeDatabaseService visitPurposeDatabaseService(){
         return new MongoVisitPurposeDatabaseService(repositoryConfiguration.visitPurposeRepository());
-    }
-    @Bean
-    public PolicyHolderDatabaseService policyHolderDatabaseService(){
-        return new MongoPolicyHolderDatabaseService(repositoryConfiguration.policyHolderRepository(),
-                chasDatabaseService(), corporateDatabaseService(),
-                insuranceDatabaseService(), mediSaveDatabaseService());
-    }
-    @Bean
-    public ChasDatabaseService chasDatabaseService(){
-        return new MongoChasDatabaseService(repositoryConfiguration.chasRepository());
-    }
-    @Bean
-    public CorporateDatabaseService corporateDatabaseService(){
-        return new MongoCorporateDatabaseService(repositoryConfiguration.corporateRepository(), repositoryConfiguration.mongoTemplate());
-    }
-    @Bean
-    public InsuranceDatabaseService insuranceDatabaseService(){
-        return new MongoInsuranceDatabaseService(repositoryConfiguration.insuranceRepository());
-    }
-    @Bean
-    public MediSaveDatabaseService mediSaveDatabaseService(){
-        return new MongoMediSaveDatabaseService(repositoryConfiguration.mediSaveRepository());
     }
     @Bean
     public CaseDatabaseService caseDatabaseService() {

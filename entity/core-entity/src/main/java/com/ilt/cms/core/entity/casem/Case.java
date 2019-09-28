@@ -1,7 +1,6 @@
 package com.ilt.cms.core.entity.casem;
 
 import com.ilt.cms.core.entity.PersistedObject;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.lippo.commons.util.CommonUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -32,7 +31,6 @@ public class Case extends PersistedObject {
 //    Just remove the unique indexed and will check later
 //    @Indexed(unique = true)
     private List<String> visitIds = new ArrayList<>();
-    private List<AttachedMedicalCoverage> attachedMedicalCoverages;
     private CaseStatus status = CaseStatus.OPEN;
 
 
@@ -99,16 +97,6 @@ public class Case extends PersistedObject {
         this.purchasedPackage = purchasedPackage;
     }
 
-    public List<AttachedMedicalCoverage> getAttachedMedicalCoverages() {
-        if (attachedMedicalCoverages == null)
-            attachedMedicalCoverages = new ArrayList<>();
-        return attachedMedicalCoverages;
-    }
-
-    public void setAttachedMedicalCoverages(List<AttachedMedicalCoverage> attachedMedicalCoverages) {
-        this.attachedMedicalCoverages = attachedMedicalCoverages;
-    }
-
     public CaseStatus getStatus() {
         return status;
     }
@@ -146,7 +134,6 @@ public class Case extends PersistedObject {
                 ", caseStartDateTime=" + caseStartDateTime +
                 ", caseEndDateTime=" + caseEndDateTime +
                 ", visitIds=" + visitIds +
-                ", attachedMedicalCoverages=" + attachedMedicalCoverages +
                 ", status=" + status +
                 '}';
     }

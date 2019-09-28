@@ -2,7 +2,6 @@ package com.ilt.cms.pm.integration.downstream;
 
 import com.ilt.cms.api.container.PageableHttpApiResponse;
 import com.ilt.cms.api.entity.casem.CaseEntity;
-import com.ilt.cms.api.entity.casem.CaseEntity.CoverageView;
 import com.ilt.cms.api.entity.casem.CaseEntity.VisitView;
 import com.ilt.cms.api.entity.casem.SalesOrderEntity;
 import com.ilt.cms.core.entity.Clinic;
@@ -10,15 +9,12 @@ import com.ilt.cms.core.entity.billing.ItemChargeDetail;
 import com.ilt.cms.core.entity.casem.Case;
 import com.ilt.cms.core.entity.casem.Package;
 import com.ilt.cms.core.entity.casem.SalesOrder;
-import com.ilt.cms.core.entity.coverage.CoveragePlan;
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.downstream.CaseDownstream;
 import com.ilt.cms.pm.business.service.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.clinic.ClinicService;
 import com.ilt.cms.pm.business.service.patient.CaseService;
-import com.ilt.cms.pm.business.service.coverage.MedicalCoverageService;
 import com.ilt.cms.pm.business.service.patient.PatientService;
 import com.ilt.cms.pm.business.service.patient.PatientVisitService;
 import com.ilt.cms.pm.integration.mapper.CaseMapper;
@@ -36,7 +32,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.lippo.commons.web.CommonWebUtil.httpApiResponse;
@@ -54,18 +49,16 @@ public class DefaultCaseDownstream implements CaseDownstream {
     private PatientService patientService;
     private PatientVisitService patientVisitService;
     private ClinicService clinicService;
-    private MedicalCoverageService medicalCoverageService;
     private PriceCalculationService priceCalculationService;
 
 
     public DefaultCaseDownstream(CaseService caseService, PatientService patientService, PatientVisitService patientVisitService,
-                                 ClinicService clinicService, MedicalCoverageService medicalCoverageService,
+                                 ClinicService clinicService,
                                  PriceCalculationService priceCalculationService) {
         this.caseService = caseService;
         this.patientService = patientService;
         this.patientVisitService = patientVisitService;
         this.clinicService = clinicService;
-        this.medicalCoverageService = medicalCoverageService;
         this.priceCalculationService = priceCalculationService;
     }
 
@@ -163,18 +156,6 @@ public class DefaultCaseDownstream implements CaseDownstream {
                     visitRegistry.getVisitNumber(),
                     clinic == null ? "": clinic.getName(),
                     visitRegistry.getStartTime()));
-        }
-
-        boolean present = Optional.ofNullable(aCase.getAttachedMedicalCoverages()).isPresent();
-        if (present) {
-            aCase.getAttachedMedicalCoverages().forEach(coverage -> {
-                try {
-                    CoveragePlan coveragePlan = medicalCoverageService.findCoverageByPlan(coverage.getPlanId());
-                    caseEntity.getCoverages().add(new CoverageView(coveragePlan.getId(), coveragePlan.getName()));
-                } catch (Exception e) {
-                    logger.error("Error while collecting medical coverage details: {}", e.getMessage());
-                }
-            });
         }
 
         return caseEntity;
@@ -299,18 +280,4 @@ public class DefaultCaseDownstream implements CaseDownstream {
         }
     }
 
-    @Override
-    public ResponseEntity<ApiResponse> updateCaseMedicalCoverages(String caseId, List<String> planIds) {
-        try {
-            Case aCase = new Case();
-            for (String planId : planIds) {
-                aCase.getAttachedMedicalCoverages().add(new AttachedMedicalCoverage(planId));
-            }
-            aCase = caseService.updateMedicalCoverage(caseId, aCase);
-            return httpApiResponse(new HttpApiResponse(collectData(aCase)));
-        } catch (CMSException e) {
-            logger.error("Case state update medical coverage error in case id [{}]:[{}]:[{}]", caseId, e.getStatusCode(), e.getMessage());
-            return httpApiResponse(new HttpApiResponse(e.getStatusCode(), e.getMessage()));
-        }
-    }
 }

@@ -6,7 +6,6 @@ import com.ilt.cms.core.entity.casem.Case.CaseStatus;
 import com.ilt.cms.core.entity.casem.Package;
 import com.ilt.cms.core.entity.casem.SalesOrder.SalesStatus;
 import com.ilt.cms.core.entity.item.Item;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.database.RunningNumberService;
 import com.ilt.cms.database.casem.CaseDatabaseService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
@@ -160,18 +159,6 @@ public class CaseService {
         validateCaseUpdate(existCase);
         prepareSalesOrder(existCase, changedCase.getSalesOrder());
 //        preparePurchasedPackage(existCase, changedCase);
-        return caseDatabaseService.save(existCase);
-    }
-
-    public Case updateMedicalCoverage(String caseId, Case changedCase) throws CMSException {
-        logger.info("Medical coverages about to updating of case id [" + caseId + "], with [" + changedCase.getAttachedMedicalCoverages() + "]");
-        validateInitRequest(caseId);
-        Case existCase = caseDatabaseService.findByCaseId(caseId);
-        validateCaseUpdate(existCase);
-        existCase.getAttachedMedicalCoverages().clear();
-        for (AttachedMedicalCoverage attachedMedicalCoverage : changedCase.getAttachedMedicalCoverages()) {
-            existCase.getAttachedMedicalCoverages().add(attachedMedicalCoverage);
-        }
         return caseDatabaseService.save(existCase);
     }
 

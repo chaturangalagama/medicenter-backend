@@ -1,9 +1,7 @@
 package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
-import business.mock.MockMedicalCoverage;
 import com.ilt.cms.core.entity.Status;
-import com.ilt.cms.core.entity.coverage.MedicalCoverage;
 import com.ilt.cms.core.entity.diagnosis.Diagnosis;
 import com.ilt.cms.pm.business.service.doctor.DiagnosisService;
 import com.ilt.cms.repository.spring.DiagnosisRepository;
@@ -65,12 +63,10 @@ public class DiagnosisServiceTest {
         diagnosis2.setStatus(Status.ACTIVE);
         diagnosis2.setFilterablePlanIds(Arrays.asList("PL01", "PL02"));
 
-        MedicalCoverage coverage = MockMedicalCoverage.mockMedicalCoverage();
 
         when(diagnosisRepository.search(anyString())).thenReturn(Arrays.asList(diagnosis1, diagnosis2));
         when(diagnosisRepository.findAllById(anyList())).thenReturn(Arrays.asList(diagnosis1, diagnosis2));
         when(diagnosisRepository.searchFilerByPlan(anyString(), anyList())).thenReturn(Arrays.asList(diagnosis1, diagnosis2));
-        when(mongoTemplate.findOne(any(Query.class), any(Class.class))).thenReturn(coverage);
 
     }
     @Test

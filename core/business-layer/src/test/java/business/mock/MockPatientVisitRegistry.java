@@ -145,7 +145,6 @@ public class MockPatientVisitRegistry {
         dispatchItem.setExpiryDate(LocalDate.now());
         dispatchItem.setInstruct("TDS");
         dispatchItem.setQuantity(20);
-        dispatchItem.setExcludedCoveragePlanIds((Set<String>) Arrays.asList("PLN0001"));
         dispatchItem.setRemarks("Remarks for dispatch item");
         dispatchItem.setOriTotalPrice(450);
         dispatchItem.setItemPriceAdjustment( new ItemPriceAdjustment(12, ItemPriceAdjustment.PaymentType.DOLLAR, "remark"));
@@ -162,7 +161,6 @@ public class MockPatientVisitRegistry {
         dispatchItem.setExpiryDate(LocalDate.now());
         dispatchItem.setInstruct("TDS");
         dispatchItem.setQuantity(20);
-        dispatchItem.setExcludedCoveragePlanIds((Set<String>) Arrays.asList("PLN0001"));
         dispatchItem.setRemarks("Remarks for dispatch item");
         dispatchItem.setOriTotalPrice(400);
         dispatchItem.setItemPriceAdjustment( new ItemPriceAdjustment(17, ItemPriceAdjustment.PaymentType.DOLLAR, "remark"));

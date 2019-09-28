@@ -30,7 +30,6 @@ public class PatientVisitRegistryEntity {
     private String clinicId;
     private String visitNumber;
 
-    private List<AttachedMedicalCoverages> attachedMedicalCoverages;
     private String consultationId;
     private PatientVisitState visitState;
     private String remark;
@@ -48,14 +47,4 @@ public class PatientVisitRegistryEntity {
 
     private Map<String, Object> ctx = new HashMap<>();
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    @ToString
-    public static class AttachedMedicalCoverages {
-        private String coverageId;
-        private String medicalCoverageId;
-        private String planId;
-    }
 }

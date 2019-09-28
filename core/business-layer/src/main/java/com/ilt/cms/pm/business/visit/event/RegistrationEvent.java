@@ -1,13 +1,11 @@
 package com.ilt.cms.pm.business.visit.event;
 
 import com.ilt.cms.core.entity.medical.MedicalReference;
-import com.ilt.cms.core.entity.visit.AttachedMedicalCoverage;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.core.entity.visit.Priority;
 import com.lippo.commons.util.CommonUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RegistrationEvent implements Event {
@@ -16,7 +14,6 @@ public class RegistrationEvent implements Event {
     private String clinicId;
     private String caseId;
     private String preferredDoctorId;
-    private List<AttachedMedicalCoverage> attachedMedicalCoverages;
     private String visitPurpose;
     private Priority priority;
 
@@ -24,16 +21,9 @@ public class RegistrationEvent implements Event {
         return new PatientVisitRegistry(patientId, clinicId, preferredDoctorId, visitPurpose, priority, new MedicalReference(), null, null, null);
     }
 
-    private Stream<AttachedMedicalCoverage> attachedMedicalCoverageMap() {
-        return attachedMedicalCoverages.stream()
-                .map(attachedMedicalCoverage -> new AttachedMedicalCoverage());
-    }
-
-
     public boolean areParametersValid() {
         return CommonUtils.isStringValid(patientId, clinicId, visitPurpose);
     }
-
 
     public String getPatientId() {
         return patientId;
@@ -57,14 +47,6 @@ public class RegistrationEvent implements Event {
 
     public void setPreferredDoctorId(String preferredDoctorId) {
         this.preferredDoctorId = preferredDoctorId;
-    }
-
-    public List<AttachedMedicalCoverage> getAttachedMedicalCoverages() {
-        return attachedMedicalCoverages;
-    }
-
-    public void setAttachedMedicalCoverages(List<AttachedMedicalCoverage> attachedMedicalCoverages) {
-        this.attachedMedicalCoverages = attachedMedicalCoverages;
     }
 
     public String getVisitPurpose() {
@@ -98,7 +80,6 @@ public class RegistrationEvent implements Event {
                 ", clinicId='" + clinicId + '\'' +
                 ", caseId='" + caseId + '\'' +
                 ", preferredDoctorId='" + preferredDoctorId + '\'' +
-                ", attachedMedicalCoverages=" + attachedMedicalCoverages +
                 ", visitPurpose='" + visitPurpose + '\'' +
                 ", priority=" + priority +
                 '}';

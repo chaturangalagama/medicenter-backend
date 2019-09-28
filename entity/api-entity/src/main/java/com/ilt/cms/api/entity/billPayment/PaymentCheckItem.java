@@ -11,5 +11,4 @@ import java.util.Set;
 @ToString
 public class PaymentCheckItem {
     private String itemId;
-    private Set<String> excludedCoveragePlanIds;
 }

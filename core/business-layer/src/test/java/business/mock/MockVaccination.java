@@ -5,7 +5,6 @@ import com.ilt.cms.core.entity.UserPaymentOption;
 import com.ilt.cms.core.entity.charge.Charge;
 import com.ilt.cms.core.entity.patient.PatientVaccination;
 import com.ilt.cms.core.entity.patient.VaccinationSchedule;
-import com.ilt.cms.core.entity.vaccination.AssociatedCoverageVaccination;
 import com.ilt.cms.core.entity.vaccination.Dose;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
 import com.ilt.cms.core.entity.vaccination.VaccinationScheme;
@@ -76,24 +75,6 @@ public class MockVaccination {
     public static VaccinationSchedule mockVaccinationSchedule(String vaccineId, Date scheduleDate){
         VaccinationSchedule vaccinationSchedule = new VaccinationSchedule(vaccineId, scheduleDate);
         return vaccinationSchedule;
-    }
-
-    public static AssociatedCoverageVaccination mockAssociatedCoverageVaccination(){
-        return mockAssociatedCoverageVaccination("MC00001", "CP00001",
-                Arrays.asList(mockVaccinationScheme("", new Charge(12, false)),
-                        mockVaccinationScheme("", new Charge(15, true))),
-                Arrays.asList(mockVaccinationScheme("", null),
-                        mockVaccinationScheme("", null)));
-    }
-
-    public static AssociatedCoverageVaccination mockAssociatedCoverageVaccination(String medicalCoverageId, String coveragePlanId,
-                                                                                  List<VaccinationScheme> modifiedVaccinationSchemes,
-                                                                                  List<VaccinationScheme> excludedVaccinationSchemes){
-
-        AssociatedCoverageVaccination associatedCoverageVaccination = new AssociatedCoverageVaccination(medicalCoverageId, coveragePlanId);
-        modifiedVaccinationSchemes.stream().forEach(modifiedVaccinationScheme-> associatedCoverageVaccination.addModifiedMedicalTestScheme(modifiedVaccinationScheme));
-        excludedVaccinationSchemes.stream().forEach(excludedVaccinationScheme-> associatedCoverageVaccination.addExcludedMedicalTestScheme(excludedVaccinationScheme));
-        return associatedCoverageVaccination;
     }
 
     public static VaccinationScheme mockVaccinationScheme(){

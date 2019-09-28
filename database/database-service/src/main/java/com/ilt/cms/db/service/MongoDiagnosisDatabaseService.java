@@ -32,8 +32,4 @@ public class MongoDiagnosisDatabaseService implements DiagnosisDatabaseService {
         return diagnosisRepository.existsById(diagnosisId);
     }
 
-    @Override
-    public List<Diagnosis> searchFilerByPlan(List<String> planIds, String term) {
-        return diagnosisRepository.searchFilerByPlan(term, planIds);
-    }
 }

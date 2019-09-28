@@ -47,7 +47,6 @@ public class MockCase {
 
     private static SalesItem createSalesItemEntity() {
         SalesItem salesItemEntity = new SalesItem();
-        salesItemEntity.setExcludedCoveragePlanIds((Set<String>) Arrays.asList("1234"));
         salesItemEntity.setCost(new Cost(100, true));
         salesItemEntity.setItemRefId("ITEM_REF_ID");
         salesItemEntity.setDosage(1);

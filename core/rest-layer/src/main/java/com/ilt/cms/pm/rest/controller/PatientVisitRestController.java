@@ -69,14 +69,14 @@ public class PatientVisitRestController {
     @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
     public ResponseEntity createPatientVisitRegistry(Principal principal, @PathVariable(value = "caseId", required = false) String caseId, @RequestBody VisitRegistryWrapper registryWrapper) {
         logger.info("Creating new PatientVisitRegistry for case [caseId]: [" + caseId + "] user [" + principal.getName() + "]");
-        return patientVisitDownstream.createVisit(caseId, registryWrapper.getRegistryEntity(), registryWrapper.getAttachedMedicalCoverages(), registryWrapper.getSingleVisitCase());
+        return patientVisitDownstream.createVisit(caseId, registryWrapper.getRegistryEntity(), registryWrapper.getSingleVisitCase());
     }
 
     @PostMapping("/create")
     @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
     public ResponseEntity createPatientVisitRegistry(Principal principal, @RequestBody VisitRegistryWrapper registryWrapper) {
         logger.info("Creating new PatientVisitRegistry user [" + principal.getName() + "]");
-        return patientVisitDownstream.createVisit(registryWrapper.getRegistryEntity(), registryWrapper.getAttachedMedicalCoverages(), registryWrapper.getSingleVisitCase());
+        return patientVisitDownstream.createVisit(registryWrapper.getRegistryEntity(), registryWrapper.getSingleVisitCase());
     }
 
     @PostMapping("/list/by-time/{clinicId}/{from}/{to}")

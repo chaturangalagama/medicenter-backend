@@ -1,19 +1,15 @@
 package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
-import business.mock.MockMedicalCoverage;
 import business.mock.MockPatient;
 import business.mock.MockVaccination;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.patient.PatientVaccination;
-import com.ilt.cms.core.entity.vaccination.AssociatedCoverageVaccination;
 import com.ilt.cms.core.entity.vaccination.Dose;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
 import com.ilt.cms.pm.business.service.patient.VaccinationService;
 import com.ilt.cms.repository.spring.PatientRepository;
-import com.ilt.cms.repository.spring.coverage.MedicalCoverageRepository;
-import com.ilt.cms.repository.spring.vaccination.AssociatedCoverageVaccinationRepository;
 import com.ilt.cms.repository.spring.vaccination.VaccinationRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
@@ -53,10 +49,6 @@ public class VaccinationServiceTest {
     private VaccinationRepository vaccinationRepository;
     @Autowired
     private PatientRepository patientRepository;
-    @Autowired
-    private AssociatedCoverageVaccinationRepository associatedCoverageVaccinationRepository;
-    @Autowired
-    private MedicalCoverageRepository medicalCoverageRepository;
 
 
     @Before
@@ -110,20 +102,6 @@ public class VaccinationServiceTest {
                 }
 
         );
-        when(medicalCoverageRepository.findById(any(String.class))).thenReturn(Optional.of(MockMedicalCoverage.mockMedicalCoverage()));
-        when(associatedCoverageVaccinationRepository.save(any(AssociatedCoverageVaccination.class)))
-                .thenAnswer(
-                        (Answer<AssociatedCoverageVaccination>) invocation->{
-                            AssociatedCoverageVaccination associatedCoverageVaccination = invocation.getArgument(0);
-                            Field id = PersistedObject.class.getDeclaredField("id");
-                            id.setAccessible(true);
-                            id.set(associatedCoverageVaccination, "ACV00001");
-                            return  associatedCoverageVaccination;
-
-                        }
-
-                );
-
     }
 
     @Test
@@ -180,42 +158,6 @@ public class VaccinationServiceTest {
     public void listAllVaccines() {
         List<Vaccination> vaccinations = vaccinationService.listAllVaccines();
         assertEquals(2, vaccinations.size());
-    }
-
-    @Test
-    public void vaccinationAssociation() throws CMSException {
-        AssociatedCoverageVaccination mock = MockVaccination.mockAssociatedCoverageVaccination();
-        mock.setCoveragePlanId("11111"); // to match when patient mock
-        AssociatedCoverageVaccination associatedCoverageVaccination =
-                vaccinationService.vaccinationAssociation(mock, false);
-        assertNotNull(associatedCoverageVaccination);
-    }
-
-    @Test
-    public void vaccinationAssociationWithUpdateTrue() throws CMSException {
-        AssociatedCoverageVaccination mock = MockVaccination.mockAssociatedCoverageVaccination();
-        mock.setCoveragePlanId("11111"); // to match when patient mock
-        AssociatedCoverageVaccination associatedCoverageVaccination =
-                vaccinationService.vaccinationAssociation(mock, true);
-        assertNotNull(associatedCoverageVaccination);
-    }
-
-    @Test
-    public void vaccinationAssociationWithPlanNotFound() throws CMSException {
-        AssociatedCoverageVaccination mock = MockVaccination.mockAssociatedCoverageVaccination();
-        try {
-            AssociatedCoverageVaccination associatedCoverageVaccination =
-                    vaccinationService.vaccinationAssociation(mock, false);
-        }catch (CMSException e){
-            assertThat(e.getMessage(), is("Plan not found"));
-        }
-    }
-
-    @Test
-    public void removeAssociation() {
-        boolean isSuccess = vaccinationService.removeAssociation("M0001", "AC00001");
-        assertTrue(isSuccess);
-
     }
 
     @Test

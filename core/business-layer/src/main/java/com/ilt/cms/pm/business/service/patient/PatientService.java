@@ -1,7 +1,6 @@
 package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.core.entity.patient.PatientCoverage;
 import com.ilt.cms.database.patient.PatientDatabaseService;
 import com.ilt.cms.database.RunningNumberService;
 import com.lippo.cms.exception.PatientException;
@@ -53,10 +52,6 @@ public class PatientService {
 
     public Patient updatePatient(String patientId, Patient patientUpdate) throws PatientException {
         return databaseService.updatePatient(patientId, patientUpdate);
-    }
-
-    public Patient removeCoveragePlan(String systemUserId, PatientCoverage coverage) throws PatientException {
-        return databaseService.removeCoveragePlan(systemUserId, coverage);
     }
 
     public List<Patient> likeSearchPatient(String value) {

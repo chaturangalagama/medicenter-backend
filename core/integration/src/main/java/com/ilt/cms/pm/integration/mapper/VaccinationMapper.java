@@ -1,12 +1,10 @@
 package com.ilt.cms.pm.integration.mapper;
 
 import com.ilt.cms.api.entity.charge.ChargeEntity;
-import com.ilt.cms.api.entity.vaccination.AssociatedCoverageVaccinationEntity;
 import com.ilt.cms.api.entity.vaccination.VaccinationEntity;
 import com.ilt.cms.api.entity.vaccination.VaccinationSchemeEntity;
 import com.ilt.cms.core.entity.UserPaymentOption;
 import com.ilt.cms.core.entity.charge.Charge;
-import com.ilt.cms.core.entity.vaccination.AssociatedCoverageVaccination;
 import com.ilt.cms.core.entity.vaccination.Dose;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
 import com.ilt.cms.core.entity.vaccination.VaccinationScheme;
@@ -78,37 +76,6 @@ public class VaccinationMapper extends Mapper{
         com.ilt.cms.api.entity.vaccination.Dose doseEntity = new com.ilt.cms.api.entity.vaccination.Dose(dose.getDoseId(), dose.getName(), dose.getCode(),
                 dose.getDescription(), priceEntity, priceAdjustmentEntity, dose.getNextDoseRecommendedGap());
         return doseEntity;
-    }
-
-    public static AssociatedCoverageVaccination mapToAssociatedCoverageVaccinationCore(AssociatedCoverageVaccinationEntity associatedCoverageVaccinationEntity){
-        if(associatedCoverageVaccinationEntity == null){
-            return null;
-        }
-        AssociatedCoverageVaccination associatedCoverageVaccination = new AssociatedCoverageVaccination();
-        associatedCoverageVaccination.setId(associatedCoverageVaccinationEntity.getId());
-        associatedCoverageVaccination.setMedicalCoverageId(associatedCoverageVaccinationEntity.getMedicalCoverageId());
-        associatedCoverageVaccination.setCoveragePlanId(associatedCoverageVaccinationEntity.getCoveragePlanId());
-        associatedCoverageVaccinationEntity.getModifiedVaccinationScheme().stream().map(mapToVaccinationSchemeCore())
-                .forEach(vaccinationScheme -> associatedCoverageVaccination.addModifiedMedicalTestScheme(vaccinationScheme));
-        associatedCoverageVaccinationEntity.getExcludedVaccinationScheme().stream().map(mapToVaccinationSchemeCore())
-                .forEach(vaccinationScheme -> associatedCoverageVaccination.addExcludedMedicalTestScheme(vaccinationScheme));
-        return associatedCoverageVaccination;
-    }
-
-    public static AssociatedCoverageVaccinationEntity mapToAssociatedCoverageVaccinationEntity(AssociatedCoverageVaccination associatedCoverageVaccination){
-        if(associatedCoverageVaccination == null){
-            return null;
-        }
-        AssociatedCoverageVaccinationEntity associatedCoverageVaccinationEntity = new AssociatedCoverageVaccinationEntity();
-        associatedCoverageVaccinationEntity.setId(associatedCoverageVaccination.getId());
-        associatedCoverageVaccinationEntity.setMedicalCoverageId(associatedCoverageVaccination.getMedicalCoverageId());
-        associatedCoverageVaccinationEntity.setCoveragePlanId(associatedCoverageVaccination.getCoveragePlanId());
-        associatedCoverageVaccination.getModifiedVaccinationScheme().stream().map(mapToVaccinationSchemeEntity())
-                .forEach(vaccinationSchemeEntity -> associatedCoverageVaccinationEntity.addModifiedMedicalTestSchemeEntity(vaccinationSchemeEntity));
-        associatedCoverageVaccination.getExcludedVaccinationScheme().stream().map(mapToVaccinationSchemeEntity())
-                .forEach(vaccinationSchemeEntity -> associatedCoverageVaccinationEntity.addExcludedMedicalTestSchemeEntity(vaccinationSchemeEntity));
-
-        return associatedCoverageVaccinationEntity;
     }
 
     public static Function<VaccinationSchemeEntity, VaccinationScheme> mapToVaccinationSchemeCore(){

@@ -44,7 +44,6 @@ public class ImmunisationGiven extends PersistedObject {
         private Charge chargeAmount;
         //this is only used for storage purposes
         private UserPaymentOption availablePriceAdjustment;
-        private Set<String> excludedCoveragePlanIds = new HashSet<>();
 
 
         public Immunisation() {
@@ -60,7 +59,6 @@ public class ImmunisationGiven extends PersistedObject {
             immunisation.setDoseId(getDoseId());
             immunisation.setChargeAmount(getChargeAmount());
             immunisation.setAvailablePriceAdjustment(getAvailablePriceAdjustment());
-            immunisation.setExcludedCoveragePlanIds(new HashSet<>(getExcludedCoveragePlanIds()));
             immunisation.setItemId(getItemId());
             return immunisation;
         }
@@ -149,14 +147,6 @@ public class ImmunisationGiven extends PersistedObject {
             this.availablePriceAdjustment = availablePriceAdjustment;
         }
 
-        public Set<String> getExcludedCoveragePlanIds() {
-            return excludedCoveragePlanIds;
-        }
-
-        public void setExcludedCoveragePlanIds(Set<String> excludedCoveragePlanIds) {
-            this.excludedCoveragePlanIds = excludedCoveragePlanIds;
-        }
-
         public String getItemId() {
             return itemId;
         }
@@ -177,7 +167,6 @@ public class ImmunisationGiven extends PersistedObject {
                     ", doseId='" + doseId + '\'' +
                     ", chargeAmount=" + chargeAmount +
                     ", availablePriceAdjustment=" + availablePriceAdjustment +
-                    ", excludedCoveragePlanIds=" + excludedCoveragePlanIds +
                     '}';
         }
     }
