@@ -29,8 +29,6 @@
         <module>core</module>
         <module>database</module>
         <module>integration-layer/database-integration</module>
-        <module>modules/inventory</module>
-        <module>modules/old-inventory-system</module>
     </modules>
 
     <dependencyManagement>
