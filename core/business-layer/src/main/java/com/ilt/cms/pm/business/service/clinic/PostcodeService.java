@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service.util;
+package com.ilt.cms.pm.business.service.clinic;
 
 import com.ilt.cms.core.entity.Postcode;
 import com.ilt.cms.database.PostcodeDatabaseService;

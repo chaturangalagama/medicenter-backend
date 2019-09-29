@@ -14,7 +14,7 @@ import com.ilt.cms.core.entity.system.PrescriptionDose;
 import com.ilt.cms.downstream.SystemConfigurationDownstream;
 import com.ilt.cms.pm.business.service.clinic.ClinicService;
 import com.ilt.cms.pm.business.service.doctor.DoctorService;
-import com.ilt.cms.pm.business.service.util.PostcodeService;
+import com.ilt.cms.pm.business.service.clinic.PostcodeService;
 import com.ilt.cms.pm.business.service.patient.VitalService;
 import com.ilt.cms.pm.integration.mapper.PostcodeMapper;
 import com.ilt.cms.repository.spring.system.InstructionRepository;

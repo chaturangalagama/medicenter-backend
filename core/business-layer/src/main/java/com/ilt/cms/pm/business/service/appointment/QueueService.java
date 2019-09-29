@@ -1,4 +1,4 @@
-package com.ilt.cms.pm.business.service.queue;
+package com.ilt.cms.pm.business.service.appointment;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;

@@ -18,7 +18,7 @@ import com.ilt.cms.pm.business.service.clinic.ItemService;
 import com.ilt.cms.pm.business.service.doctor.ConsultationFollowupService;
 import com.ilt.cms.pm.business.service.doctor.ConsultationService;
 import com.ilt.cms.pm.business.service.doctor.DiagnosisService;
-import com.ilt.cms.pm.business.service.queue.QueueService;
+import com.ilt.cms.pm.business.service.appointment.QueueService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.UserInfoHelper;
 import com.lippo.commons.util.StatusCode;

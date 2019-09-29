@@ -107,9 +107,6 @@ public class ClinicService {
             logger.debug("clinic found validating the doctor list [" + clinic.getAttendingDoctorId()
                     + "] id [" + currentClinic.getId()
                     + "] current Clinic[" + currentClinic + "]");
-//            if (validateDoctorIds(clinic)) {
-//                throw new CMSException(StatusCode.E2000);
-//            }
             currentClinic.copy(clinic);
             logger.debug("Validation success, persisting the clinic [" + currentClinic + "] id [" + currentClinic.getId() + "]");
             Clinic savedClinic = clinicDatabaseService.save(currentClinic);

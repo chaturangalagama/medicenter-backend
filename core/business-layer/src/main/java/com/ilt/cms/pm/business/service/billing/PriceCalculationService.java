@@ -2,12 +2,10 @@ package com.ilt.cms.pm.business.service.billing;
 
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.charge.Charge;
-import com.ilt.cms.core.entity.inventory.InventoryUsage;
 import com.ilt.cms.core.entity.item.*;
 import com.ilt.cms.core.entity.billing.ItemChargeDetail;
 import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeDetailResponse;
 import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeRequest;
-import com.ilt.cms.pm.business.service.inventory.LegacyInventoryService;
 import com.ilt.cms.repository.spring.*;
 import com.lippo.cms.container.CmsServiceResponse;
 import com.lippo.cms.exception.CMSException;
@@ -17,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PriceCalculationService {
