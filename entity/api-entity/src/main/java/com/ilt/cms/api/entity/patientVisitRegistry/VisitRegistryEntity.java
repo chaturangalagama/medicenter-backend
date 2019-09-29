@@ -2,7 +2,7 @@ package com.ilt.cms.api.entity.patientVisitRegistry;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ilt.cms.api.entity.diagnosis.DiagnosisEntity;
-import com.ilt.cms.api.entity.medical.MedicalReferenceEntity;
+import com.ilt.cms.api.entity.medical.PatientReferralEntity;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.lippo.cms.util.CMSConstant;
 import lombok.*;
@@ -34,7 +34,7 @@ public class VisitRegistryEntity {
     private String preferredDoctorId;
     private String visitPurpose;
     private Priority priority;
-    private MedicalReferenceEntity medicalReferenceEntity;
+    private PatientReferralEntity patientReferralEntity;
     private PatientVisitState visitStatus;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern=CMSConstant.JSON_DATE_FORMAT_WITH_SECONDS)
     @DateTimeFormat(pattern = CMSConstant.JSON_DATE_FORMAT_WITH_SECONDS)

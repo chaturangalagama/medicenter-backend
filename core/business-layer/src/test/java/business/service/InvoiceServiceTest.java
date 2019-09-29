@@ -5,7 +5,7 @@ import com.ilt.cms.core.entity.item.Cost;
 import com.ilt.cms.core.entity.item.Item;
 import com.ilt.cms.database.RunningNumberService;
 import com.ilt.cms.database.item.ItemDatabaseService;
-import com.ilt.cms.pm.business.service.billing.InvoiceService;
+import com.ilt.cms.pm.business.service.clinic.billing.InvoiceService;
 import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
 import com.ilt.cms.repository.spring.SalesOrderRepository;
 import com.lippo.cms.exception.CMSException;

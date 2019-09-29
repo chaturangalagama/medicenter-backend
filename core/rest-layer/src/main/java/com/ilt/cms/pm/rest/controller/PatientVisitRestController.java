@@ -4,7 +4,7 @@ import com.ilt.cms.api.container.ConsultationWrapper;
 import com.ilt.cms.api.container.VisitRegistryWrapper;
 import com.ilt.cms.api.entity.consultation.MedicalCertificate;
 import com.ilt.cms.api.entity.consultation.PatientReferral;
-import com.ilt.cms.api.entity.medical.MedicalReferenceEntity;
+import com.ilt.cms.api.entity.medical.PatientReferralEntity;
 import com.ilt.cms.api.entity.patientVisitRegistry.ConsultationFollowUp;
 import com.ilt.cms.api.entity.patientVisitRegistry.VisitRegistryEntity;
 import com.ilt.cms.downstream.PatientVisitDownstream;
@@ -105,18 +105,18 @@ public class PatientVisitRestController {
     @PostMapping("/update/post-consult/{visitId}")
     @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
     public ResponseEntity updateToPostConsultState(Principal principal, @PathVariable("visitId") String visitId,
-                                                   @RequestBody MedicalReferenceEntity medicalReferenceEntity) {
+                                                   @RequestBody PatientReferralEntity patientReferralEntity) {
         logger.info("Updating PatientVisitRegistry [visitId]:[" + visitId + "] to [POST_CONSULT] status for user [" + principal.getName() + "]");
-        return patientVisitDownstream.updateStatusToPostConsult(visitId, medicalReferenceEntity, principal);
+        return patientVisitDownstream.updateStatusToPostConsult(visitId, patientReferralEntity, principal);
 
     }
 
     @PostMapping("/update/payment/{visitId}")
     @RolesAllowed("ROLE_PATIENT_VISIT_MANAGE")
     public ResponseEntity updateToPaymentState(Principal principal, @PathVariable("visitId") String visitId,
-                                               @RequestBody MedicalReferenceEntity medicalReferenceEntity) {
+                                               @RequestBody PatientReferralEntity patientReferralEntity) {
         logger.info("Updating PatientVisitRegistry [visitId]:[" + visitId + "] to [PAYMENT] status for user [" + principal.getName() + "]");
-        return patientVisitDownstream.updateStatusToPayment(visitId, medicalReferenceEntity, principal);
+        return patientVisitDownstream.updateStatusToPayment(visitId, patientReferralEntity, principal);
     }
 
     @PostMapping("/update/complete/{visitId}")
@@ -164,16 +164,16 @@ public class PatientVisitRestController {
 
     @PostMapping("/save/consultation/{visitId}")
     public ResponseEntity saveVisitConsultationData(Principal principal, @PathVariable("visitId") String visitId,
-                                                    @RequestBody MedicalReferenceEntity medicalReferenceEntity) {
+                                                    @RequestBody PatientReferralEntity patientReferralEntity) {
         logger.info("Update PatientVisitRegistry - Consultation data for [visitId]:[" + visitId + "] for user [" + principal.getName() + "]");
-        return patientVisitDownstream.saveConsultationData(visitId, medicalReferenceEntity, principal);
+        return patientVisitDownstream.saveConsultationData(visitId, patientReferralEntity, principal);
     }
 
     @PostMapping("/save/dispensing/{visitId}")
     public ResponseEntity saveVisitDispensingData(Principal principal, @PathVariable("visitId") String visitId,
-                                                  @RequestBody MedicalReferenceEntity medicalReferenceEntity) {
+                                                  @RequestBody PatientReferralEntity patientReferralEntity) {
         logger.info("Update PatientVisitRegistry - dispensing data for [visit]:[" + visitId + "] for user [" + principal.getName() + "]");
-        return patientVisitDownstream.saveDispensingData(visitId, medicalReferenceEntity, principal);
+        return patientVisitDownstream.saveDispensingData(visitId, patientReferralEntity, principal);
     }
 
     @PostMapping("/patient-consultation/list-followup/{clinicId}/{startDate}/{endDate}")

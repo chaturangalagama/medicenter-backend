@@ -3,7 +3,7 @@ package business.service;
 import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.visit.VisitPurpose;
-import com.ilt.cms.pm.business.service.patient.VisitPurposeService;
+import com.ilt.cms.pm.business.service.patient.patientVisit.VisitPurposeService;
 import com.ilt.cms.repository.spring.VisitPurposeRepository;
 import com.lippo.cms.exception.CMSException;
 import org.junit.Before;

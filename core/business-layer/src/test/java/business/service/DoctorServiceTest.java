@@ -7,7 +7,7 @@ import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.consultation.ConsultationTemplate;
 import com.ilt.cms.core.entity.doctor.Doctor;
 import com.ilt.cms.core.entity.doctor.Speciality;
-import com.ilt.cms.pm.business.service.doctor.DoctorService;
+import com.ilt.cms.pm.business.service.clinic.DoctorService;
 import com.ilt.cms.repository.spring.ClinicRepository;
 import com.ilt.cms.repository.spring.DoctorRepository;
 import com.lippo.cms.exception.CMSException;

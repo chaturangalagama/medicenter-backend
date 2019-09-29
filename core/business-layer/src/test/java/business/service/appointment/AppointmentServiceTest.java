@@ -2,7 +2,7 @@ package business.service.appointment;
 
 
 import business.config.service.SpringTestServiceConfiguration;
-import com.ilt.cms.pm.business.service.appointment.AppointmentService;
+import com.ilt.cms.pm.business.service.patient.patientVisit.AppointmentService;
 import com.ilt.cms.repository.spring.calendar.AppointmentRepository;
 import com.ilt.cms.repository.spring.calendar.ClinicCalendarRepository;
 import com.ilt.cms.repository.spring.calendar.DoctorCalendarRepository;
@@ -12,15 +12,10 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @Import(SpringTestServiceConfiguration.class)

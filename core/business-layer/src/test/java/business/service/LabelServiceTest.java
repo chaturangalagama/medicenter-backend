@@ -44,7 +44,7 @@ public class LabelServiceTest {
     public void setUp() throws Exception {
         Field id = PersistedObject.class.getDeclaredField("id");
         id.setAccessible(true);
-        Label label = new Label("prescription", "<div> <p>Content</p> </dive>");
+        Label label = new Label("prescription", "<div> <p>Content</p> </div>");
         id.set(label, "0001");
         Mockito.when(labelRepository.findById(anyString())).thenReturn(Optional.of(label));
         Mockito.when(labelRepository.findAll()).thenReturn(Arrays.asList(label, label));

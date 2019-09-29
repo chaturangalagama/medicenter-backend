@@ -3,7 +3,7 @@ package business.service;
 import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.diagnosis.Diagnosis;
-import com.ilt.cms.pm.business.service.doctor.DiagnosisService;
+import com.ilt.cms.pm.business.service.patient.patientVisit.DiagnosisService;
 import com.ilt.cms.repository.spring.DiagnosisRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;

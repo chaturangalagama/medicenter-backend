@@ -4,7 +4,7 @@ import business.config.service.SpringTestServiceConfiguration;
 import business.mock.MockDoctor;
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.patient.PatientNote;
-import com.ilt.cms.pm.business.service.patient.PatientNoteService;
+import com.ilt.cms.pm.business.service.clinic.PatientNoteService;
 import com.ilt.cms.repository.spring.DoctorRepository;
 import com.ilt.cms.repository.spring.PatientNoteRepository;
 import com.lippo.cms.exception.CMSException;

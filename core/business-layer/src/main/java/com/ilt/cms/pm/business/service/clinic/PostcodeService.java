@@ -2,7 +2,6 @@ package com.ilt.cms.pm.business.service.clinic;
 
 import com.ilt.cms.core.entity.Postcode;
 import com.ilt.cms.database.PostcodeDatabaseService;
-import com.ilt.cms.pm.business.service.patient.AllergyGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

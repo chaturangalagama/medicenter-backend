@@ -3,9 +3,8 @@ package com.ilt.cms.downstream;
 import com.ilt.cms.api.entity.consultation.ConsultationEntity;
 import com.ilt.cms.api.entity.consultation.MedicalCertificate;
 import com.ilt.cms.api.entity.consultation.PatientReferral;
-import com.ilt.cms.api.entity.medical.MedicalReferenceEntity;
+import com.ilt.cms.api.entity.medical.PatientReferralEntity;
 import com.ilt.cms.api.entity.patientVisitRegistry.ConsultationFollowUp;
-import com.ilt.cms.api.entity.patientVisitRegistry.PatientVisitRegistryEntity;
 import com.ilt.cms.api.entity.patientVisitRegistry.VisitRegistryEntity;
 import com.lippo.commons.web.api.ApiResponse;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +34,9 @@ public interface PatientVisitDownstream {
 
     ResponseEntity<ApiResponse> updateStatusToConsult(String visitId, String doctorId);
 
-    ResponseEntity<ApiResponse> updateStatusToPostConsult(String visitId, MedicalReferenceEntity medicalReferenceEntity, Principal principal);
+    ResponseEntity<ApiResponse> updateStatusToPostConsult(String visitId, PatientReferralEntity patientReferralEntity, Principal principal);
 
-    ResponseEntity<ApiResponse> updateStatusToPayment(String visitId, MedicalReferenceEntity medicalReferenceEntity, Principal principal);
+    ResponseEntity<ApiResponse> updateStatusToPayment(String visitId, PatientReferralEntity patientReferralEntity, Principal principal);
 
     ResponseEntity<ApiResponse> rollbackStatusToPostConsult(String visitId, Principal principal);
 
@@ -53,9 +52,9 @@ public interface PatientVisitDownstream {
 
     ResponseEntity<ApiResponse> updateVisitMedicalCertificates(String visitId, List<MedicalCertificate> certificates, Principal principal);
 
-    ResponseEntity<ApiResponse> saveConsultationData(String visitId, MedicalReferenceEntity medicalReferenceEntity, Principal principal);
+    ResponseEntity<ApiResponse> saveConsultationData(String visitId, PatientReferralEntity patientReferralEntity, Principal principal);
 
-    ResponseEntity<ApiResponse> saveDispensingData(String visitId, MedicalReferenceEntity medicalReferenceEntity, Principal principal);
+    ResponseEntity<ApiResponse> saveDispensingData(String visitId, PatientReferralEntity patientReferralEntity, Principal principal);
 
     ResponseEntity<ApiResponse> searchVisitByClinicQueue(String clinicId);
 
