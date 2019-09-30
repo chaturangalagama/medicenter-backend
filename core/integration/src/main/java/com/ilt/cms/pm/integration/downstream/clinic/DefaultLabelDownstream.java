@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream.clinic;
 
 import com.ilt.cms.api.entity.label.LabelEntity;
 import com.ilt.cms.core.entity.label.Label;
-import com.ilt.cms.downstream.LabelDownstream;
+import com.ilt.cms.downstream.clinic.LabelDownstream;
 import com.ilt.cms.pm.business.service.clinic.LabelService;
 import com.ilt.cms.pm.integration.mapper.clinic.LabelMapper;
 import com.lippo.cms.exception.CMSException;

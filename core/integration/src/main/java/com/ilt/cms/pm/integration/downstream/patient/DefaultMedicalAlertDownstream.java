@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream.patient;
 
 import com.ilt.cms.api.entity.patient.MedicalAlertEntity;
 import com.ilt.cms.core.entity.patient.MedicalAlert;
-import com.ilt.cms.downstream.MedicalAlertDownstream;
+import com.ilt.cms.downstream.patient.MedicalAlertDownstream;
 import com.ilt.cms.pm.business.service.patient.MedicalAlertService;
 import com.ilt.cms.pm.integration.mapper.patient.MedicalAlertMapper;
 import com.lippo.cms.exception.MedicalAlertException;

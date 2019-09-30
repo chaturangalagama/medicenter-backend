@@ -1,15 +1,25 @@
 package business.config.repository;
 
 import com.ilt.cms.repository.CustomPatientRepository;
-import com.ilt.cms.repository.spring.*;
-import com.ilt.cms.repository.spring.calendar.AppointmentRepository;
-import com.ilt.cms.repository.spring.calendar.ClinicCalendarRepository;
-import com.ilt.cms.repository.spring.calendar.DoctorCalendarRepository;
-import com.ilt.cms.repository.spring.consultation.ConsultationFollowupRepository;
-import com.ilt.cms.repository.spring.consultation.ConsultationRepository;
-import com.ilt.cms.repository.spring.consultation.ConsultationTemplateRepository;
-import com.ilt.cms.repository.spring.system.SystemStoreRepository;
-import com.ilt.cms.repository.spring.vaccination.VaccinationRepository;
+import com.ilt.cms.repository.clinic.*;
+import com.ilt.cms.repository.clinic.billing.SalesOrderRepository;
+import com.ilt.cms.repository.clinic.system.TemporaryStoreRepository;
+import com.ilt.cms.repository.patient.patientVisit.calendar.AppointmentRepository;
+import com.ilt.cms.repository.patient.patientVisit.calendar.ClinicCalendarRepository;
+import com.ilt.cms.repository.patient.patientVisit.calendar.DoctorCalendarRepository;
+import com.ilt.cms.repository.patient.patientVisit.consultation.ConsultationFollowupRepository;
+import com.ilt.cms.repository.patient.patientVisit.consultation.ConsultationRepository;
+import com.ilt.cms.repository.patient.patientVisit.consultation.ConsultationTemplateRepository;
+import com.ilt.cms.repository.clinic.inventory.ItemRepository;
+import com.ilt.cms.repository.clinic.inventory.SupplierRepository;
+import com.ilt.cms.repository.clinic.system.SystemStoreRepository;
+import com.ilt.cms.repository.patient.MedicalAlertRepository;
+import com.ilt.cms.repository.patient.PatientRepository;
+import com.ilt.cms.repository.patient.VaccinationRepository;
+import com.ilt.cms.repository.patient.patientVisit.DiagnosisRepository;
+import com.ilt.cms.repository.patient.patientVisit.PatientReferralRepository;
+import com.ilt.cms.repository.patient.patientVisit.PatientVisitRepository;
+import com.ilt.cms.repository.patient.patientVisit.VisitPurposeRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -130,8 +140,8 @@ public class SpringTestRepositoryConfiguration {
     }
 
     @Bean
-    public PatientVisitRegistryRepository patientVisitRegistryRepository() {
-        return Mockito.mock(PatientVisitRegistryRepository.class);
+    public PatientVisitRepository patientVisitRegistryRepository() {
+        return Mockito.mock(PatientVisitRepository.class);
     }
 
     @Bean

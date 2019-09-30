@@ -5,7 +5,7 @@ import com.ilt.cms.core.entity.patient.PatientVaccination;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
 import com.ilt.cms.core.entity.vaccination.VaccinationScheme;
 import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.database.vaccination.VaccinationDatabaseService;
+import com.ilt.cms.database.patient.VaccinationDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.CMSConstant;
 import com.lippo.commons.util.CommonUtils;

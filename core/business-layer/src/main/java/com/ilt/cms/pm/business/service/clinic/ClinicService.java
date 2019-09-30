@@ -3,7 +3,7 @@ package com.ilt.cms.pm.business.service.clinic;
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
-import com.ilt.cms.database.doctor.DoctorDatabaseService;
+import com.ilt.cms.database.clinic.DoctorDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.LoggerFactory;

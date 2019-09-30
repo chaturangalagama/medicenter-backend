@@ -10,9 +10,9 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.ilt.cms.core.entity.file.FileMetaData;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.pm.business.service.clinic.FileManagementService;
-import com.ilt.cms.repository.spring.ClinicRepository;
-import com.ilt.cms.repository.spring.PatientRepository;
-import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
+import com.ilt.cms.repository.clinic.ClinicRepository;
+import com.ilt.cms.repository.patient.PatientRepository;
+import com.ilt.cms.repository.patient.patientVisit.PatientVisitRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.AWSConfig;
 import org.junit.Assert;
@@ -56,7 +56,7 @@ public class FileManagementServiceTest {
     private ClinicRepository clinicRepository;
 
     @Autowired
-    private PatientVisitRegistryRepository patientVisitRegistryRepository;
+    private PatientVisitRepository patientVisitRepository;
 
     @Autowired
     private AWSConfig awsConfig;
@@ -86,10 +86,10 @@ public class FileManagementServiceTest {
 
         when(patientRepository.findById(anyString())).thenReturn(Optional.of(MockPatient.mockPatient()));
         when(clinicRepository.findById(anyString())).thenReturn(Optional.of(MockClinic.mockClinic()));
-        when(patientVisitRegistryRepository.existsById(anyString())).thenReturn(true);
+        when(patientVisitRepository.existsById(anyString())).thenReturn(true);
         when(clinicRepository.existsById(anyString())).thenReturn(true);
-        when(patientVisitRegistryRepository.findById(anyString())).thenReturn(Optional.of(MockPatientVisitRegistry.mockVisitRegistry()));
-        when(patientVisitRegistryRepository.save(any(PatientVisitRegistry.class))).thenAnswer(
+        when(patientVisitRepository.findById(anyString())).thenReturn(Optional.of(MockPatientVisitRegistry.mockVisitRegistry()));
+        when(patientVisitRepository.save(any(PatientVisitRegistry.class))).thenAnswer(
                 invocationOnMock -> {
                     PatientVisitRegistry patientVisitRegistry = invocationOnMock.getArgument(0);
                     return patientVisitRegistry;

@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream.patient.patientVisit;
 
 import com.ilt.cms.api.entity.patientVisitRegistry.VisitPurposeEntity;
 import com.ilt.cms.core.entity.visit.VisitPurpose;
-import com.ilt.cms.downstream.VisitPurposeDownstream;
+import com.ilt.cms.downstream.patient.patientVisit.VisitPurposeDownstream;
 import com.ilt.cms.pm.business.service.patient.patientVisit.VisitPurposeService;
 import com.ilt.cms.pm.integration.downstream.clinic.DefaultAllergyDownstream;
 import com.ilt.cms.pm.integration.mapper.patient.patientVisit.VisitPurposeMapper;

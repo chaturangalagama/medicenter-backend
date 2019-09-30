@@ -6,7 +6,7 @@ import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.consultation.ConsultationTemplate;
 import com.ilt.cms.core.entity.doctor.Doctor;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
-import com.ilt.cms.database.doctor.DoctorDatabaseService;
+import com.ilt.cms.database.clinic.DoctorDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.CommonUtils;
 import com.lippo.commons.util.StatusCode;

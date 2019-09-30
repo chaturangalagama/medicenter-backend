@@ -1,7 +1,7 @@
 package com.ilt.cms.pm.business.service.patient.patientVisit;
 
 import com.ilt.cms.core.entity.calendar.*;
-import com.ilt.cms.database.appointment.CalendarDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.AppointmentDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.Logger;
@@ -19,10 +19,10 @@ public class AppointmentService {
 
     private static final Logger logger = LoggerFactory.getLogger(AppointmentService.class);
 
-    private CalendarDatabaseService calendarDatabaseService;
+    private AppointmentDatabaseService appointmentDatabaseService;
 
-    public AppointmentService(CalendarDatabaseService calendarDatabaseService) {
-        this.calendarDatabaseService = calendarDatabaseService;
+    public AppointmentService(AppointmentDatabaseService appointmentDatabaseService) {
+        this.appointmentDatabaseService = appointmentDatabaseService;
     }
 
 
@@ -36,21 +36,21 @@ public class AppointmentService {
     public List<Appointment> findClinicAppointments(String clinicId, LocalDateTime start, LocalDateTime end) {
         logger.info("finding all appointment for clinic[" + clinicId + "] start[" + start
                 + "] end[" + end + "]");
-        return calendarDatabaseService.findAppointmentByClinicId(clinicId, start, end);
+        return appointmentDatabaseService.findAppointmentByClinicId(clinicId, start, end);
     }
 
     public List<Appointment> findClinicAppointments(String clinicId, String doctorId, LocalDateTime start,
                                                      LocalDateTime end) {
         logger.info("finding all appointment for clinic[" + clinicId + "] doctor[" + doctorId
                 + "] start[" + start + "] end[" + end + "]");
-        return calendarDatabaseService.findAppointmentByClinicIdAndDoctorId(clinicId, doctorId, start, end);
+        return appointmentDatabaseService.findAppointmentByClinicIdAndDoctorId(clinicId, doctorId, start, end);
     }
 
     public List<Appointment> findDoctorAppointments(String doctorId, LocalDateTime start,
                                                     LocalDateTime end) {
         logger.info("finding all appointment for doctor[" + doctorId
                 + "] start[" + start + "] end[" + end + "]");
-        return calendarDatabaseService.findAppointmentByDoctorId(doctorId, start, end);
+        return appointmentDatabaseService.findAppointmentByDoctorId(doctorId, start, end);
     }
 
 
@@ -72,7 +72,7 @@ public class AppointmentService {
     public DoctorCalendar addBlockDoctorTime(String clinicId, String doctorId, LocalDateTime startTime, LocalDateTime endTime) {
         logger.info("Add blocking doctor [" + doctorId + "] for clinic [" + clinicId + "] timeslot[" + startTime + "][" + endTime + "]");
 
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(clinicId, doctorId);
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(clinicId, doctorId);
         if (!(doctorCalendar.isDoctorAvailable(startTime)
                 && doctorCalendar.isDoctorAvailable(endTime))) {
             logger.error("Doctor is not available to block this time slot");
@@ -83,13 +83,13 @@ public class AppointmentService {
         }
         doctorCalendar.getBlockedTime().add(new CalendarTimeSlot(new CalendarDayOfYear(startTime.toLocalDate()),
                 startTime.toLocalTime(), endTime.toLocalTime()));
-        DoctorCalendar saveDoctorCalendar = calendarDatabaseService.saveDoctorCalendar(doctorCalendar);
+        DoctorCalendar saveDoctorCalendar = appointmentDatabaseService.saveDoctorCalendar(doctorCalendar);
         return saveDoctorCalendar;
     }
 
     public boolean removeBlockDoctorTime(String clinicId, String doctorId, LocalDateTime startTime){
         logger.info("Remove blocking doctor [" + doctorId + "] for clinic [" + clinicId + "] timeslot[" + startTime + "]");
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(clinicId, doctorId);
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(clinicId, doctorId);
         Optional<CalendarTimeSlot> calendarTimeSlotOpt = doctorCalendar.getBlockedTime().stream()
                 .filter(calendarTimeSlot -> calendarTimeSlot.getCalendarDay().isDayMatches(startTime.toLocalDate())
                 && calendarTimeSlot.getStart().isBefore(startTime.toLocalTime())
@@ -100,7 +100,7 @@ public class AppointmentService {
             logger.info("Block time slot is exist["+calendarTimeSlotOpt.get()+"]");
             CalendarTimeSlot blockTimeSlot = calendarTimeSlotOpt.get();
             success = doctorCalendar.getBlockedTime().remove(blockTimeSlot);
-            calendarDatabaseService.saveDoctorCalendar(doctorCalendar);
+            appointmentDatabaseService.saveDoctorCalendar(doctorCalendar);
         }
 
         return success;
@@ -113,8 +113,8 @@ public class AppointmentService {
             throw new CMSException(StatusCode.E1010, "Make appointment should before 1 hour");
         }
 
-        ClinicCalendar clinicCalendar = calendarDatabaseService.findCalendar(appointment.getClinicId());
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(appointment.getClinicId(),
+        ClinicCalendar clinicCalendar = appointmentDatabaseService.findCalendar(appointment.getClinicId());
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(appointment.getClinicId(),
                 appointment.getDoctorId());
 
         boolean withinClinicHours = clinicCalendar.isWithinClinicHours(appointment.getStartDate());
@@ -127,13 +127,13 @@ public class AppointmentService {
 
         int maxClinicAppointmentPerHour = findMaxClinicAppointmentPerHour(clinicCalendar, appointment.getStartDate());
 
-        List<Appointment> appointments = calendarDatabaseService.findAppointmentByClinicId(appointment.getClinicId(),
+        List<Appointment> appointments = appointmentDatabaseService.findAppointmentByClinicId(appointment.getClinicId(),
                 LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(0)),
                 LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(59)));
 
         if(appointment.getDoctorId() != null) {
             int appointmentPerHour = findMaxDoctorAppointmentPerHour(clinicCalendar, appointment.getDoctorId(), appointment.getStartDate());
-            List<Appointment> doctorAppointments = calendarDatabaseService.findAppointmentByClinicIdAndDoctorId(appointment.getClinicId(), appointment.getDoctorId(),
+            List<Appointment> doctorAppointments = appointmentDatabaseService.findAppointmentByClinicIdAndDoctorId(appointment.getClinicId(), appointment.getDoctorId(),
                     LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(0)),
                     LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(59)));
 
@@ -158,7 +158,7 @@ public class AppointmentService {
                     + "] doctorCalendar[" + doctorAvailable + "]");
         } else {
             logger.info("saving appointment");
-            return calendarDatabaseService.saveAppointment(appointment);
+            return appointmentDatabaseService.saveAppointment(appointment);
         }
     }
 
@@ -167,7 +167,7 @@ public class AppointmentService {
         if(appointment.getStartDate().isAfter(LocalDateTime.now().minusHours(1))){
             throw new CMSException(StatusCode.E1010, "Make appointment should before 1 hour");
         }
-        Optional<Appointment> appointmentOpt = calendarDatabaseService.findAppointmentById(appointmentId);
+        Optional<Appointment> appointmentOpt = appointmentDatabaseService.findAppointmentById(appointmentId);
 
         if(!appointmentOpt.isPresent()){
             throw new CMSException(StatusCode.E2000, "appointment not found");
@@ -180,8 +180,8 @@ public class AppointmentService {
         existAppointment.setAppointmentPurpose(appointment.getAppointmentPurpose());
         existAppointment.setRemark(appointment.getRemark());
 
-        ClinicCalendar clinicCalendar = calendarDatabaseService.findCalendar(appointment.getClinicId());
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(appointment.getClinicId(),
+        ClinicCalendar clinicCalendar = appointmentDatabaseService.findCalendar(appointment.getClinicId());
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(appointment.getClinicId(),
                 appointment.getDoctorId());
 
         boolean withinClinicHours = clinicCalendar.isWithinClinicHours(appointment.getStartDate());
@@ -194,13 +194,13 @@ public class AppointmentService {
 
         int maxClinicAppointmentPerHour = findMaxClinicAppointmentPerHour(clinicCalendar, appointment.getStartDate());
 
-        List<Appointment> appointments = calendarDatabaseService.findAppointmentByClinicId(appointment.getClinicId(),
+        List<Appointment> appointments = appointmentDatabaseService.findAppointmentByClinicId(appointment.getClinicId(),
                 LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(0)),
                 LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(59)));
 
         if(appointment.getDoctorId() != null) {
             int appointmentPerHour = findMaxDoctorAppointmentPerHour(clinicCalendar, appointment.getDoctorId(), appointment.getStartDate());
-            List<Appointment> doctorAppointments = calendarDatabaseService.findAppointmentByClinicIdAndDoctorId(appointment.getClinicId(), appointment.getDoctorId(),
+            List<Appointment> doctorAppointments = appointmentDatabaseService.findAppointmentByClinicIdAndDoctorId(appointment.getClinicId(), appointment.getDoctorId(),
                     LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(0)),
                     LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(59)));
 
@@ -225,20 +225,20 @@ public class AppointmentService {
                     + "] doctorCalendar[" + doctorAvailable + "]");
         } else {
             logger.info("saving appointment");
-            return calendarDatabaseService.saveAppointment(appointment);
+            return appointmentDatabaseService.saveAppointment(appointment);
         }
     }
 
     public boolean deleteDoctorAppointment(String appointmentId){
         logger.info("Delete a appointment [" + appointmentId + "]");
-        return calendarDatabaseService.removeDoctorCalendar(appointmentId);
+        return appointmentDatabaseService.removeDoctorCalendar(appointmentId);
     }
 
     public List<Appointment> searchAppointment(List<String> clinicIds, List<String> doctorIds,
                                                boolean containNoDoctorPreferred, LocalDateTime startDate, LocalDateTime endDate) {
         logger.info("Search appointment for clinics [" + clinicIds + "], doctors ["+doctorIds+"], " +
                 "from startDate["+startDate+"] to endDate["+endDate+"] with no doctor perferred["+containNoDoctorPreferred+"]");
-        List<Appointment> appointments = calendarDatabaseService.findAppointmentByClinicIdsOrDoctorIds(clinicIds, doctorIds, startDate, endDate);
+        List<Appointment> appointments = appointmentDatabaseService.findAppointmentByClinicIdsOrDoctorIds(clinicIds, doctorIds, startDate, endDate);
         List<Appointment> returnAppointments = null;
         if(!containNoDoctorPreferred) {
             returnAppointments = appointments.stream().filter(appointment -> appointment.getDoctorId() != null).collect(Collectors.toList());
@@ -252,7 +252,7 @@ public class AppointmentService {
 
     public List<Appointment> listConflictAppointment(String clinicId) {
         logger.info("List conflict appointment by clinic["+clinicId+"]");
-        List<Appointment> appointments = calendarDatabaseService.findAppointmentByClinicId(clinicId, LocalDateTime.now(), LocalDateTime.MAX);
+        List<Appointment> appointments = appointmentDatabaseService.findAppointmentByClinicId(clinicId, LocalDateTime.now(), LocalDateTime.MAX);
 
         return appointments.stream()
                 .filter(this::checkAppointmentConflict)
@@ -261,17 +261,17 @@ public class AppointmentService {
 
     public ClinicCalendar findClinicCalendar(String clinicId) {
         logger.info("Find clinic calendar by clinic["+clinicId+"]");
-        return calendarDatabaseService.findCalendar(clinicId);
+        return appointmentDatabaseService.findCalendar(clinicId);
     }
 
     public DoctorCalendar findDoctorCalendar(String clinicId, String doctorId) {
         logger.info("Find doctor calendar by clinic["+clinicId+"], doctor["+doctorId+"]");
-        return calendarDatabaseService.findDoctorCalendar(clinicId, doctorId);
+        return appointmentDatabaseService.findDoctorCalendar(clinicId, doctorId);
     }
 
     public ClinicCalendar updateClinicWorkingHour(String clinicId, List<CalendarTimeSlot> workingHourTimeSlot) {
         logger.info("Add clinic working hour by clinic["+clinicId+"], timeslot["+workingHourTimeSlot+"]");
-        ClinicCalendar clinicCalendar = calendarDatabaseService.findCalendar(clinicId);
+        ClinicCalendar clinicCalendar = appointmentDatabaseService.findCalendar(clinicId);
         for (CalendarTimeSlot operationHour : workingHourTimeSlot) {
             if (operationHour.getStart() == null || operationHour.getEnd() == null) {
                 logger.error("operating hours not available [" + operationHour + "]");
@@ -282,12 +282,12 @@ public class AppointmentService {
             }
         }
         clinicCalendar.setOperationHours(workingHourTimeSlot);
-        return calendarDatabaseService.saveClinic(clinicCalendar);
+        return appointmentDatabaseService.saveClinic(clinicCalendar);
     }
 
     public ClinicCalendar updateClinicHoliday(String clinicId, List<CalendarTimeSlot> holidayTimeSlot) {
         logger.info("Add clinic holiday by clinic["+clinicId+"], timeslot["+holidayTimeSlot+"]");
-        ClinicCalendar clinicCalendar = calendarDatabaseService.findCalendar(clinicId);
+        ClinicCalendar clinicCalendar = appointmentDatabaseService.findCalendar(clinicId);
         for (CalendarTimeSlot holiday : holidayTimeSlot) {
             if (holiday.getStart() == null || holiday.getEnd() == null) {
                 logger.error("operating hours not available [" + holiday + "]");
@@ -298,12 +298,12 @@ public class AppointmentService {
             }
         }
         clinicCalendar.setClinicHolidays(holidayTimeSlot);
-        return calendarDatabaseService.saveClinic(clinicCalendar);
+        return appointmentDatabaseService.saveClinic(clinicCalendar);
     }
 
     public DoctorCalendar updateDoctorLeave(String clinicId, String doctorId, List<CalendarTimeSlot> leaveTimeSlot) {
         logger.info("Add doctor leave by clinic["+clinicId+"], doctor["+doctorId+"], timeslot["+leaveTimeSlot+"]");
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(clinicId, doctorId);
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(clinicId, doctorId);
         for (CalendarTimeSlot holiday : leaveTimeSlot) {
             if (holiday.getStart() == null || holiday.getEnd() == null) {
                 logger.error("operating hours not available [" + holiday + "]");
@@ -314,12 +314,12 @@ public class AppointmentService {
             }
         }
         doctorCalendar.setLeaves(leaveTimeSlot);
-        return calendarDatabaseService.saveDoctorCalendar(doctorCalendar);
+        return appointmentDatabaseService.saveDoctorCalendar(doctorCalendar);
     }
 
     public DoctorCalendar updateDoctorWorkingDay(String clinicId, String doctorId, List<CalendarTimeSlot> workDayTimeSlot) {
         logger.info("Add doctor working day by clinic["+clinicId+"], doctor["+doctorId+"], timeslot["+workDayTimeSlot+"]");
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(clinicId, doctorId);
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(clinicId, doctorId);
         for (CalendarTimeSlot workingDay : workDayTimeSlot) {
             if (workingDay.getStart() == null || workingDay.getEnd() == null) {
                 logger.error("operating hours not available [" + workingDay + "]");
@@ -330,7 +330,7 @@ public class AppointmentService {
             }
         }
         doctorCalendar.setLeaves(workDayTimeSlot);
-        return calendarDatabaseService.saveDoctorCalendar(doctorCalendar);
+        return appointmentDatabaseService.saveDoctorCalendar(doctorCalendar);
     }
 
     /*public DoctorCalendar updateDoctorBlockTime(String clinicId, String doctorId, List<CalendarTimeSlot> blockTimeSlot) {
@@ -350,8 +350,8 @@ public class AppointmentService {
     }*/
 
     private boolean checkAppointmentConflict(Appointment appointment) {
-        ClinicCalendar clinicCalendar = calendarDatabaseService.findCalendar(appointment.getClinicId());
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(appointment.getClinicId(), appointment.getDoctorId());
+        ClinicCalendar clinicCalendar = appointmentDatabaseService.findCalendar(appointment.getClinicId());
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(appointment.getClinicId(), appointment.getDoctorId());
 
         boolean withinClinicHours = clinicCalendar.isWithinClinicHours(appointment.getStartDate());
         boolean doctorAvailable = true;
@@ -361,7 +361,7 @@ public class AppointmentService {
 
         int maxClinicAppointmentPerHour = findMaxClinicAppointmentPerHour(clinicCalendar, appointment.getStartDate());
 
-        List<Appointment> appointments = calendarDatabaseService.findAppointmentByClinicId(appointment.getClinicId(),
+        List<Appointment> appointments = appointmentDatabaseService.findAppointmentByClinicId(appointment.getClinicId(),
                 LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(0)),
                 LocalDateTime.of(appointment.getStartDate().toLocalDate(), appointment.getStartDate().toLocalTime().withMinute(59)));
 
@@ -377,7 +377,7 @@ public class AppointmentService {
     }
 
     private int findMaxClinicAppointmentPerHour(ClinicCalendar clinicCalendar, LocalDateTime dateTime){
-        List<DoctorCalendar> doctorCalendars = calendarDatabaseService.findDoctorCalendarByClinic(clinicCalendar.getClinicId());
+        List<DoctorCalendar> doctorCalendars = appointmentDatabaseService.findDoctorCalendarByClinic(clinicCalendar.getClinicId());
 
         List<DoctorCalendar> availableDoctorCalendars = doctorCalendars.stream()
                 .filter(doctorCalendar1 -> doctorCalendar1.isDoctorAvailable(dateTime))
@@ -390,7 +390,7 @@ public class AppointmentService {
     }
 
     private int findMaxDoctorAppointmentPerHour(ClinicCalendar clinicCalendar, String doctorId, LocalDateTime dateTime){
-        DoctorCalendar doctorCalendar = calendarDatabaseService.findDoctorCalendar(clinicCalendar.getClinicId(), doctorId);
+        DoctorCalendar doctorCalendar = appointmentDatabaseService.findDoctorCalendar(clinicCalendar.getClinicId(), doctorId);
         int noOfDoctorInClinic = 0;
         if(doctorCalendar.isDoctorAvailable(dateTime)){
             noOfDoctorInClinic = 1;

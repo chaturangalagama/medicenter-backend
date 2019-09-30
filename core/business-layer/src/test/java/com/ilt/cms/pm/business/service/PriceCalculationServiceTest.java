@@ -8,7 +8,8 @@ import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeDetailResponse
 import com.ilt.cms.core.entity.billing.ItemChargeDetail.ItemChargeRequest;
 import com.ilt.cms.pm.business.service.clinic.billing.PriceCalculationService;
 import com.ilt.cms.pm.business.service.clinic.billing.LegacyInventoryService;
-import com.ilt.cms.repository.spring.*;
+import com.ilt.cms.repository.clinic.*;
+import com.ilt.cms.repository.clinic.inventory.ItemRepository;
 import com.lippo.cms.exception.CMSException;
 import org.junit.Before;
 import org.junit.Test;

@@ -7,7 +7,7 @@ import com.ilt.cms.core.entity.RunningNumber;
 import com.ilt.cms.core.entity.UserId;
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.pm.business.service.patient.PatientService;
-import com.ilt.cms.repository.spring.PatientRepository;
+import com.ilt.cms.repository.patient.PatientRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.exception.PatientException;
 import com.lippo.commons.util.exception.RestValidationException;

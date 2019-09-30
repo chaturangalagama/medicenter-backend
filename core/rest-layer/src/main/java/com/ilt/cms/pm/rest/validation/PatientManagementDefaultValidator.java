@@ -1,8 +1,8 @@
 package com.ilt.cms.pm.rest.validation;
 
 
-import com.ilt.cms.downstream.ClinicDownstream;
-import com.ilt.cms.downstream.PatientDownstream;
+import com.ilt.cms.downstream.clinic.ClinicDownstream;
+import com.ilt.cms.downstream.patient.PatientDownstream;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

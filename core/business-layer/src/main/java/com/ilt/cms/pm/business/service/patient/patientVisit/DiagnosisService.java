@@ -1,7 +1,7 @@
 package com.ilt.cms.pm.business.service.patient.patientVisit;
 
 import com.ilt.cms.core.entity.diagnosis.Diagnosis;
-import com.ilt.cms.database.diagnosis.DiagnosisDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.DiagnosisDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.Logger;

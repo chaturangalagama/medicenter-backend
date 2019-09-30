@@ -3,9 +3,9 @@ package business.service.appointment;
 
 import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.pm.business.service.patient.patientVisit.AppointmentService;
-import com.ilt.cms.repository.spring.calendar.AppointmentRepository;
-import com.ilt.cms.repository.spring.calendar.ClinicCalendarRepository;
-import com.ilt.cms.repository.spring.calendar.DoctorCalendarRepository;
+import com.ilt.cms.repository.patient.patientVisit.calendar.AppointmentRepository;
+import com.ilt.cms.repository.patient.patientVisit.calendar.ClinicCalendarRepository;
+import com.ilt.cms.repository.patient.patientVisit.calendar.DoctorCalendarRepository;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;

@@ -8,7 +8,9 @@ import com.ilt.cms.api.entity.medical.PatientReferralEntity;
 import com.ilt.cms.core.entity.doctor.Speciality;
 import com.ilt.cms.core.entity.medical.DispatchItem;
 import com.ilt.cms.core.entity.medical.MedicalReference;
-import com.ilt.cms.pm.integration.mapper.clinic.SalesOrderMapper;
+import com.ilt.cms.pm.integration.mapper.clinic.billing.SalesOrderMapper;
+import com.ilt.cms.pm.integration.mapper.patient.patientVisit.consultation.ConsultationFollowUpMapper;
+import com.ilt.cms.pm.integration.mapper.patient.patientVisit.consultation.ConsultationMapper;
 
 import java.util.function.Function;
 import java.util.stream.Collectors;

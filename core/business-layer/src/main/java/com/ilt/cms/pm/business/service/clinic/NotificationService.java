@@ -1,7 +1,7 @@
 package com.ilt.cms.pm.business.service.clinic;
 
 import com.ilt.cms.core.entity.notification.Notification;
-import com.ilt.cms.database.notification.NotificationDatabaseService;
+import com.ilt.cms.database.clinic.NotificationDatabaseService;
 import com.lippo.cms.exception.NotificationException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.LoggerFactory;

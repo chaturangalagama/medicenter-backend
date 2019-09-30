@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream.patient;
 
 import com.ilt.cms.api.entity.vital.VitalEntity;
 import com.ilt.cms.core.entity.vital.Vital;
-import com.ilt.cms.downstream.VitalDownstream;
+import com.ilt.cms.downstream.patient.VitalDownstream;
 import com.ilt.cms.pm.business.service.patient.VitalService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;

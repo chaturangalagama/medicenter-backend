@@ -8,13 +8,15 @@ import com.ilt.cms.core.entity.medical.MedicalReference;
 import com.ilt.cms.core.entity.visit.ConsultationFollowup;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.core.entity.visit.Priority;
-import com.ilt.cms.database.RunningNumberService;
+import com.ilt.cms.database.clinic.system.RunningNumberService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
-import com.ilt.cms.database.doctor.DoctorDatabaseService;
+import com.ilt.cms.database.clinic.DoctorDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.PatientVisitDatabaseService;
 import com.ilt.cms.pm.business.service.clinic.billing.PriceCalculationService;
-import com.ilt.cms.pm.business.service.clinic.ItemService;
+import com.ilt.cms.pm.business.service.clinic.inventory.ItemService;
+import com.ilt.cms.pm.business.service.patient.patientVisit.consultation.ConsultationFollowupService;
+import com.ilt.cms.pm.business.service.patient.patientVisit.consultation.ConsultationService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.UserInfoHelper;
 import com.lippo.commons.util.StatusCode;
@@ -38,7 +40,7 @@ public class PatientVisitService {
 
     private static final Logger logger = LoggerFactory.getLogger(PatientVisitService.class);
     private final int EDITABLE_HOURS = 24;
-    private PatientVisitRegistryDatabaseService patientVisitRegistryDatabaseService;
+    private PatientVisitDatabaseService patientVisitDatabaseService;
     private PatientDatabaseService patientDatabaseService;
     private ClinicDatabaseService clinicDatabaseService;
     private DoctorDatabaseService doctorDatabaseService;
@@ -52,14 +54,14 @@ public class PatientVisitService {
     private PriceCalculationService priceCalculationService;
 
 
-    public PatientVisitService(PatientVisitRegistryDatabaseService patientVisitRegistryDatabaseService,
+    public PatientVisitService(PatientVisitDatabaseService patientVisitDatabaseService,
                                PatientDatabaseService patientDatabaseService,
                                ClinicDatabaseService clinicDatabaseService, DoctorDatabaseService doctorDatabaseService,
                                ConsultationService consultationService, ConsultationFollowupService consultationFollowupService,
                                PatientReferralService patientReferralService, ItemService itemService,
                                RunningNumberService runningNumberService, DiagnosisService diagnosisService,
                                QueueService queueService, PriceCalculationService priceCalculationService) {
-        this.patientVisitRegistryDatabaseService = patientVisitRegistryDatabaseService;
+        this.patientVisitDatabaseService = patientVisitDatabaseService;
         this.patientDatabaseService = patientDatabaseService;
         this.clinicDatabaseService = clinicDatabaseService;
         this.doctorDatabaseService = doctorDatabaseService;
@@ -74,7 +76,7 @@ public class PatientVisitService {
     }
 
     public PatientVisitRegistry searchById(String visitId) throws CMSException {
-        PatientVisitRegistry registry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry registry = patientVisitDatabaseService.searchById(visitId);
         if (registry == null) {
             logger.debug("PatientVisitRegistry not found for [id]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000, "Records not found for id " + visitId);
@@ -85,13 +87,13 @@ public class PatientVisitService {
     }
 
     public List<PatientVisitRegistry> searchByIds(List<String> ids) {
-        List<PatientVisitRegistry> visits = patientVisitRegistryDatabaseService.searchByIds(ids);
+        List<PatientVisitRegistry> visits = patientVisitDatabaseService.searchByIds(ids);
         logger.debug("PatientVisitRegistry [{}] found for [ids]:[{}] in the system", visits.size(), ids);
         return visits;
     }
 
     public PatientVisitRegistry searchByVisitNumber(String visitNumber) throws CMSException {
-        PatientVisitRegistry registry = patientVisitRegistryDatabaseService.searchByVisitNumber(visitNumber);
+        PatientVisitRegistry registry = patientVisitDatabaseService.searchByVisitNumber(visitNumber);
         if (registry == null) {
             logger.debug("PatientVisitRegistry not found for [visitNumber]:[{}]", visitNumber);
             throw new CMSException(StatusCode.E2000, "Records not found for visit number " + visitNumber);
@@ -102,14 +104,14 @@ public class PatientVisitService {
     }
 
     public List<PatientVisitRegistry> listVisits(String patientId) {
-        List<PatientVisitRegistry> visitRegistries = patientVisitRegistryDatabaseService.listPatientVisits(patientId);
+        List<PatientVisitRegistry> visitRegistries = patientVisitDatabaseService.listPatientVisits(patientId);
         logger.debug("found [{}] PatientVisitRegistries in the system", visitRegistries.size());
         return visitRegistries;
     }
 
     public Page<PatientVisitRegistry> listVisits(String patientId, int page, int size) {
 
-        Page<PatientVisitRegistry> visits = patientVisitRegistryDatabaseService.listPatientVisits(patientId, page, size, new Sort(Sort.Direction.DESC, "startTime"));
+        Page<PatientVisitRegistry> visits = patientVisitDatabaseService.listPatientVisits(patientId, page, size, new Sort(Sort.Direction.DESC, "startTime"));
         if (visits != null) {
             logger.debug("found [{}] PatientVisitRegistries in the system", visits.getContent().size());
             return visits;
@@ -120,7 +122,7 @@ public class PatientVisitService {
     }
 
     public PatientVisitRegistry updatePatientVisitRegistry(String visitId, PatientVisitRegistry visitRegistry) throws CMSException {
-        PatientVisitRegistry currentRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentRegistry = patientVisitDatabaseService.searchById(visitId);
         if (currentRegistry == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000);
@@ -131,7 +133,7 @@ public class PatientVisitService {
         }
         checkPatientVisitRegistryValidity(visitRegistry);
         currentRegistry.copy(visitRegistry);
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentRegistry);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentRegistry);
         logger.debug("PatientVisitRegistry updated [visitId]:[{}]", savedRegistry.getVisitNumber());
         return savedRegistry;
     }
@@ -147,7 +149,7 @@ public class PatientVisitService {
             patientQueue.setUrgent(true);
         }
         visitRegistry.setPatientQueue(patientQueue);
-        PatientVisitRegistry createVisitRegistry = patientVisitRegistryDatabaseService.save(visitRegistry);
+        PatientVisitRegistry createVisitRegistry = patientVisitDatabaseService.save(visitRegistry);
 
         logger.debug("PatientVisitRegistry [visitId]:[{}] created", createVisitRegistry.getVisitNumber());
         return createVisitRegistry;
@@ -158,7 +160,7 @@ public class PatientVisitService {
             logger.debug("Clinic not find for [id]: [{}]", clinicId);
             throw new CMSException(StatusCode.E2002);
         }
-        List<PatientVisitRegistry> visitRegistries = patientVisitRegistryDatabaseService.listByClinicIdAndStartTime(clinicId, start, end);
+        List<PatientVisitRegistry> visitRegistries = patientVisitDatabaseService.listByClinicIdAndStartTime(clinicId, start, end);
         if (visitRegistries != null) {
             logger.debug("Visits found for clinic [id]:[{}] startTime between [{}] & [{}]", clinicId, start, end);
             return visitRegistries;
@@ -181,7 +183,7 @@ public class PatientVisitService {
                 LocalTime endOfDay = LocalTime.MAX;
                 endTime = LocalDateTime.of(endOfMonth, endOfDay);
             }
-            List<PatientVisitRegistry> visitRegistries = patientVisitRegistryDatabaseService.findByPatientIdAndStartTime(patientId, startTime, endTime);
+            List<PatientVisitRegistry> visitRegistries = patientVisitDatabaseService.findByPatientIdAndStartTime(patientId, startTime, endTime);
             List<PatientVisitRegistry> attachableVisits = new ArrayList<>();
             for (PatientVisitRegistry visitRegistry : visitRegistries) {
                 if (attachableVisits.size() < limit) {
@@ -195,12 +197,12 @@ public class PatientVisitService {
     }
 
     public PatientVisitRegistry changeStateToConsult(String visitId, String doctorId, boolean setQueueAsCalled) throws CMSException {
-        if (!patientVisitRegistryDatabaseService.exists(visitId)) {
+        if (!patientVisitDatabaseService.exists(visitId)) {
             logger.debug("PatientVisit not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000, "visit not found for given visitId");
         }
 
-        PatientVisitRegistry currentRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentRegistry = patientVisitDatabaseService.searchById(visitId);
         if (!PatientVisitRegistry.PatientVisitState.INITIAL.equals(currentRegistry.getVisitStatus()) ||
                 PatientVisitRegistry.PatientVisitState.POST_CONSULT.equals(currentRegistry.getVisitStatus())) {
             logger.debug("Patient visit not allowed to change status to [status]:[CONSULT]");
@@ -215,13 +217,13 @@ public class PatientVisitService {
         if (setQueueAsCalled) {
             currentRegistry.getPatientQueue().setPatientCalled(true);
         }
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentRegistry);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentRegistry);
         logger.debug("PatientVisitRegistry [visitId]:[{}] status updated to : [CONSULT]", visitId);
         return savedRegistry;
     }
 
     public PatientVisitRegistry saveConsultationData(String visitId, MedicalReference medicalReference, Principal principal) throws CMSException {
-        PatientVisitRegistry currentRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentRegistry = patientVisitDatabaseService.searchById(visitId);
         if (currentRegistry == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000);
@@ -234,13 +236,13 @@ public class PatientVisitService {
             validateAndCreateMedicalReference(principal, currentRegistry, medicalReference, currentRegistry.getMedicalReference());
         }
 
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentRegistry);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentRegistry);
         logger.debug("PatientVisitRegistry [visitId]:[{}] status updated to : [POST_CONSULT]", savedRegistry.getVisitNumber());
         return savedRegistry;
     }
 
     public PatientVisitRegistry changeStateToPostConsult(String visitId, MedicalReference medicalReference, Principal principal) throws CMSException {
-        PatientVisitRegistry currentRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentRegistry = patientVisitDatabaseService.searchById(visitId);
         logger.debug("currentRegistry:" + currentRegistry);
         if (currentRegistry == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
@@ -258,13 +260,13 @@ public class PatientVisitService {
 
 
         currentRegistry.setVisitStatus(PatientVisitRegistry.PatientVisitState.POST_CONSULT);
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentRegistry);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentRegistry);
         logger.debug("PatientVisitRegistry [visitId]:[{}] status updated to : [POST_CONSULT]", savedRegistry.getVisitNumber());
         return savedRegistry;
     }
 
     public PatientVisitRegistry saveDispensingData(String visitId, MedicalReference newMedicalReference, Principal principal) throws CMSException {
-        PatientVisitRegistry currentRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentRegistry = patientVisitDatabaseService.searchById(visitId);
         if (currentRegistry == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000);
@@ -277,13 +279,13 @@ public class PatientVisitService {
         if (newMedicalReference != null) {
             validateAndCreateMedicalReference(principal, currentRegistry, newMedicalReference, currentRegistry.getMedicalReference());
         }
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentRegistry);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentRegistry);
         logger.debug("PatientVisitRegistry [visitId]:[{}] status updated to : [PAYMENT]", savedRegistry.getVisitNumber());
         return savedRegistry;
     }
 
     public PatientVisitRegistry changeStatusToPayment(String visitId, MedicalReference medicalReference, Principal principal, Map<String, Integer> planMaxUsage) throws CMSException {
-        PatientVisitRegistry currentRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentRegistry = patientVisitDatabaseService.searchById(visitId);
         if (currentRegistry == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000);
@@ -303,7 +305,7 @@ public class PatientVisitService {
 
         currentRegistry.setVisitStatus(PatientVisitRegistry.PatientVisitState.PAYMENT);
 
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentRegistry);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentRegistry);
         logger.debug("PatientVisitRegistry [visitId]:[{}] status updated to : [PAYMENT]", savedRegistry.getVisitNumber());
         return savedRegistry;
     }
@@ -351,7 +353,7 @@ public class PatientVisitService {
 //    }
 
     public PatientVisitRegistry rollbackStatusToPostConsult(String visitId) throws CMSException {
-        PatientVisitRegistry currentVisit = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentVisit = patientVisitDatabaseService.searchById(visitId);
         if (currentVisit == null) {
             logger.error("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000);
@@ -363,14 +365,14 @@ public class PatientVisitService {
         }
 
         currentVisit.setVisitStatus(PatientVisitRegistry.PatientVisitState.POST_CONSULT);
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentVisit);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentVisit);
         logger.info("removing invoices for rollback for visit [" + visitId + "]");
         return savedRegistry;
     }
 
 
     public PatientVisitRegistry changeStatusToComplete(String visitId) throws CMSException {
-        PatientVisitRegistry currentVisit = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentVisit = patientVisitDatabaseService.searchById(visitId);
         if (currentVisit == null) {
             logger.error("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000);
@@ -378,7 +380,7 @@ public class PatientVisitService {
 
         currentVisit.setVisitStatus(PatientVisitRegistry.PatientVisitState.COMPLETE);
         currentVisit.setEndTime(LocalDateTime.now());
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentVisit);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentVisit);
 //        if (invoiceCalculationService.calculateDueAmount(aCase.getId()) <= 0 && aCase.isSingleVisit()) {
 //            caseService.closeCase(aCase.getId());
 //            logger.debug("Case status changed to closed since single visit and no due amount");
@@ -390,7 +392,7 @@ public class PatientVisitService {
     }
 
     public PatientVisitRegistry updateConsultation(String visitId, Consultation consultation, List<String> diagnosisIds, Principal principal) throws CMSException {
-        PatientVisitRegistry currentVisit = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentVisit = patientVisitDatabaseService.searchById(visitId);
         if (currentVisit == null) {
             logger.error("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
             throw new CMSException(StatusCode.E2000);
@@ -428,13 +430,13 @@ public class PatientVisitService {
         consultationService.isConsultationExists(consultation.getId());
         currentVisit.getMedicalReference().setConsultation(consultationService.updateConsultation(consultation.getId(), consultation));
 
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentVisit);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentVisit);
         logger.debug("PatientVisitRegistry [visitId]:[{}] consultation updated", savedRegistry.getVisitNumber());
         return savedRegistry;
     }
 
     public PatientVisitRegistry updatePatientReferral(String visitId, PatientReferral referral, Principal principal) throws CMSException {
-        PatientVisitRegistry currentVisit = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentVisit = patientVisitDatabaseService.searchById(visitId);
 
         if (currentVisit == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
@@ -474,7 +476,7 @@ public class PatientVisitService {
     }
 
     public PatientVisitRegistry updateConsultationFollowup(String visitId, ConsultationFollowup followup, Principal principal) throws CMSException {
-        PatientVisitRegistry currentVisit = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentVisit = patientVisitDatabaseService.searchById(visitId);
 
         if (currentVisit == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
@@ -503,13 +505,13 @@ public class PatientVisitService {
         consultationFollowupService.isConsultationFollowupExists(followup.getId());
 
         currentVisit.getMedicalReference().getConsultationFollowup().copyParameters(followup);
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentVisit);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentVisit);
         logger.debug("PatientVisitRegistry [visitId]:[{}] PatientReferral updated", savedRegistry.getVisitNumber());
         return savedRegistry;
     }
 
     public PatientVisitRegistry updateMedicalCertificates(String visitId, List<MedicalCertificate> medicalCertificates, Principal principal) throws CMSException {
-        PatientVisitRegistry currentVisit = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry currentVisit = patientVisitDatabaseService.searchById(visitId);
 
         if (currentVisit == null) {
             logger.debug("PatientVisitRegistry not found for [visitId]:[{}]", visitId);
@@ -540,7 +542,7 @@ public class PatientVisitService {
             currentVisit.getMedicalReference().setMedicalCertificates(medicalCertificates);
         }
 
-        PatientVisitRegistry savedRegistry = patientVisitRegistryDatabaseService.save(currentVisit);
+        PatientVisitRegistry savedRegistry = patientVisitDatabaseService.save(currentVisit);
         logger.debug("PatientVisitRegistry [visitId]:[{}] PatientReferral updated", savedRegistry.getVisitNumber());
         return savedRegistry;
     }

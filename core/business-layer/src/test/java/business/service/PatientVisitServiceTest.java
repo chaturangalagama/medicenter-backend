@@ -15,9 +15,16 @@ import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.core.entity.visit.VisitPurpose;
 import com.ilt.cms.pm.business.service.patient.patientVisit.PatientVisitService;
 import com.ilt.cms.pm.business.service.clinic.billing.SalesOrderService;
-import com.ilt.cms.repository.spring.*;
-import com.ilt.cms.repository.spring.consultation.ConsultationFollowupRepository;
-import com.ilt.cms.repository.spring.consultation.ConsultationRepository;
+import com.ilt.cms.repository.clinic.*;
+import com.ilt.cms.repository.clinic.billing.SalesOrderRepository;
+import com.ilt.cms.repository.patient.patientVisit.consultation.ConsultationFollowupRepository;
+import com.ilt.cms.repository.patient.patientVisit.consultation.ConsultationRepository;
+import com.ilt.cms.repository.clinic.inventory.ItemRepository;
+import com.ilt.cms.repository.patient.PatientRepository;
+import com.ilt.cms.repository.patient.patientVisit.DiagnosisRepository;
+import com.ilt.cms.repository.patient.patientVisit.PatientReferralRepository;
+import com.ilt.cms.repository.patient.patientVisit.PatientVisitRepository;
+import com.ilt.cms.repository.patient.patientVisit.VisitPurposeRepository;
 import com.lippo.cms.exception.CMSException;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +64,7 @@ public class PatientVisitServiceTest {
     private PatientVisitService patientVisitService;
 
     @Autowired
-    private PatientVisitRegistryRepository patientVisitRegistryRepository;
+    private PatientVisitRepository patientVisitRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
     @Autowired
@@ -93,7 +100,7 @@ public class PatientVisitServiceTest {
     public void setUp() throws Exception {
 //        when(principal.getName()).thenReturn("John");
 
-        when(patientVisitRegistryRepository.findById("V0000")).thenAnswer(
+        when(patientVisitRepository.findById("V0000")).thenAnswer(
                 (Answer<Optional>) invocation -> {
                     String idStr = invocation.getArgument(0);
                     PatientVisitRegistry visitRegistry = MockPatientVisitRegistry.mockVisitRegistry();
@@ -104,7 +111,7 @@ public class PatientVisitServiceTest {
                 }
         );
 
-        when(patientVisitRegistryRepository.findById(eq("V0001"))).thenAnswer(
+        when(patientVisitRepository.findById(eq("V0001"))).thenAnswer(
                 (Answer<Optional>) invocation -> {
                     String visitIdStr = invocation.getArgument(0);
                     PatientVisitRegistry visitRegistry = MockPatientVisitRegistry.mockVisitRegistry();
@@ -118,7 +125,7 @@ public class PatientVisitServiceTest {
                 }
         );
 
-        when(patientVisitRegistryRepository.findById(eq("V0002"))).thenAnswer(
+        when(patientVisitRepository.findById(eq("V0002"))).thenAnswer(
                 (Answer<Optional>) invocation -> {
                     String visitIdStr = invocation.getArgument(0);
                     PatientVisitRegistry visitRegistry = MockPatientVisitRegistry.mockVisitRegistry();
@@ -132,7 +139,7 @@ public class PatientVisitServiceTest {
                 }
         );
 
-        when(patientVisitRegistryRepository.findById(eq("V0003"))).thenAnswer(
+        when(patientVisitRepository.findById(eq("V0003"))).thenAnswer(
                 (Answer<Optional>) invocation -> {
                     String visitIdStr = invocation.getArgument(0);
                     PatientVisitRegistry visitRegistry = MockPatientVisitRegistry.mockVisitRegistry();
@@ -146,7 +153,7 @@ public class PatientVisitServiceTest {
                 }
         );
 
-        when(patientVisitRegistryRepository.findById(eq("1245842"))).thenAnswer(
+        when(patientVisitRepository.findById(eq("1245842"))).thenAnswer(
                 (Answer<Optional>) invocation -> {
                     String visitIdStr = invocation.getArgument(0);
                     PatientVisitRegistry visitRegistry = MockPatientVisitRegistry.mockVisitRegistry();
@@ -157,7 +164,7 @@ public class PatientVisitServiceTest {
                 }
         );
 
-        when(patientVisitRegistryRepository.findByVisitNumber(anyString())).thenAnswer(
+        when(patientVisitRepository.findByVisitNumber(anyString())).thenAnswer(
                 (Answer<Optional>) invocation -> {
                     String visitIdStr = invocation.getArgument(0);
                     PatientVisitRegistry visitRegistry = MockPatientVisitRegistry.mockVisitRegistry();
@@ -169,22 +176,22 @@ public class PatientVisitServiceTest {
         );
 
 
-        when(patientVisitRegistryRepository.findAllById(anyList())).thenReturn(Arrays.asList(MockPatientVisitRegistry.mockVisitRegistry(), MockPatientVisitRegistry.mockVisitRegistry()));
-        when(patientVisitRegistryRepository.findAllByPatientId(anyString())).thenReturn(Arrays.asList(MockPatientVisitRegistry.mockVisitRegistry(), MockPatientVisitRegistry.mockVisitRegistry()));
+        when(patientVisitRepository.findAllById(anyList())).thenReturn(Arrays.asList(MockPatientVisitRegistry.mockVisitRegistry(), MockPatientVisitRegistry.mockVisitRegistry()));
+        when(patientVisitRepository.findAllByPatientId(anyString())).thenReturn(Arrays.asList(MockPatientVisitRegistry.mockVisitRegistry(), MockPatientVisitRegistry.mockVisitRegistry()));
         Page<PatientVisitRegistry> mockVisit = mock(Page.class);
         when(mockVisit.getTotalElements()).thenReturn(1000L);
         when(mockVisit.getContent()).thenReturn(Arrays.asList(MockPatientVisitRegistry.mockVisitRegistry()));
         when(mockVisit.getTotalPages()).thenReturn(10);
         when(mockVisit.getNumber()).thenReturn(2);
-        when(patientVisitRegistryRepository.findAll(any(Pageable.class))).thenReturn(mockVisit);
-        when(patientVisitRegistryRepository.findAll()).thenAnswer(
+        when(patientVisitRepository.findAll(any(Pageable.class))).thenReturn(mockVisit);
+        when(patientVisitRepository.findAll()).thenAnswer(
                 (Answer<List<PatientVisitRegistry>>) invocation -> {
                     PatientVisitRegistry registry = MockPatientVisitRegistry.mockVisitRegistry();
                     return Arrays.asList(registry);
                 }
         );
 
-        when(patientVisitRegistryRepository.save(any(PatientVisitRegistry.class))).thenReturn(MockPatientVisitRegistry.mockVisitRegistryTwo());
+        when(patientVisitRepository.save(any(PatientVisitRegistry.class))).thenReturn(MockPatientVisitRegistry.mockVisitRegistryTwo());
 
         when(patientRepository.existsById(anyString())).thenReturn(true);
         when(clinicRepository.existsById(anyString())).thenReturn(true);
@@ -204,8 +211,8 @@ public class PatientVisitServiceTest {
         );
         when(consultationRepository.existsById(anyString())).thenReturn(true);
         when(diagnosisRepository.existsById(anyString())).thenReturn(true);
-        when(patientVisitRegistryRepository.existsByVisitNumber(anyString())).thenReturn(true);
-        when(patientVisitRegistryRepository.existsById(anyString())).thenReturn(true);
+        when(patientVisitRepository.existsByVisitNumber(anyString())).thenReturn(true);
+        when(patientVisitRepository.existsById(anyString())).thenReturn(true);
 
         when(mongoTemplate.find(any(Query.class), any())).thenReturn(Arrays.asList(MockPatientVisitRegistry.mockVisitRegistry()));
 

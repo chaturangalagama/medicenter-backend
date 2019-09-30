@@ -2,7 +2,7 @@ package com.itl.cms.pm.repo;
 
 import com.ilt.cms.core.entity.vital.Vital;
 import com.ilt.cms.pm.integration.ApplicationStarter;
-import com.ilt.cms.repository.spring.VitalRepository;
+import com.ilt.cms.repository.clinic.VitalRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

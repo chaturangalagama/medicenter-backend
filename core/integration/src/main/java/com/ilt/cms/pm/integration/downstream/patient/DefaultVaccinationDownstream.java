@@ -3,7 +3,7 @@ package com.ilt.cms.pm.integration.downstream.patient;
 import com.ilt.cms.api.entity.patient.PatientVaccination;
 import com.ilt.cms.api.entity.vaccination.VaccinationEntity;
 import com.ilt.cms.core.entity.vaccination.Vaccination;
-import com.ilt.cms.downstream.VaccinationDownstream;
+import com.ilt.cms.downstream.patient.VaccinationDownstream;
 import com.ilt.cms.pm.business.service.patient.VaccinationService;
 import com.ilt.cms.pm.integration.mapper.patient.PatientMapper;
 import com.ilt.cms.pm.integration.mapper.patient.VaccinationMapper;

@@ -2,7 +2,7 @@ package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.database.RunningNumberService;
+import com.ilt.cms.database.clinic.system.RunningNumberService;
 import com.lippo.cms.exception.PatientException;
 import com.lippo.commons.util.exception.RestValidationException;
 import org.slf4j.LoggerFactory;

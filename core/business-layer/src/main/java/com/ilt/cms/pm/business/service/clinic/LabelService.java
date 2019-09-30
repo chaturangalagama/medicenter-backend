@@ -1,7 +1,7 @@
 package com.ilt.cms.pm.business.service.clinic;
 
 import com.ilt.cms.core.entity.label.Label;
-import com.ilt.cms.database.label.LabelDatabaseService;
+import com.ilt.cms.database.clinic.LabelDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.Logger;

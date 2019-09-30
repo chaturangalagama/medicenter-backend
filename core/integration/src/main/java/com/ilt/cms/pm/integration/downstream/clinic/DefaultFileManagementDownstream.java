@@ -1,7 +1,7 @@
 package com.ilt.cms.pm.integration.downstream.clinic;
 
 import com.ilt.cms.core.entity.file.FileMetaData;
-import com.ilt.cms.downstream.FileManagementDownstream;
+import com.ilt.cms.downstream.clinic.FileManagementDownstream;
 import com.ilt.cms.pm.business.service.clinic.FileManagementService;
 import com.ilt.cms.pm.integration.mapper.patient.PatientMapper;
 import com.lippo.cms.exception.CMSException;

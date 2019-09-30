@@ -8,11 +8,11 @@ import com.ilt.cms.core.entity.PersistedObject;
 
 import com.ilt.cms.core.entity.consultation.ConsultationTemplate;
 
-import com.ilt.cms.pm.business.service.patient.patientVisit.ConsultationTemplateService;
+import com.ilt.cms.pm.business.service.patient.patientVisit.consultation.ConsultationTemplateService;
 
-import com.ilt.cms.repository.spring.DoctorRepository;
-import com.ilt.cms.repository.spring.PatientRepository;
-import com.ilt.cms.repository.spring.consultation.ConsultationTemplateRepository;
+import com.ilt.cms.repository.clinic.DoctorRepository;
+import com.ilt.cms.repository.patient.PatientRepository;
+import com.ilt.cms.repository.patient.patientVisit.consultation.ConsultationTemplateRepository;
 
 import com.lippo.cms.exception.CMSException;
 

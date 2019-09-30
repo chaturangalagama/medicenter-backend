@@ -5,7 +5,7 @@ import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.label.Label;
 import com.ilt.cms.pm.business.service.clinic.LabelService;
-import com.ilt.cms.repository.spring.LabelRepository;
+import com.ilt.cms.repository.clinic.LabelRepository;
 import com.lippo.cms.exception.CMSException;
 import org.junit.Before;
 import org.junit.Test;

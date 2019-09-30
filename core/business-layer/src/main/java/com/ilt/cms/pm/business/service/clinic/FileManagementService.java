@@ -11,7 +11,7 @@ import com.ilt.cms.core.entity.patient.Patient;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.PatientVisitDatabaseService;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.util.ConcurrencyLock;
 import com.lippo.cms.util.UserInfoHelper;
@@ -38,14 +38,14 @@ public class FileManagementService {
 
     private AWSConfig awsConfig;
 
-    private PatientVisitRegistryDatabaseService patientVisitRegistryDatabaseService;
+    private PatientVisitDatabaseService patientVisitDatabaseService;
     private PatientDatabaseService patientDatabaseService;
     private ClinicDatabaseService clinicDatabaseService;
 
-    public FileManagementService(AWSConfig awsConfig, PatientVisitRegistryDatabaseService patientVisitRegistryDatabaseService,
+    public FileManagementService(AWSConfig awsConfig, PatientVisitDatabaseService patientVisitDatabaseService,
                                  PatientDatabaseService patientDatabaseService, ClinicDatabaseService clinicDatabaseService) {
         this.awsConfig = awsConfig;
-        this.patientVisitRegistryDatabaseService = patientVisitRegistryDatabaseService;
+        this.patientVisitDatabaseService = patientVisitDatabaseService;
         this.patientDatabaseService = patientDatabaseService;
         this.clinicDatabaseService = clinicDatabaseService;
         concurrencyLock = new ConcurrencyLock();
@@ -144,7 +144,7 @@ public class FileManagementService {
             logger.error("invalid uploadTo[" + uploadTo + "]");
             throw new CMSException(StatusCode.E1002, "uploadTo cannot be empty");
         }
-        if(!patientVisitRegistryDatabaseService.exists(visitId)){
+        if(!patientVisitDatabaseService.exists(visitId)){
             logger.error("VisitId[" + visitId + "] cannot be found");
             throw new CMSException(StatusCode.E2000, "Visit not found");
         }
@@ -156,7 +156,7 @@ public class FileManagementService {
             throw new CMSException(StatusCode.E1010, "File size is too big");
         }
 
-        PatientVisitRegistry visitRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry visitRegistry = patientVisitDatabaseService.searchById(visitId);
         logger.debug("uploading file to patient visit registry");
 
         int lockNumber = 0;
@@ -181,7 +181,7 @@ public class FileManagementService {
                 FileMetaData metaData = uploadToS3(fileMetaData, uploadFile, currentFileMetaData, fileId, metadata);
                 logger.debug("updating patient visit");
                 visitRegistry.setFileMetaData(currentFileMetaData);
-                patientVisitRegistryDatabaseService.save(visitRegistry);
+                patientVisitDatabaseService.save(visitRegistry);
                 logger.debug("Recoded added");
                 return metaData;
             } catch (AmazonServiceException e) {
@@ -197,7 +197,7 @@ public class FileManagementService {
 
     public List<FileMetaData> listFilesByVisit(String visitId) throws CMSException {
         logger.debug("Listing files for visit [id]:[{}]", visitId);
-        PatientVisitRegistry visitRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry visitRegistry = patientVisitDatabaseService.searchById(visitId);
         if (visitRegistry == null) {
             logger.debug("Patient visit not found for [id]:[{}]", visitId);
             throw new CMSException(StatusCode.E1002);
@@ -269,7 +269,7 @@ public class FileManagementService {
 
     public FileDownloadResponse downloadFileFromVisit(String visitId, String fileId) throws IOException, CMSException {
         logger.debug("Downloading file for visit [id]:[{}] fileId [id]:[{}]", visitId, fileId);
-        PatientVisitRegistry visitRegistry = patientVisitRegistryDatabaseService.searchById(visitId);
+        PatientVisitRegistry visitRegistry = patientVisitDatabaseService.searchById(visitId);
         if (visitRegistry == null) {
             logger.debug("Patient visit not found [id]:[{}]", visitId);
             throw new CMSException(StatusCode.E1002);

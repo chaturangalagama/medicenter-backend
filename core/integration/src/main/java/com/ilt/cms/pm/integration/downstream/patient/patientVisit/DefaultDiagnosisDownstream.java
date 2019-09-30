@@ -1,7 +1,7 @@
 package com.ilt.cms.pm.integration.downstream.patient.patientVisit;
 
 import com.ilt.cms.core.entity.diagnosis.Diagnosis;
-import com.ilt.cms.downstream.DiagnosisDownstream;
+import com.ilt.cms.downstream.patient.patientVisit.DiagnosisDownstream;
 import com.ilt.cms.pm.business.service.patient.patientVisit.DiagnosisService;
 import com.ilt.cms.pm.integration.mapper.patient.patientVisit.DiagnosisMapper;
 import com.lippo.commons.web.api.ApiResponse;

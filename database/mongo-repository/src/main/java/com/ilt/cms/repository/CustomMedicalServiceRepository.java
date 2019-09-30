@@ -1,6 +1,6 @@
 package com.ilt.cms.repository;
 
-import com.ilt.cms.repository.spring.MedicalServiceRepository;
+import com.ilt.cms.repository.clinic.MedicalServiceRepository;
 import com.ilt.cms.core.entity.service.MedicalService;
 import com.ilt.cms.core.entity.service.MedicalServiceItem;
 import org.springframework.data.mongodb.core.MongoTemplate;

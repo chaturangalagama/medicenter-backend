@@ -2,7 +2,7 @@ package com.ilt.cms.repository;
 
 import com.ilt.cms.core.entity.UserId;
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.repository.spring.PatientRepository;
+import com.ilt.cms.repository.patient.PatientRepository;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

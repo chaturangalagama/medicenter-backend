@@ -4,7 +4,7 @@ import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.Status;
 import com.ilt.cms.core.entity.diagnosis.Diagnosis;
 import com.ilt.cms.pm.business.service.patient.patientVisit.DiagnosisService;
-import com.ilt.cms.repository.spring.DiagnosisRepository;
+import com.ilt.cms.repository.patient.patientVisit.DiagnosisRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

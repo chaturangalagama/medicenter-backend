@@ -2,8 +2,8 @@ package business.service;
 
 import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.Postcode;
-import com.ilt.cms.pm.business.service.clinic.PostcodeService;
-import com.ilt.cms.repository.spring.PostcodeRepository;
+import com.ilt.cms.pm.business.service.clinic.system.PostcodeService;
+import com.ilt.cms.repository.clinic.PostcodeRepository;
 //import jdk.jfr.Unsigned;
 import org.junit.Before;
 import org.junit.Test;

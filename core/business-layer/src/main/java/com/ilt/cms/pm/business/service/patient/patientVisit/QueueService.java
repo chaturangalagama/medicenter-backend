@@ -3,10 +3,10 @@ package com.ilt.cms.pm.business.service.patient.patientVisit;
 import com.ilt.cms.core.entity.Clinic;
 import com.ilt.cms.core.entity.visit.PatientVisitRegistry;
 import com.ilt.cms.core.entity.visit.VisitPurpose;
-import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.repository.spring.ClinicRepository;
-import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
-import com.ilt.cms.repository.spring.VisitPurposeRepository;
+import com.ilt.cms.database.clinic.system.RunningNumberService;
+import com.ilt.cms.repository.clinic.ClinicRepository;
+import com.ilt.cms.repository.patient.patientVisit.PatientVisitRepository;
+import com.ilt.cms.repository.patient.patientVisit.VisitPurposeRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.Logger;
@@ -22,12 +22,12 @@ import java.util.Optional;
 public class QueueService {
 
     private static final Logger logger = LoggerFactory.getLogger(QueueService.class);
-    private PatientVisitRegistryRepository visitRegistryRepository;
+    private PatientVisitRepository visitRegistryRepository;
     private ClinicRepository clinicRepository;
     private VisitPurposeRepository visitPurposeRepository;
     private RunningNumberService runningNumberService;
 
-    public QueueService(PatientVisitRegistryRepository visitRegistryRepository, ClinicRepository clinicRepository,
+    public QueueService(PatientVisitRepository visitRegistryRepository, ClinicRepository clinicRepository,
                         VisitPurposeRepository visitPurposeRepository, RunningNumberService runningNumberService) {
         this.visitRegistryRepository = visitRegistryRepository;
         this.clinicRepository = clinicRepository;

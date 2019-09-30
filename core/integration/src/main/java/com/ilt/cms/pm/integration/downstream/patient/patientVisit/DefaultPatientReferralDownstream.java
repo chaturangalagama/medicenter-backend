@@ -1,7 +1,7 @@
 package com.ilt.cms.pm.integration.downstream.patient.patientVisit;
 
 import com.ilt.cms.core.entity.consultation.PatientReferral;
-import com.ilt.cms.downstream.PatientReferralDownstream;
+import com.ilt.cms.downstream.patient.patientVisit.PatientReferralDownstream;
 import com.ilt.cms.pm.business.service.patient.patientVisit.PatientReferralService;
 import com.ilt.cms.pm.integration.mapper.patient.patientVisit.PatientReferralMapper;
 import com.lippo.cms.exception.CMSException;

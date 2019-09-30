@@ -3,11 +3,11 @@ package business.service;
 import com.ilt.cms.core.entity.sales.*;
 import com.ilt.cms.core.entity.item.Cost;
 import com.ilt.cms.core.entity.item.Item;
-import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.database.item.ItemDatabaseService;
+import com.ilt.cms.database.clinic.system.RunningNumberService;
+import com.ilt.cms.database.clinic.inventory.ItemDatabaseService;
 import com.ilt.cms.pm.business.service.clinic.billing.InvoiceService;
-import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
-import com.ilt.cms.repository.spring.SalesOrderRepository;
+import com.ilt.cms.repository.patient.patientVisit.PatientVisitRepository;
+import com.ilt.cms.repository.clinic.billing.SalesOrderRepository;
 import com.lippo.cms.exception.CMSException;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ import static util.Assert.assertThrows;
 public class InvoiceServiceTest {
     private SalesOrderRepository salesOrderRepository = Mockito.mock(SalesOrderRepository.class);
     private RunningNumberService runningNumberService = Mockito.mock(RunningNumberService.class);
-    private PatientVisitRegistryRepository patientVisitRegistryRepository = Mockito.mock(PatientVisitRegistryRepository.class);
+    private PatientVisitRepository patientVisitRepository = Mockito.mock(PatientVisitRepository.class);
     private ItemDatabaseService itemDatabaseService = Mockito.mock(ItemDatabaseService.class);
 
     private InvoiceService invoiceService;
@@ -42,7 +42,7 @@ public class InvoiceServiceTest {
         invoiceService = new InvoiceService(
                 salesOrderRepository,
                 runningNumberService,
-                patientVisitRegistryRepository,
+                patientVisitRepository,
                 itemDatabaseService
         );
         when(salesOrderRepository.findById(anyString())).thenAnswer(invocationOnMock -> {

@@ -3,7 +3,7 @@ package com.ilt.cms.pm.integration.downstream.clinic;
 import com.ilt.cms.api.entity.common.Status;
 import com.ilt.cms.api.entity.patient.PatientNoteEntity;
 import com.ilt.cms.core.entity.patient.PatientNote;
-import com.ilt.cms.downstream.PatientNoteDownstream;
+import com.ilt.cms.downstream.clinic.PatientNoteDownstream;
 import com.ilt.cms.pm.business.service.clinic.PatientNoteService;
 import com.ilt.cms.pm.integration.mapper.clinic.PatientNoteMapper;
 import com.lippo.cms.exception.CMSException;

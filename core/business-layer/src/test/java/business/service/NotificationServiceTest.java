@@ -4,7 +4,7 @@ import business.config.service.SpringTestServiceConfiguration;
 import com.ilt.cms.core.entity.PersistedObject;
 import com.ilt.cms.core.entity.notification.Notification;
 import com.ilt.cms.pm.business.service.clinic.NotificationService;
-import com.ilt.cms.repository.spring.NotificationRepository;
+import com.ilt.cms.repository.clinic.NotificationRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.cms.exception.NotificationException;
 import com.lippo.commons.util.StatusCode;

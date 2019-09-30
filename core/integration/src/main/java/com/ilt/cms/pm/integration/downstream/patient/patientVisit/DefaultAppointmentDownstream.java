@@ -5,7 +5,7 @@ import com.ilt.cms.api.entity.calendar.CalendarTimeSlotEntity;
 import com.ilt.cms.core.entity.calendar.Appointment;
 import com.ilt.cms.core.entity.calendar.ClinicCalendar;
 import com.ilt.cms.core.entity.calendar.DoctorCalendar;
-import com.ilt.cms.downstream.AppointmentDownstream;
+import com.ilt.cms.downstream.patient.patientVisit.AppointmentDownstream;
 import com.ilt.cms.pm.business.service.patient.patientVisit.AppointmentService;
 import com.ilt.cms.pm.integration.mapper.patient.patientVisit.AppointmentMapper;
 import com.lippo.cms.exception.CMSException;

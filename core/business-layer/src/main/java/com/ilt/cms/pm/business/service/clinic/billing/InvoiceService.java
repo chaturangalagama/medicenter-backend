@@ -2,10 +2,10 @@ package com.ilt.cms.pm.business.service.clinic.billing;
 
 import com.ilt.cms.core.entity.sales.Invoice;
 import com.ilt.cms.core.entity.sales.PaymentInfo;
-import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.database.item.ItemDatabaseService;
-import com.ilt.cms.repository.spring.PatientVisitRegistryRepository;
-import com.ilt.cms.repository.spring.SalesOrderRepository;
+import com.ilt.cms.database.clinic.system.RunningNumberService;
+import com.ilt.cms.database.clinic.inventory.ItemDatabaseService;
+import com.ilt.cms.repository.patient.patientVisit.PatientVisitRepository;
+import com.ilt.cms.repository.clinic.billing.SalesOrderRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.CommonUtils;
 import com.lippo.commons.util.StatusCode;
@@ -29,17 +29,17 @@ public class InvoiceService {
 
     private SalesOrderRepository salesOrderRepository;
     private RunningNumberService runningNumberService;
-    private PatientVisitRegistryRepository patientVisitRegistryRepository;
+    private PatientVisitRepository patientVisitRepository;
     private ItemDatabaseService itemRepository;
 
     public InvoiceService(
-                          SalesOrderRepository salesOrderRepository,
-                          RunningNumberService runningNumberService,
-                          PatientVisitRegistryRepository patientVisitRegistryRepository,
-                          ItemDatabaseService itemRepository) {
+            SalesOrderRepository salesOrderRepository,
+            RunningNumberService runningNumberService,
+            PatientVisitRepository patientVisitRepository,
+            ItemDatabaseService itemRepository) {
         this.salesOrderRepository = salesOrderRepository;
         this.runningNumberService = runningNumberService;
-        this.patientVisitRegistryRepository = patientVisitRegistryRepository;
+        this.patientVisitRepository = patientVisitRepository;
         this.itemRepository = itemRepository;
     }
 

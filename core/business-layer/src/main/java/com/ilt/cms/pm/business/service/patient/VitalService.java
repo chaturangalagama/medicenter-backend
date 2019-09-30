@@ -2,8 +2,8 @@ package com.ilt.cms.pm.business.service.patient;
 
 import com.ilt.cms.core.entity.vital.Vital;
 import com.ilt.cms.core.entity.vital.VitalMaster;
-import com.ilt.cms.repository.spring.PatientRepository;
-import com.ilt.cms.repository.spring.VitalRepository;
+import com.ilt.cms.repository.patient.PatientRepository;
+import com.ilt.cms.repository.patient.VitalRepository;
 import com.lippo.cms.exception.CMSException;
 import com.lippo.commons.util.StatusCode;
 import org.slf4j.Logger;

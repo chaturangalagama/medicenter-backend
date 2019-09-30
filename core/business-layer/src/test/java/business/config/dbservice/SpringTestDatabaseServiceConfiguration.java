@@ -1,31 +1,43 @@
 package business.config.dbservice;
 
 import business.config.repository.SpringTestRepositoryConfiguration;
-import com.ilt.cms.database.PostcodeDatabaseService;
-import com.ilt.cms.database.RunningNumberService;
-import com.ilt.cms.database.SupplierDatabaseService;
-import com.ilt.cms.database.allergy.AllergyGroupDatabaseService;
-import com.ilt.cms.database.appointment.CalendarDatabaseService;
+import com.ilt.cms.database.clinic.system.PostcodeDatabaseService;
+import com.ilt.cms.database.clinic.system.RunningNumberService;
+import com.ilt.cms.database.clinic.inventory.SupplierDatabaseService;
+import com.ilt.cms.database.clinic.AllergyGroupDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.AppointmentDatabaseService;
 import com.ilt.cms.database.clinic.ClinicDatabaseService;
-import com.ilt.cms.database.consultation.ConsultationDatabaseService;
-import com.ilt.cms.database.consultation.ConsultationFollowupDatabaseService;
-import com.ilt.cms.database.consultation.ConsultationTemplateDatabaseService;
-import com.ilt.cms.database.diagnosis.DiagnosisDatabaseService;
-import com.ilt.cms.database.doctor.DoctorDatabaseService;
-import com.ilt.cms.database.item.ItemDatabaseService;
-import com.ilt.cms.database.label.LabelDatabaseService;
-import com.ilt.cms.database.notification.NotificationDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.consultation.ConsultationDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.consultation.ConsultationFollowupDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.consultation.ConsultationTemplateDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.DiagnosisDatabaseService;
+import com.ilt.cms.database.clinic.DoctorDatabaseService;
+import com.ilt.cms.database.clinic.inventory.ItemDatabaseService;
+import com.ilt.cms.database.clinic.LabelDatabaseService;
+import com.ilt.cms.database.clinic.NotificationDatabaseService;
 import com.ilt.cms.database.patient.MedicalAlertDatabaseService;
 import com.ilt.cms.database.patient.PatientDatabaseService;
-import com.ilt.cms.database.patient.PatientNoteDatabaseService;
-import com.ilt.cms.database.store.SystemStoreDatabaseService;
-import com.ilt.cms.database.store.TemporaryStoreDatabaseService;
-import com.ilt.cms.database.vaccination.VaccinationDatabaseService;
-import com.ilt.cms.database.visit.PatientReferralDatabaseService;
-import com.ilt.cms.database.visit.PatientVisitRegistryDatabaseService;
-import com.ilt.cms.database.visit.VisitPurposeDatabaseService;
-import com.ilt.cms.db.service.*;
-import com.ilt.cms.db.service.appointment.MongoCalendarDatabaseService;
+import com.ilt.cms.database.clinic.PatientNoteDatabaseService;
+import com.ilt.cms.database.clinic.system.SystemStoreDatabaseService;
+import com.ilt.cms.database.clinic.system.TemporaryStoreDatabaseService;
+import com.ilt.cms.database.patient.VaccinationDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.PatientReferralDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.PatientVisitDatabaseService;
+import com.ilt.cms.database.patient.patientVisit.VisitPurposeDatabaseService;
+import com.ilt.cms.db.service.clinic.*;
+import com.ilt.cms.db.service.patient.patientVisit.*;
+import com.ilt.cms.db.service.clinic.system.MongoPostcodeDatabaseService;
+import com.ilt.cms.db.service.clinic.system.MongoRunningNumberService;
+import com.ilt.cms.db.service.clinic.system.MongoSystemStoreDatabaseService;
+import com.ilt.cms.db.service.clinic.system.MongoTemporaryStoreDatabaseService;
+import com.ilt.cms.db.service.patient.MongoMedicalAlertDatabaseService;
+import com.ilt.cms.db.service.patient.MongoPatientDatabaseService;
+import com.ilt.cms.db.service.patient.MongoVaccinationDatabaseService;
+import com.ilt.cms.db.service.patient.patientVisit.consultation.MongoConsultationDatabaseService;
+import com.ilt.cms.db.service.patient.patientVisit.consultation.MongoConsultationFollowupDatabaseService;
+import com.ilt.cms.db.service.patient.patientVisit.consultation.MongoConsultationTemplateDatabaseService;
+import com.ilt.cms.db.service.clinic.inventory.MongoItemDatabaseService;
+import com.ilt.cms.db.service.clinic.inventory.MongoSupplierDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -130,13 +142,13 @@ public class SpringTestDatabaseServiceConfiguration{
     }
 
     @Bean
-    public PatientVisitRegistryDatabaseService patientVisitRegistryDatabaseService() {
-        return new MongoPatientVisitRegistryDatabaseService(repositoryConfiguration.patientVisitRegistryRepository(), repositoryConfiguration.mongoTemplate());
+    public PatientVisitDatabaseService patientVisitRegistryDatabaseService() {
+        return new MongoPatientVisitDatabaseService(repositoryConfiguration.patientVisitRegistryRepository(), repositoryConfiguration.mongoTemplate());
     }
 
     @Bean
-    public CalendarDatabaseService calendarDatabaseService(){
-        return new MongoCalendarDatabaseService(repositoryConfiguration.appointmentRepository(),
+    public AppointmentDatabaseService calendarDatabaseService(){
+        return new MongoAppointmentDatabaseService(repositoryConfiguration.appointmentRepository(),
                 repositoryConfiguration.clinicCalendarRepository(), repositoryConfiguration.doctorCalendarRepository());
     }
 }

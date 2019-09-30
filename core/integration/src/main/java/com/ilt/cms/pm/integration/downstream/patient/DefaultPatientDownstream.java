@@ -2,7 +2,7 @@ package com.ilt.cms.pm.integration.downstream.patient;
 
 import com.ilt.cms.api.entity.patient.PatientEntity;
 import com.ilt.cms.core.entity.patient.Patient;
-import com.ilt.cms.downstream.PatientDownstream;
+import com.ilt.cms.downstream.patient.PatientDownstream;
 import com.ilt.cms.pm.business.service.patient.PatientService;
 import com.ilt.cms.pm.integration.mapper.patient.PatientMapper;
 import com.lippo.cms.exception.PatientException;
