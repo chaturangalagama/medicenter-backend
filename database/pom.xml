@@ -16,7 +16,7 @@
 
     <modules>
         <module>mongo-repository</module>
-        <module>database-service</module>
+        <module>database-service-impl</module>
     </modules>
 
     <dependencies>

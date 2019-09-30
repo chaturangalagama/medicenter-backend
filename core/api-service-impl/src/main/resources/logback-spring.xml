@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+
+    <property name="LOG_LOCATION" value="util/logs"/>
+    <property name="APP_NAME" value="cms-dua"/>
+    <property name="LOG_PATTERN" value="%d %p [%t] [%X{transaction-id}] %logger{5} : %m%n"/>
+
+    <appender name="console-appender" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="debug-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_LOCATION}/${APP_NAME}-debug.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_LOCATION}/${APP_NAME}-debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--<maxHistory>30</maxHistory>-->
+        </rollingPolicy>
+    </appender>
+
+    <appender name="info-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_LOCATION}/${APP_NAME}-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_LOCATION}/${APP_NAME}-info-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="error-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_LOCATION}/${APP_NAME}-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_LOCATION}/${APP_NAME}-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.ilt.cms" additivity="false" level="debug">
+        <appender-ref ref="console-appender"/>
+        <appender-ref ref="debug-appender"/>
+        <appender-ref ref="info-appender"/>
+        <appender-ref ref="error-appender"/>
+    </logger>
+
+    <logger name="com.lippo" additivity="false" level="debug">
+        <appender-ref ref="console-appender"/>
+        <appender-ref ref="debug-appender"/>
+        <appender-ref ref="info-appender"/>
+        <appender-ref ref="error-appender"/>
+    </logger>
+
+    <root level="info" additivity="false">
+        <appender-ref ref="console-appender"/>
+        <appender-ref ref="debug-appender"/>
+        <appender-ref ref="info-appender"/>
+        <appender-ref ref="error-appender"/>
+    </root>
+
+</configuration>

@@ -16,9 +16,9 @@
     <description>cms-core</description>
 
     <modules>
-        <module>rest-layer</module>
-        <module>business-layer</module>
-        <module>integration</module>
+        <module>business</module>
+        <module>rest-api</module>
+        <module>api-service-impl</module>
     </modules>
 
     <dependencies>
